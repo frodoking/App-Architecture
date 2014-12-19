@@ -6,16 +6,11 @@ import java.util.List;
 
 /**
  * 列表加载事件
- * Created by xuwei19 on 2014/12/19.
+ * Created by frodoking on 2014/12/19.
  */
-public class ItemListEvent {
-    private List<Item> items;
+public class ItemListEvent extends AbstractEvent<List<Item>>{
 
     public ItemListEvent(List<Item> items) {
-        this.items = items;
-    }
-
-    public List<Item> getItems() {
-        return items;
+        super(items);
     }
 }

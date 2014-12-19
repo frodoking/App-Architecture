@@ -52,7 +52,7 @@ public class ItemListFragment extends ListFragment {
     public void onEventMainThread(ItemListEvent event) {
         setListAdapter(new ArrayAdapter<Item>(getActivity(),
                 android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1, event.getItems()));
+                android.R.id.text1, event.getContent()));
     }
 
     @Override
