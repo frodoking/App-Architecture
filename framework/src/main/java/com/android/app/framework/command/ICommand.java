@@ -3,6 +3,7 @@ package com.android.app.framework.command;
 
 import com.android.app.framework.controller.IController;
 import com.android.app.framework.controller.Notifier;
+import com.android.app.framework.net.Response;
 
 import java.util.Map;
 
@@ -26,9 +27,9 @@ public interface ICommand {
 
     void setParams(Map<String,String> paramMap);
 
-    Notifier getNotifier();
+    Response getResponse();
 
-    void setNotifier(Notifier notifier);
+    void setResponse(Response response);
 
     void setCancel(boolean isCancel);
 

@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * 带有jason的数据返回,并且返回期望的实体数据类型
  * Created by frodoking on 2014/12/19.
  */
-public abstract class ResponseHandler extends JsonHttpResponseHandler {
+public abstract class ResponseHandler extends JsonHttpResponseHandler implements Response {
     private static final String TAG = AsyncRequest.class.getSimpleName();
 
     @Override
@@ -35,17 +35,17 @@ public abstract class ResponseHandler extends JsonHttpResponseHandler {
                 String responseString;
                 if (response.optJSONObject("data") != null) {
                     responseString = response.optJSONObject("data").toString();
-                    if(expectedParserType().equals(Request.ParserType.GSON)){
+                    if (expectedParserType().equals(Request.ParserType.GSON)) {
                         entity = new Gson().fromJson(responseString, expectedClass());
-                    }else if(expectedParserType().equals(Request.ParserType.CUSTOM)){
+                    } else if (expectedParserType().equals(Request.ParserType.CUSTOM)) {
                         entity = expectedClass().newInstance();
                         entity.fromJson(responseString);
                     }
-                } else if (response.optJSONArray("data") != null){
+                } else if (response.optJSONArray("data") != null) {
                     responseString = response.optJSONArray("data").toString();
-                    if(expectedParserType().equals(Request.ParserType.GSON)){
+                    if (expectedParserType().equals(Request.ParserType.GSON)) {
                         entity = new Gson().fromJson(responseString, expectedClass());
-                    }else if(expectedParserType().equals(Request.ParserType.CUSTOM)){
+                    } else if (expectedParserType().equals(Request.ParserType.CUSTOM)) {
                         entity = expectedClass().newInstance();
                         entity.fromJson(responseString);
                     }
@@ -56,18 +56,17 @@ public abstract class ResponseHandler extends JsonHttpResponseHandler {
             e.printStackTrace();
         }
 
-        onSuccess(statusCode,stat,msg,entity);
+        onSuccess(statusCode, stat, msg, entity);
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
         Log.i(TAG, " *** statusCode:" + statusCode + ", onFailure: " + errorResponse + " *** ");
-        onFailure(statusCode,throwable);
+        onFailure(statusCode, throwable);
     }
 
-    public abstract void onSuccess(int statusCode,int stat,String msg,Entity data);
-    public abstract void onFailure(int statusCode,Throwable throwable);
     public abstract Class<Entity> expectedClass();
+
     public abstract Request.ParserType expectedParserType();
 }

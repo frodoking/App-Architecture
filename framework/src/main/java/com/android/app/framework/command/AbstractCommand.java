@@ -3,6 +3,7 @@ package com.android.app.framework.command;
 
 import com.android.app.framework.controller.IController;
 import com.android.app.framework.controller.Notifier;
+import com.android.app.framework.net.Response;
 
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 public abstract class AbstractCommand implements ICommand {
     private IController mController;
     private Map<String, String> mParams;
-    private Notifier mNotifier;
+    private Response mResponse;
     private volatile boolean isCancel = false;
 
     public AbstractCommand(IController controller) {
@@ -26,10 +27,10 @@ public abstract class AbstractCommand implements ICommand {
         this(controller, paramMap, null);
     }
 
-    public AbstractCommand(IController controller, Map<String, String> paramMap, Notifier notifier) {
+    public AbstractCommand(IController controller, Map<String, String> paramMap, Response response) {
         this.mController = controller;
         this.mParams = paramMap;
-        this.mNotifier = notifier;
+        this.mResponse = response;
     }
 
     @Override
@@ -63,12 +64,12 @@ public abstract class AbstractCommand implements ICommand {
     }
 
     @Override
-    public final Notifier getNotifier() {
-        return mNotifier;
+    public Response getResponse() {
+        return mResponse;
     }
 
     @Override
-    public final void setNotifier(Notifier notifier) {
-        this.mNotifier = notifier;
+    public void setResponse(Response response) {
+this.mResponse = response;
     }
 }

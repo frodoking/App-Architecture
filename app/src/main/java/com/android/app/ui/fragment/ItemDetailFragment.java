@@ -13,7 +13,7 @@ import com.android.app.entity.Item;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by xuwei19 on 2014/12/19.
+ * Created by frodoking on 2014/12/19.
  */
 public class ItemDetailFragment extends Fragment {
 

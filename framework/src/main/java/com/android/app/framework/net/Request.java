@@ -1,6 +1,8 @@
 package com.android.app.framework.net;
 
 
+import com.android.app.framework.entity.Entity;
+
 import java.util.Map;
 
 /**
@@ -36,7 +38,7 @@ public class Request {
     /**
      * 期望返回类型
      */
-    private Class<?> mExpectType;
+    private Class<Entity> mExpectType;
 
     public int getType() {
         return mType;
@@ -74,11 +76,11 @@ public class Request {
         return mParserType;
     }
 
-    public Class<?> getExpectType() {
+    public Class<Entity> getExpectType() {
         return mExpectType;
     }
 
-    public void setExpectType(Class<?> expectType) {
+    public void setExpectType(Class<Entity> expectType) {
         this.mExpectType = expectType;
     }
 
