@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.app.BuildConfig;
+import com.android.app.framework.controller.IController;
+import com.android.app.ui.activity.AbstractBaseActivity;
 
 
 /**
@@ -18,10 +20,12 @@ import com.android.app.BuildConfig;
  */
 public abstract class AbstractBaseFragment extends Fragment {
     public static final String TAG = "tag_fragment_lifecycle";
+    private IController mController;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mController = ((AbstractBaseActivity)activity).getController();
         printLeftCycle("onAttach");
     }
 
@@ -124,6 +128,10 @@ public abstract class AbstractBaseFragment extends Fragment {
 
     public boolean onBackPressed() {
         return false;
+    }
+
+    public IController getController(){
+        return this.mController;
     }
 
 
