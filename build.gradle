@@ -1,14 +1,30 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
+def isReleaseBuild() {
+    return version.contains("SNAPSHOT") == false
+}
+
 allprojects {
+    group = 'com.android.app'
+    version = '1.0'
+
     repositories {
-        jcenter()
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.compilerArgs << "-Xlint:unchecked"
     }
 }
+
+apply plugin: 'android-reporting'
+

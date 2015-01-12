@@ -1,10 +1,5 @@
 package com.android.app.ui.fragment;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.app.R;
@@ -15,22 +10,15 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by frodoking on 2014/12/19.
  */
-public class ItemDetailFragment extends Fragment {
+public class ItemDetailFragment extends AbstractBaseFragment {
 
     private TextView tvDetail;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void init() {
         // register
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Unregister
-        EventBus.getDefault().unregister(this);
+        super.init();
     }
 
     /**
@@ -41,12 +29,32 @@ public class ItemDetailFragment extends Fragment {
             tvDetail.setText(item.content);
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
-        tvDetail = (TextView) rootView.findViewById(R.id.item_detail);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.fragment_item_detail;
+    }
+
+    @Override
+    public void initView() {
+        tvDetail = (TextView) getView().findViewById(R.id.item_detail);
+    }
+
+    @Override
+    public void registerListener() {
+
+    }
+
+    @Override
+    public void initBusiness() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Unregister
+        EventBus.getDefault().unregister(this);
     }
 }
 
