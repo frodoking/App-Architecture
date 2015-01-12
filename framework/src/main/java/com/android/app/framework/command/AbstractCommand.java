@@ -8,10 +8,8 @@ import com.android.app.framework.net.Response;
 import java.util.Map;
 
 /**
- * command 基类
- *
  * @author xuwei19
- * @date 2014年11月19日 下午12:22:50
+ * @date 2014-11-19 00:22:50
  */
 public abstract class AbstractCommand implements ICommand {
     private IController mController;

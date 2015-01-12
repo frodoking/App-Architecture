@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
  * IMacroCommand impl
  * 
  * @author frodoking
- * @date 2014年11月19日 下午12:13:34
+ * @date 2014-11-19 00:13:34
  */
 public final class MacroCommand implements IMacroCommand {
 

@@ -8,12 +8,8 @@ import com.android.app.framework.net.Response;
 import java.util.Map;
 
 /**
- * 统一命令规范 响应请求，并作出处理，进行统�?���?<br>
- * args 是请求参数的封装 //FIXME <br>
- * Notifier 是否会有状�?返回 <br>
- * 
  * @author frodoking
- * @date 2014�?1�?6�?上午11:59:53
+ * @date 2014-11-10 11:59:53
  */
 public interface ICommand {
 
