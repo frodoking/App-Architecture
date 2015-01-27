@@ -10,7 +10,7 @@ import com.android.app.ui.fragment.AbstractBaseFragment;
 /**
  * Created by frodo on 2015/1/27.
  */
-public class MainActivity extends AbstractBaseActivity {
+public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
     private FragmentStack mStack;
 
@@ -44,17 +44,6 @@ public class MainActivity extends AbstractBaseActivity {
         return R.layout.layout_main;
     }
 
-    @Override
-    public void initView() {
-    }
-
-    @Override
-    public void registerListener() {
-    }
-
-    @Override
-    public void initBusiness() {
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -70,25 +59,19 @@ public class MainActivity extends AbstractBaseActivity {
         super.onBackPressed();
     }
 
-    /**
-     * 添加当前时间作为tag 是因为相同tag会重复 导致加载不成功
-     *
-     * @param fragment
-     */
-    public void addFragment(Class<? extends Fragment> fragment) {
-        mStack.push(fragment, String.valueOf(System.currentTimeMillis()));
-        mStack.commit();
+    public final void addFragment(Class<? extends Fragment> fragment) {
+        addFragment(fragment, String.valueOf(System.currentTimeMillis()), null);
     }
 
-    public void addFragment(Class<? extends Fragment> fragment, Bundle args) {
+    public final void addFragment(Class<? extends Fragment> fragment, Bundle args) {
         addFragment(fragment, String.valueOf(System.currentTimeMillis()), args);
     }
 
-    public void addFragment(Class<? extends Fragment> fragment, String tag) {
+    public final void addFragment(Class<? extends Fragment> fragment, String tag) {
         addFragment(fragment, tag, null);
     }
 
-    public void addFragment(Class<? extends Fragment> fragment, String tag, Bundle args) {
+    private void addFragment(Class<? extends Fragment> fragment, String tag, Bundle args) {
         mStack.push(fragment, tag, args);
         mStack.commit();
     }

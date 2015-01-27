@@ -7,7 +7,7 @@ import com.android.app.framework.controller.Controller;
 import com.android.app.framework.controller.IController;
 
 /**
- * Created by frodoking on 2014/12/19.
+ * Created by frodo on 2014/12/19.
  */
 public abstract class AppApplication extends Application{
     private IController mController;
