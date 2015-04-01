@@ -1,30 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
-    }
-
-    lintOptions {
-        xmlReport false
-        warningsAsErrors true
-        quiet false
-        showAll true
-        disable 'OldTargetApi'
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        minSdkVersion 8
     }
 }
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'de.greenrobot:eventbus:2.4.0'
@@ -32,12 +15,3 @@ dependencies {
 }
 
 
-android.libraryVariants.all { variant ->
-    def name = variant.buildType.name
-    def task = project.tasks.create "jar${name.capitalize()}", Jar
-    task.dependsOn variant.javaCompile
-    task.from variant.javaCompile.destinationDir
-    artifacts.add('archives', task);
-}
-
-apply from: '../maven_push.gradle'
