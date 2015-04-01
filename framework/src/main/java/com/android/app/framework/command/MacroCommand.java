@@ -1,7 +1,5 @@
 package com.android.app.framework.command;
 
-import com.android.app.framework.controller.IController;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -9,30 +7,38 @@ import java.util.concurrent.Executors;
 
 
 /**
- * IMacroCommand impl
- * 
+ * CMD执行工具
+ *
  * @author frodoking
  * @date 2014-11-19 00:13:34
  */
-public final class MacroCommand implements IMacroCommand {
+public final class MacroCommand {
+
+    private static MacroCommand macroCommand;
 
     private ExecutorService mPool;
     private Timer mTimer;
-    private IController mController;
 
-    public MacroCommand(IController controller) {
-        this.mController = controller;
+    public static MacroCommand getDefault() {
+        if (macroCommand == null) {
+            synchronized (MacroCommand.class) {
+                macroCommand = new MacroCommand();
+            }
+        }
+
+        return macroCommand;
+    }
+
+    public MacroCommand() {
         mPool = Executors.newCachedThreadPool();
         mTimer = new Timer();
     }
 
-    @Override
     public void execute(ICommand command) {
         command.setCancel(false);
         command.execute();
     }
 
-    @Override
     public void executeDelayed(final ICommand command, long delayMillis) {
         mTimer.schedule(new TimerTask() {
 
@@ -43,7 +49,6 @@ public final class MacroCommand implements IMacroCommand {
         }, delayMillis);
     }
 
-    @Override
     public void executeAsync(final ICommand command) {
         command.setCancel(false);
         mPool.execute(new Runnable() {
@@ -54,7 +59,6 @@ public final class MacroCommand implements IMacroCommand {
         });
     }
 
-    @Override
     public void executeAsyncDelayed(final ICommand command, long delayMillis) {
         mTimer.schedule(new TimerTask() {
 
@@ -63,10 +67,5 @@ public final class MacroCommand implements IMacroCommand {
                 executeAsync(command);
             }
         }, delayMillis);
-    }
-
-    @Override
-    public IController getController() {
-        return mController;
     }
 }

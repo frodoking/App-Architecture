@@ -2,7 +2,6 @@ package com.android.app.framework.command;
 
 
 import com.android.app.framework.controller.IController;
-import com.android.app.framework.controller.Notifier;
 import com.android.app.framework.net.Response;
 
 import java.util.Map;
@@ -19,9 +18,9 @@ public interface ICommand {
 
     void execute();
 
-    Map<String,String> getParams();
+    Map<String, String> getParams();
 
-    void setParams(Map<String,String> paramMap);
+    void setParams(Map<String, String> paramMap);
 
     Response getResponse();
 

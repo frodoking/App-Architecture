@@ -3,8 +3,8 @@ package com.android.app;
 import android.app.Application;
 
 import com.android.app.framework.config.Configuration;
-import com.android.app.framework.controller.Controller;
 import com.android.app.framework.controller.IController;
+import com.android.app.framework.controller.MainController;
 
 /**
  * Created by frodo on 2014/12/19.
@@ -15,7 +15,7 @@ public abstract class AppApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        mController = new Controller(getConfiguration());
+        mController = new MainController(getConfiguration());
     }
 
     public IController getController(){

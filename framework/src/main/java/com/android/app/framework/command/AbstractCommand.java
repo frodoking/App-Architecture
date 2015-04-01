@@ -2,7 +2,6 @@ package com.android.app.framework.command;
 
 
 import com.android.app.framework.controller.IController;
-import com.android.app.framework.controller.Notifier;
 import com.android.app.framework.net.Response;
 
 import java.util.Map;
@@ -68,6 +67,6 @@ public abstract class AbstractCommand implements ICommand {
 
     @Override
     public void setResponse(Response response) {
-this.mResponse = response;
+        this.mResponse = response;
     }
 }
