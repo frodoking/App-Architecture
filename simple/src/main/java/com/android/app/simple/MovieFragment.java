@@ -81,7 +81,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                 }
 
                 Movie movie = (Movie) getItem(position);
-                Picasso.with(getActivity()).load(movie.imageUrl).into(holder.imageView);
+                Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(200, 280).into(holder.imageView);
                 holder.textView.setText(movie.name);
 
                 return convertView;
