@@ -1,16 +1,6 @@
-apply plugin: 'com.android.library'
-
-android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-
-    defaultConfig {
-        minSdkVersion 8
-    }
-}
+apply plugin: 'java'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    compile 'com.loopj.android:android-async-http:1.4.6'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.google.guava:guava:18.0'
 }

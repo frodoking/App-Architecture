@@ -17,8 +17,9 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_container);
 
-        mStack = FragmentStack.forContainer(this, R.id.main_container,
+        mStack = FragmentStack.forContainer(this, R.id.container,
                 new FragmentStack.Callback() {
                     @Override
                     public void onStackChanged(int stackSize, Fragment topFragment) {
@@ -40,8 +41,8 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.layout_main;
+    public final int getLayoutId() {
+        return R.layout.fragment_container;
     }
 
 
@@ -52,7 +53,7 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public final void onBackPressed() {
         if (isForPop())
             return;
 

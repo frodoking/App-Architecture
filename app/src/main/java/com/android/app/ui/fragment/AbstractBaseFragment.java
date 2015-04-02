@@ -10,30 +10,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.app.BuildConfig;
-import com.android.app.framework.controller.IController;
+import com.android.app.framework.controller.IView;
+import com.android.app.framework.controller.MainController;
 import com.android.app.ui.activity.AbstractBaseActivity;
 
 
 /**
  * Created by frodo on 2015/1/12.
  */
-public abstract class AbstractBaseFragment extends Fragment {
+public abstract class AbstractBaseFragment extends Fragment implements IView {
     public static final String TAG = "tag_fragment_lifecycle";
-    private IController mController;
+    private MainController controller;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mController = ((AbstractBaseActivity)activity).getController();
+        controller = ((AbstractBaseActivity)activity).getMainController();
         printLeftCycle("onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onCreatePresenter();
         printLeftCycle("onCreate");
     }
+
+    public abstract void onCreatePresenter();
 
     /**
      * 初始化界面相关
@@ -130,13 +133,13 @@ public abstract class AbstractBaseFragment extends Fragment {
         return false;
     }
 
-    public IController getController(){
-        return this.mController;
+    public MainController getMainController(){
+        return this.controller;
     }
 
 
     private void printLeftCycle(String methodName) {
-        if (BuildConfig.DEBUG)
+        if (getMainController().getConfiguration().isDebug())
             Log.d(TAG, " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode() + ") + activity (" + getActivity().hashCode() + ")");
     }
 
@@ -145,7 +148,7 @@ public abstract class AbstractBaseFragment extends Fragment {
     }
 
     public final void printLog(String log) {
-        if (BuildConfig.DEBUG)
+        if (getMainController().getConfiguration().isDebug())
             Log.d("tag_"+ tag(), " >> -----------> " + log + " <------------ <<");
     }
 }

@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.android.app.AppApplication;
 import com.android.app.BuildConfig;
-import com.android.app.framework.controller.IController;
+import com.android.app.framework.controller.MainController;
 
 
 /**
@@ -15,13 +15,13 @@ import com.android.app.framework.controller.IController;
  */
 public abstract class AbstractBaseActivity extends FragmentActivity {
     private static final String TAG = "tag_activity_lifecycle";
-    private IController mController;
+    private MainController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         printLeftCycle("onCreate");
-        mController = ((AppApplication)getApplication()).getController();
+        controller = ((AppApplication)getApplication()).getMainController();
         init();
     }
 
@@ -94,8 +94,8 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
         printLeftCycle("onDestroy");
     }
 
-    public IController getController(){
-        return this.mController;
+    public MainController getMainController(){
+        return this.controller;
     }
 
     private void printLeftCycle(String methodName) {

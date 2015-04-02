@@ -1,6 +1,8 @@
 package com.android.app.framework.controller;
 
 import com.android.app.framework.config.Configuration;
+import com.android.app.framework.datasource.StorageSystems;
+import com.google.common.base.Preconditions;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -11,12 +13,13 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class MainController implements IController {
 
-    private Configuration mConfiguration;
+    private Configuration configuration;
+    private StorageSystems storageSystems;
     private ConcurrentMap<String, IModel> modelCache;
 
-
-    public MainController(Configuration configuration) {
-        this.mConfiguration = configuration;
+    public MainController(Configuration configuration, StorageSystems storageSystems) {
+        this.configuration = Preconditions.checkNotNull(configuration, "configuration cannot be null");
+        this.storageSystems = Preconditions.checkNotNull(storageSystems, "configuration cannot be null");
         modelCache = new ConcurrentHashMap<>();
     }
 
@@ -37,6 +40,10 @@ public class MainController implements IController {
     }
 
     public Configuration getConfiguration() {
-        return mConfiguration;
+        return configuration;
+    }
+
+    public StorageSystems getStorageSystems() {
+        return storageSystems;
     }
 }

@@ -10,7 +10,7 @@ buildscript {
         if (System.env.CUSTOM_REPO != null) {
             maven { url System.env.CUSTOM_REPO }
         } else {
-            mavenCentral()
+            jcenter();
         }
     }
     dependencies {
@@ -20,10 +20,9 @@ buildscript {
 
 allprojects {
     group = 'com.android.app'
-    version = '1.0'
 
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     tasks.withType(JavaCompile) {

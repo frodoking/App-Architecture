@@ -13,4 +13,6 @@ public interface Configuration {
     String getVersionName();
 
     int getVersionCode();
+
+    boolean isDebug();
 }
