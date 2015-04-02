@@ -5,9 +5,7 @@ import com.android.app.framework.controller.Notifier;
 import com.jakewharton.trakt.entities.Movie;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by frodo on 2015/4/2.
@@ -22,14 +20,9 @@ public class FetchMoviesCommand extends AbstractCommand {
         List<Movie> movies = PhilmTrakt.getDefault().moviesService().trending();
         MovieMapper movieMapper = new MovieMapper();
 
-        List<Map<String, String>> currentMovies = new ArrayList<>();
+        List<com.android.app.simple.Movie> currentMovies = new ArrayList<>();
         for (Movie movie : movies) {
-            com.android.app.simple.Movie currentMovie = movieMapper.map(movie);
-
-            Map<String, String> map = new HashMap<>();
-            map.put("ItemImage", currentMovie.imageUrl);
-            map.put("ItemText", currentMovie.name);
-            currentMovies.add(map);
+            currentMovies.add(movieMapper.map(movie));
         }
 
         getNotifier().onNotify(currentMovies);

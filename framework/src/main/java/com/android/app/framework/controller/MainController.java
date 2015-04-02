@@ -19,7 +19,7 @@ public class MainController implements IController {
 
     public MainController(Configuration configuration, StorageSystems storageSystems) {
         this.configuration = Preconditions.checkNotNull(configuration, "configuration cannot be null");
-        this.storageSystems = Preconditions.checkNotNull(storageSystems, "configuration cannot be null");
+        this.storageSystems = Preconditions.checkNotNull(storageSystems, "storageSystems cannot be null");
         modelCache = new ConcurrentHashMap<>();
     }
 

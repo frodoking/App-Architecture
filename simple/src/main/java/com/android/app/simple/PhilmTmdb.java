@@ -36,8 +36,26 @@ public class PhilmTmdb extends Tmdb {
 
     private final File mCacheLocation;
 
+    public PhilmTmdb() {
+        this(null);
+    }
+
     public PhilmTmdb(File cacheLocation) {
         mCacheLocation = cacheLocation;
+    }
+
+    private static PhilmTmdb philmTmdb;
+
+    public static PhilmTmdb getDefault() {
+        if (philmTmdb == null) {
+            synchronized (PhilmTmdb.class) {
+                philmTmdb = new PhilmTmdb();
+                philmTmdb.setApiKey(Constants.TMDB_API_KEY);
+                philmTmdb.setIsDebug(Constants.DEBUG_NETWORK);
+            }
+        }
+
+        return philmTmdb;
     }
 
     @Override

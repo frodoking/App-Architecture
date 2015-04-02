@@ -11,17 +11,16 @@ import java.util.List;
  * Created by frodo on 2015/4/2.
  */
 public class MoviePresenter extends AbstractPresenter {
-    private MovieView movieView;
 
     protected MoviePresenter(MovieView view) {
         super(view);
     }
 
     public void requestLatestMoives() {
-        MacroCommand.getDefault().executeAsync(new FetchMoviesCommand(new MainUINotifier(movieView.getActivity()) {
+        MacroCommand.getDefault().executeAsync(new FetchMoviesCommand(new MainUINotifier(getView().getActivity()) {
             @Override
             public void onUiNotify(Object... args) {
-                movieView.showMovieList((List<Movie>) args[0]);
+                getView().showMovieList((List<Movie>) args[0]);
             }
         }));
     }
@@ -29,6 +28,12 @@ public class MoviePresenter extends AbstractPresenter {
     @Override
     public MovieModel createModel() {
         return null;
+    }
+
+
+    @Override
+    public MovieView getView() {
+        return (MovieView) super.getView();
     }
 
     public static interface MovieView extends UIView {

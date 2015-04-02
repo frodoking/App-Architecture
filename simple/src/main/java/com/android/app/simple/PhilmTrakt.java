@@ -23,6 +23,8 @@ public class PhilmTrakt extends Trakt {
         if (philmTrakt == null) {
             synchronized (PhilmTrakt.class) {
                 philmTrakt = new PhilmTrakt();
+                philmTrakt.setApiKey(Constants.TRAKT_API_KEY);
+                philmTrakt.setIsDebug(Constants.DEBUG_NETWORK);
             }
         }
 

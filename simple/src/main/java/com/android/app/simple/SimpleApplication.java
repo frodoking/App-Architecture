@@ -1,6 +1,7 @@
 package com.android.app.simple;
 
 import com.android.app.AppApplication;
+import com.android.app.core.util.ResourceManager;
 import com.android.app.framework.config.Configuration;
 import com.android.app.framework.datasource.StorageSystems;
 
@@ -26,7 +27,7 @@ public class SimpleApplication extends AppApplication {
 
         @Override
         public boolean isDebug() {
-            return false;
+            return ResourceManager.debugable();
         }
     };
 
@@ -37,6 +38,6 @@ public class SimpleApplication extends AppApplication {
 
     @Override
     public StorageSystems getStorageSystems() {
-        return null;
+        return new MovieStorageSystems();
     }
 }

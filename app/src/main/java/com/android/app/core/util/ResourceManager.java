@@ -105,6 +105,17 @@ public class ResourceManager {
         return metaValue;
     }
 
+    public static boolean debugable() {
+        try {
+            ApplicationInfo ai = mContext.getPackageManager().getApplicationInfo(mContext.getPackageName(),
+                    PackageManager.GET_META_DATA);
+            return (ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+
     public static void globalToast(int strId) {
         globalToast(getString(strId));
     }

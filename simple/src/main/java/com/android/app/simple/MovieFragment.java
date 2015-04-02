@@ -1,16 +1,20 @@
 package com.android.app.simple;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.app.framework.controller.MainController;
 import com.android.app.ui.fragment.AbstractBaseFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * a simple for movie
@@ -19,8 +23,8 @@ import java.util.Map;
 public class MovieFragment extends AbstractBaseFragment implements MoviePresenter.MovieView {
     private MoviePresenter presenter;
     private GridView gridView;
-    List<Map<String, Object>> movies = new ArrayList<>();
-    SimpleAdapter movieAdapter;
+    List<Movie> movies = new ArrayList<>();
+    BaseAdapter movieAdapter;
 
     @Override
     public void onCreatePresenter() {
@@ -45,11 +49,50 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
     @Override
     public void initView() {
         gridView = (GridView) getView().findViewById(R.id.gridview);
-        movieAdapter = new SimpleAdapter(getActivity(),
-                movies,
-                R.layout.layout_movie_item,
-                new String[]{"ItemImage", "ItemText"},
-                new int[]{R.id.ItemImage, R.id.ItemText});
+
+        movieAdapter = new BaseAdapter() {
+
+            @Override
+            public int getCount() {
+                return movies.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return movies.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                ViewHolder holder;
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_movie_item, null);
+                    holder = new ViewHolder();
+                    holder.imageView = (ImageView) convertView.findViewById(R.id.image);
+                    holder.textView = (TextView) convertView.findViewById(R.id.text);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+
+                Movie movie = (Movie) getItem(position);
+                Picasso.with(getActivity()).load(movie.imageUrl).into(holder.imageView);
+                holder.textView.setText(movie.name);
+
+                return convertView;
+            }
+
+            class ViewHolder {
+                ImageView imageView;
+                TextView textView;
+            }
+        };
+
         gridView.setAdapter(movieAdapter);
     }
 
@@ -74,13 +117,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void showMovieList(final List<Movie> movies) {
-        getView().post(new Runnable() {
-            @Override
-            public void run() {
-                movies.clear();
-                movies.addAll(movies);
-                movieAdapter.notifyDataSetChanged();
-            }
-        });
+        this.movies.clear();
+        this.movies.addAll(movies);
+        movieAdapter.notifyDataSetChanged();
     }
 }

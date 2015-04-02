@@ -15,12 +15,12 @@ public abstract class AbstractPresenter implements IPresenter {
     }
 
     @Override
-    public final IModel getModel() {
+    public IModel getModel() {
         return model;
     }
 
     @Override
-    public final IView getView() {
+    public IView getView() {
         return view;
     }
 

@@ -16,9 +16,6 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_container);
-
         mStack = FragmentStack.forContainer(this, R.id.container,
                 new FragmentStack.Callback() {
                     @Override
@@ -30,6 +27,8 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
                 R.anim.slide_in_right,
                 R.anim.slide_out_left);
 
+        super.onCreate(savedInstanceState);
+
         if (savedInstanceState == null) {
             mStack.replace(mStack.peek().getClass(),
                     String.valueOf(System.currentTimeMillis()),
@@ -38,6 +37,11 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
         } else {
             mStack.restoreState(savedInstanceState);
         }
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override
