@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 public class SplashActivity extends AbstractBaseActivity {
     ImageView ad;
 
-
     @Override
     public int getLayoutId() {
         return R.layout.layout_splash;
@@ -22,7 +21,9 @@ public class SplashActivity extends AbstractBaseActivity {
     @Override
     public void initView() {
         ad = (ImageView) findViewById(R.id.ad);
-        Picasso.with(this).load("http://b.hiphotos.baidu.com/image/pic/item/d009b3de9c82d15815bba0ce830a19d8bc3e4290.jpg").into(ad);
+        Picasso.with(this)
+                .load("http://b.hiphotos.baidu.com/image/pic/item/d009b3de9c82d15815bba0ce830a19d8bc3e4290.jpg")
+                .into(ad);
     }
 
     @Override

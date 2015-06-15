@@ -4,6 +4,10 @@ import com.android.app.AppApplication;
 import com.android.app.core.util.ResourceManager;
 import com.android.app.framework.config.Configuration;
 import com.android.app.framework.datasource.StorageSystems;
+import com.android.app.framework.scene.DefaultScene;
+import com.android.app.framework.scene.Scene;
+import com.android.app.framework.theme.DefaultTheme;
+import com.android.app.framework.theme.Theme;
 
 /**
  * Created by frodo on 2015/4/2.
@@ -30,6 +34,16 @@ public class SimpleApplication extends AppApplication {
             return ResourceManager.debugable();
         }
     };
+
+    @Override
+    public Scene getScene() {
+        return new DefaultScene();
+    }
+
+    @Override
+    public Theme getAppTheme() {
+        return new DefaultTheme();
+    }
 
     @Override
     public Configuration getConfiguration() {

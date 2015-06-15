@@ -1,6 +1,5 @@
 package com.android.app.ui.fragment;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import com.android.app.framework.controller.IView;
 import com.android.app.framework.controller.MainController;
 import com.android.app.ui.activity.AbstractBaseActivity;
 
-
 /**
  * Created by frodo on 2015/1/12.
  */
@@ -25,7 +23,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        controller = ((AbstractBaseActivity)activity).getMainController();
+        controller = ((AbstractBaseActivity) activity).getMainController();
         printLeftCycle("onAttach");
     }
 
@@ -86,7 +84,6 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
 
     public abstract void initBusiness();
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -133,14 +130,15 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
         return false;
     }
 
-    public MainController getMainController(){
+    public MainController getMainController() {
         return this.controller;
     }
 
-
     private void printLeftCycle(String methodName) {
-        if (getMainController().getConfiguration().isDebug())
-            Log.d(TAG, " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode() + ") + activity (" + getActivity().hashCode() + ")");
+        if (getMainController().getConfig().isDebug()) {
+            Log.d(TAG, " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode()
+                    + ") + activity (" + getActivity().hashCode() + ")");
+        }
     }
 
     public String tag() {
@@ -148,8 +146,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     }
 
     public final void printLog(String log) {
-        if (getMainController().getConfiguration().isDebug())
-            Log.d("tag_"+ tag(), " >> -----------> " + log + " <------------ <<");
+        if (getMainController().getConfig().isDebug()) {
+            Log.d("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
+        }
     }
 }
 

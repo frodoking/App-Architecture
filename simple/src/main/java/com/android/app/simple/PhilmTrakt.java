@@ -21,7 +21,7 @@ public class PhilmTrakt extends Trakt {
 
     public static PhilmTrakt getDefault() {
         if (philmTrakt == null) {
-            synchronized (PhilmTrakt.class) {
+            synchronized(PhilmTrakt.class) {
                 philmTrakt = new PhilmTrakt();
                 philmTrakt.setApiKey(Constants.TRAKT_API_KEY);
                 philmTrakt.setIsDebug(Constants.DEBUG_NETWORK);

@@ -5,12 +5,19 @@ package com.android.app.framework.controller;
  */
 public abstract class AbstractModel implements IModel {
 
-    public AbstractModel() {
-        getMainController().getModelFactory().registerMode(this);
+    private MainController mainController;
+    public AbstractModel(MainController controller) {
+        this.mainController = controller;
+        controller.getModelFactory().registerMode(this);
     }
 
     @Override
     public String name() {
         return MODEL_UNKNOWN;
+    }
+
+    @Override
+    public final MainController getMainController() {
+        return mainController;
     }
 }

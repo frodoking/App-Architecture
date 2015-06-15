@@ -10,4 +10,6 @@ public interface IPresenter {
     IView getView();
 
     IModel getModel();
+
+    void attachMainControllerToModel(MainController mainController);
 }

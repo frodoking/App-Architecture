@@ -7,7 +7,7 @@ package com.android.app.framework.controller;
  * <p/>
  * Created by frodo on 2015/4/1.
  */
-public interface IModel extends IController {
+public interface IModel {
     public static String MODEL_UNKNOWN = "model_unknown";
 
     String name();

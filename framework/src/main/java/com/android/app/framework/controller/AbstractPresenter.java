@@ -10,19 +10,21 @@ public abstract class AbstractPresenter implements IPresenter {
     private IView view;
 
     protected AbstractPresenter(IView view) {
-        this.model = Preconditions.checkNotNull(createModel(), "model cannot be null");
         this.view = view;
     }
 
     @Override
-    public IModel getModel() {
+    public final IModel getModel() {
+        Preconditions.checkNotNull(model, "model cannot be null");
         return model;
     }
 
-    @Override
-    public IView getView() {
-        return view;
+    public final void setModel(IModel model){
+        this.model = model;
     }
 
-    public abstract IModel createModel();
+    @Override
+    public final IView getView() {
+        return view;
+    }
 }

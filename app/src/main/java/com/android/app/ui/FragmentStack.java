@@ -81,8 +81,9 @@ public class FragmentStack {
 
         final Fragment topFragment = stack.peekFirst();
         for (Fragment f : stack) {
-            if (f != topFragment)
+            if (f != topFragment) {
                 removeFragment(f);
+            }
         }
         stack.clear();
 
@@ -206,6 +207,7 @@ public class FragmentStack {
      * stack.
      *
      * @param commit Whether the transaction should be committed.
+     *
      * @return Whether a transaction has been enqueued.
      */
     public boolean pop(boolean commit) {
@@ -216,8 +218,9 @@ public class FragmentStack {
             Fragment f = stack.peekLast();
             attachFragment(f, f.getTag());
 
-            if (commit)
+            if (commit) {
                 commit();
+            }
 
             return true;
         }
@@ -250,8 +253,9 @@ public class FragmentStack {
     }
 
     private FragmentTransaction ensureTransaction() {
-        if (fragmentTransaction == null)
+        if (fragmentTransaction == null) {
             fragmentTransaction = fragmentManager.beginTransaction();
+        }
         handler.removeCallbacks(execPendingTransactions);
         return fragmentTransaction;
     }

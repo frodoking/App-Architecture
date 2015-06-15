@@ -58,8 +58,9 @@ public class FragmentContainerActivity2 extends AbstractBaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (mCurrentFragment.onBackPressed())
+            if (mCurrentFragment.onBackPressed()) {
                 return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

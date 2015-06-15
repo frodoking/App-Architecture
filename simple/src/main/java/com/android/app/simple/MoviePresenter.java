@@ -1,11 +1,10 @@
 package com.android.app.simple;
 
-import com.android.app.core.MainUINotifier;
-import com.android.app.core.UIView;
-import com.android.app.framework.command.MacroCommand;
-import com.android.app.framework.controller.AbstractPresenter;
-
 import java.util.List;
+
+import com.android.app.core.UIView;
+import com.android.app.framework.controller.AbstractPresenter;
+import com.android.app.framework.controller.MainController;
 
 /**
  * Created by frodo on 2015/4/2.
@@ -16,27 +15,17 @@ public class MoviePresenter extends AbstractPresenter {
         super(view);
     }
 
-    public void requestLatestMoives() {
-        MacroCommand.getDefault().executeAsync(new FetchMoviesCommand(new MainUINotifier(getView().getActivity()) {
-            @Override
-            public void onUiNotify(Object... args) {
-                getView().showMovieList((List<Movie>) args[0]);
-            }
-        }));
-    }
-
     @Override
-    public MovieModel createModel() {
-        return null;
+    public void attachMainControllerToModel(MainController mainController) {
+        setModel(new MovieModel(mainController));
     }
 
-
-    @Override
-    public MovieView getView() {
-        return (MovieView) super.getView();
+    public void setMovies(List<Movie> movies) {
+        MovieModel movieModel = (MovieModel) getModel();
+        movieModel.saveMovie(movies.get(0));
     }
 
-    public static interface MovieView extends UIView {
+    public interface MovieView extends UIView {
         void showMovieList(List<Movie> movies);
     }
 }

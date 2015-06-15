@@ -1,6 +1,5 @@
 package com.android.app.core.util;
 
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;

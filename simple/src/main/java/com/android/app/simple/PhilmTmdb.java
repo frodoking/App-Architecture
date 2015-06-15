@@ -48,7 +48,7 @@ public class PhilmTmdb extends Tmdb {
 
     public static PhilmTmdb getDefault() {
         if (philmTmdb == null) {
-            synchronized (PhilmTmdb.class) {
+            synchronized(PhilmTmdb.class) {
                 philmTmdb = new PhilmTmdb();
                 philmTmdb.setApiKey(Constants.TMDB_API_KEY);
                 philmTmdb.setIsDebug(Constants.DEBUG_NETWORK);

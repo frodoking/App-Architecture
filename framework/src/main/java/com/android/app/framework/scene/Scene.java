@@ -1,7 +1,7 @@
 package com.android.app.framework.scene;
 
 /**
- * ÓÃÓÚ¶¨Î»Õû¸öAppµÄ³¡¾°ÇÐ»»(ÀýÈç¹«¹²ºËÐÄÄ£¿éÒ»°ã¶¼»áÓÐ±à¼­ºÍ·Ç±à¼­×´Ì¬µÄ»ù±¾³¡¾°,Ò»°ãÐÔappÒ²¿ÉÒÔ²ÉÓÃÕâÖÖË¼Â·)
+ * åœºæ™¯ï¼ˆåœ¨å¾ˆå¤šAppä¸­æ ¸å¿ƒåŠŸèƒ½åœ¨ä¸åŒåœºæ™¯ä¸‹å±•ç¤ºçš„æ–¹å¼æ˜¯ä¸ä¸€æ ·çš„ï¼‰
  * Created by frodo on 2015/6/15.
  */
 public interface Scene {

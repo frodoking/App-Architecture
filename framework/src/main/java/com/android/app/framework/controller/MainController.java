@@ -6,9 +6,6 @@ import com.android.app.framework.scene.Scene;
 import com.android.app.framework.theme.Theme;
 import com.google.common.base.Preconditions;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 /**
  * 整个app的核心
  * Created by frodo on 2015/4/1.

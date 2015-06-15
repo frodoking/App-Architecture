@@ -49,7 +49,6 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
         return R.layout.fragment_container;
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         mStack.saveState(outState);
@@ -58,8 +57,9 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
     @Override
     public final void onBackPressed() {
-        if (isForPop())
+        if (isForPop()) {
             return;
+        }
 
         super.onBackPressed();
     }

@@ -9,6 +9,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.app.core.MainUINotifier;
+import com.android.app.framework.command.MacroCommand;
 import com.android.app.framework.controller.MainController;
 import com.android.app.ui.fragment.AbstractBaseFragment;
 import com.squareup.picasso.Picasso;
@@ -28,17 +30,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void onCreatePresenter() {
-        presenter = new MoviePresenter(this) {
-            @Override
-            public MovieModel createModel() {
-                return new MovieModel() {
-                    @Override
-                    public MainController getMainController() {
-                        return MovieFragment.this.getMainController();
-                    }
-                };
-            }
-        };
+        presenter = new MoviePresenter(this);
+        presenter.attachMainControllerToModel(getMainController());
     }
 
     @Override
@@ -107,7 +100,14 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void initBusiness() {
-        presenter.requestLatestMoives();
+        MacroCommand.getDefault().executeAsync(new FetchMoviesCommand(new MainUINotifier(getActivity()) {
+            @Override
+            public void onUiNotify(Object... args) {
+                List<Movie> movies = (List<Movie>) args[0];
+                showMovieList(movies);
+                getPresenter().setMovies(movies);
+            }
+        }));
     }
 
     @Override
