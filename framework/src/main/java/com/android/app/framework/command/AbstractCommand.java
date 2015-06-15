@@ -5,7 +5,7 @@ import com.android.app.framework.controller.Notifier;
 import com.google.common.base.Preconditions;
 
 /**
- * @author xuwei19
+ * @author frodo
  * @date 2014-11-19 00:22:50
  */
 public abstract class AbstractCommand implements ICommand {
