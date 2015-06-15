@@ -2,6 +2,8 @@ package com.android.app.framework.controller;
 
 import com.android.app.framework.config.Configuration;
 import com.android.app.framework.datasource.StorageSystems;
+import com.android.app.framework.scene.Scene;
+import com.android.app.framework.theme.Theme;
 import com.google.common.base.Preconditions;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,38 +14,45 @@ import java.util.concurrent.ConcurrentMap;
  * Created by frodo on 2015/4/1.
  */
 public class MainController implements IController {
-
     private Configuration configuration;
+    private Scene scene;
+    private Theme theme;
     private StorageSystems storageSystems;
-    private ConcurrentMap<String, IModel> modelCache;
+    private ModelFactory modelFactory;
 
-    public MainController(Configuration configuration, StorageSystems storageSystems) {
+    public MainController(Configuration configuration,
+                          Scene scene,
+                          Theme theme,
+                          StorageSystems storageSystems) {
         this.configuration = Preconditions.checkNotNull(configuration, "configuration cannot be null");
+        this.scene = Preconditions.checkNotNull(scene, "scene cannot be null");
+        this.theme = Preconditions.checkNotNull(theme, "theme cannot be null");
         this.storageSystems = Preconditions.checkNotNull(storageSystems, "storageSystems cannot be null");
-        modelCache = new ConcurrentHashMap<>();
+        modelFactory = new ModelFactory();
     }
 
-    public final void registerMode(IModel model) {
-        modelCache.putIfAbsent(model.name(), model);
-    }
-
-    public final void removeMode(String modelName) {
-        modelCache.remove(modelName);
-    }
-
-    public final void clean() {
-        modelCache.clear();
-    }
-
-    public final IModel findModelByName(String modelName){
-        return modelCache.get(modelName);
-    }
-
-    public Configuration getConfiguration() {
+    @Override
+    public final Configuration getConfig() {
         return configuration;
     }
 
-    public StorageSystems getStorageSystems() {
+    @Override
+    public final Theme getTheme() {
+        return theme;
+    }
+
+    @Override
+    public final ModelFactory getModelFactory() {
+        return modelFactory;
+    }
+
+    @Override
+    public final Scene getScene() {
+        return scene;
+    }
+
+    @Override
+    public final StorageSystems getStorageSystems() {
         return storageSystems;
     }
 }

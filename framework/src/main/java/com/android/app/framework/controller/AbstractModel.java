@@ -6,7 +6,7 @@ package com.android.app.framework.controller;
 public abstract class AbstractModel implements IModel {
 
     public AbstractModel() {
-        getMainController().registerMode(this);
+        getMainController().getModelFactory().registerMode(this);
     }
 
     @Override

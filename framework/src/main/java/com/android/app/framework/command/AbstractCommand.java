@@ -1,6 +1,5 @@
 package com.android.app.framework.command;
 
-
 import com.android.app.framework.controller.Notifier;
 import com.google.common.base.Preconditions;
 
@@ -13,9 +12,8 @@ public abstract class AbstractCommand implements ICommand {
     private Notifier notifier;
 
     protected AbstractCommand(Notifier notifier) {
-        this.notifier = Preconditions.checkNotNull(notifier, "notifier cannot be null");;
+        this.notifier = Preconditions.checkNotNull(notifier, "notifier cannot be null");
     }
-
 
     @Override
     public final boolean isCancel() {

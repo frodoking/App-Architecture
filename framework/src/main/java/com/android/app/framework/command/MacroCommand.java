@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 /**
  * CMD执行工具
  *
@@ -21,7 +20,7 @@ public final class MacroCommand {
 
     public static MacroCommand getDefault() {
         if (macroCommand == null) {
-            synchronized (MacroCommand.class) {
+            synchronized(MacroCommand.class) {
                 macroCommand = new MacroCommand();
             }
         }
