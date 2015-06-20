@@ -2,7 +2,9 @@ package com.android.app.simple;
 
 import com.android.app.AppApplication;
 import com.android.app.core.config.AndroidConfig;
+import com.android.app.core.network.AndroidNetworkSystem;
 import com.android.app.framework.config.Configuration;
+import com.android.app.framework.net.NetworkInteractor;
 import com.android.app.framework.scene.DefaultScene;
 import com.android.app.framework.scene.Scene;
 import com.android.app.framework.theme.Theme;
@@ -30,5 +32,10 @@ public class SimpleApplication extends AppApplication {
                 return 0xff00fe;
             }
         };
+    }
+
+    @Override
+    public NetworkInteractor loadNetworkInteractor() {
+        return new AndroidNetworkSystem(getMainController());
     }
 }

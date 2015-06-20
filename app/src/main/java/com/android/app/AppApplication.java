@@ -5,6 +5,7 @@ import com.android.app.core.log.AndroidLogCollectorSystem;
 import com.android.app.framework.config.Configuration;
 import com.android.app.framework.context.Context;
 import com.android.app.framework.controller.MainController;
+import com.android.app.framework.net.NetworkInteractor;
 import com.android.app.framework.scene.Scene;
 import com.android.app.framework.theme.Theme;
 
@@ -36,6 +37,7 @@ public abstract class AppApplication extends Application implements Context {
     public abstract Configuration loadConfiguration();
     public abstract Scene loadScene();
     public abstract Theme loadTheme();
+    public abstract NetworkInteractor loadNetworkInteractor();
 
     public final void enableCache(boolean enable) {
         if (enable) {
