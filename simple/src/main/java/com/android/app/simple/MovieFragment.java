@@ -1,5 +1,13 @@
 package com.android.app.simple;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.android.app.core.MainUINotifier;
+import com.android.app.framework.command.MacroCommand;
+import com.android.app.ui.fragment.AbstractBaseFragment;
+import com.squareup.picasso.Picasso;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +16,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.android.app.core.MainUINotifier;
-import com.android.app.framework.command.MacroCommand;
-import com.android.app.framework.controller.MainController;
-import com.android.app.ui.fragment.AbstractBaseFragment;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * a simple for movie
