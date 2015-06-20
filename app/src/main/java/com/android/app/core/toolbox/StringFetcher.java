@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.app.core.util;
+package com.android.app.core.toolbox;
 
 public interface StringFetcher {
 

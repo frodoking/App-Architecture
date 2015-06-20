@@ -19,7 +19,7 @@ public abstract class AbstractPresenter implements IPresenter {
         return model;
     }
 
-    public final void setModel(IModel model){
+    public final void setModel(IModel model) {
         this.model = model;
     }
 

@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.android.app.core.util;
+package com.android.app.core.toolbox;
 
-public interface Logger {
+public class TextUtils {
+    public static boolean isEmpty(CharSequence text) {
+        return null == text || text.length() == 0;
+    }
 
-    public void i(String tag, String message);
-
-    public void d(String tag, String message);
-
-    public void e(String tag, String message);
 }

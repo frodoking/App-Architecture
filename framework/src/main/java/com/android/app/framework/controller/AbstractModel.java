@@ -6,6 +6,7 @@ package com.android.app.framework.controller;
 public abstract class AbstractModel implements IModel {
 
     private MainController mainController;
+
     public AbstractModel(MainController controller) {
         this.mainController = controller;
         controller.getModelFactory().registerMode(this);

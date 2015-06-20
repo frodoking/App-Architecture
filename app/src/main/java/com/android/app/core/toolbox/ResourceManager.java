@@ -1,4 +1,4 @@
-package com.android.app.core.util;
+package com.android.app.core.toolbox;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

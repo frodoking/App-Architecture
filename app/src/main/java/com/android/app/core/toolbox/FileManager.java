@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.android.app.core.util;
+package com.android.app.core.toolbox;
 
-public class TextUtils {
-    public static boolean isEmpty(CharSequence text) {
-        return null == text || text.length() == 0;
-    }
+import java.io.File;
+
+public interface FileManager {
+
+    public File getFile(String filename);
 
 }

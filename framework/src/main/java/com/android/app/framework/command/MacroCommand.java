@@ -18,6 +18,11 @@ public final class MacroCommand {
     private ExecutorService mPool;
     private Timer mTimer;
 
+    public MacroCommand() {
+        mPool = Executors.newCachedThreadPool();
+        mTimer = new Timer();
+    }
+
     public static MacroCommand getDefault() {
         if (macroCommand == null) {
             synchronized(MacroCommand.class) {
@@ -26,11 +31,6 @@ public final class MacroCommand {
         }
 
         return macroCommand;
-    }
-
-    public MacroCommand() {
-        mPool = Executors.newCachedThreadPool();
-        mTimer = new Timer();
     }
 
     public void execute(ICommand command) {

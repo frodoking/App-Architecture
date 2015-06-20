@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.android.app.core.util;
+package com.android.app.core.toolbox;
 
-import java.io.File;
+public interface Logger {
 
-public interface FileManager {
+    public void i(String tag, String message);
 
-    public File getFile(String filename);
+    public void d(String tag, String message);
 
+    public void e(String tag, String message);
 }

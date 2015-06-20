@@ -14,7 +14,7 @@ public interface ICommand {
 
     void execute();
 
-    void setCancel(boolean isCancel);
-
     boolean isCancel();
+
+    void setCancel(boolean isCancel);
 }
