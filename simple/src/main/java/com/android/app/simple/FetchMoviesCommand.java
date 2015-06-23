@@ -19,6 +19,7 @@ public class FetchMoviesCommand extends AndroidNetworkCommand<MoviesService> {
 
     @Override
     public void execute() {
+        super.execute();
         List<Movie> movies = getService().trending();
         MovieMapper movieMapper = new MovieMapper();
 
