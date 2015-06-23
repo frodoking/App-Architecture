@@ -1,23 +1,25 @@
 package com.android.app.simple;
 
-import com.android.app.framework.command.AbstractCommand;
-import com.android.app.framework.controller.Notifier;
-import com.jakewharton.trakt.entities.Movie;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.android.app.core.cmd.AndroidNetworkCommand;
+import com.android.app.framework.controller.Notifier;
+import com.jakewharton.trakt.entities.Movie;
+import com.jakewharton.trakt.services.MoviesService;
 
 /**
  * Created by frodo on 2015/4/2.
  */
-public class FetchMoviesCommand extends AbstractCommand {
-    protected FetchMoviesCommand(Notifier notifier) {
-        super(notifier);
+public class FetchMoviesCommand extends AndroidNetworkCommand<MoviesService> {
+
+    protected FetchMoviesCommand(MoviesService service, Notifier notifier) {
+        super(service, notifier);
     }
 
     @Override
     public void execute() {
-        List<Movie> movies = PhilmTrakt.getDefault().moviesService().trending();
+        List<Movie> movies = getService().trending();
         MovieMapper movieMapper = new MovieMapper();
 
         List<com.android.app.simple.Movie> currentMovies = new ArrayList<>();

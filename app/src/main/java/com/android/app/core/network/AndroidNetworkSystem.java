@@ -1,22 +1,34 @@
 package com.android.app.core.network;
 
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.android.app.framework.controller.AbstractChildSystem;
 import com.android.app.framework.controller.IController;
 import com.android.app.framework.net.NetworkInteractor;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 /**
  * Created by frodo on 2015/6/20.
  */
-public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkInteractor{
+public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkInteractor {
     private Context context;
+    private RestAdapter restAdapter;
 
     public AndroidNetworkSystem(IController controller) {
         super(controller);
@@ -29,10 +41,8 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
         NetworkInfo mWifi = mConnMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo mMobile = mConnMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         boolean flag = false;
-        if((mWifi != null)  && ((mWifi.isAvailable()) || (mMobile.isAvailable())))
-        {
-            if((mWifi.isConnected()) || (mMobile.isConnected()))
-            {
+        if ((mWifi != null) && ((mWifi.isAvailable()) || (mMobile.isAvailable()))) {
+            if ((mWifi.isConnected()) || (mMobile.isConnected())) {
                 flag = true;
             }
         }
@@ -41,14 +51,14 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
     @Override
     public boolean isGpsEnabled() {
-        LocationManager lm = ((LocationManager) context .getSystemService(Context.LOCATION_SERVICE));
+        LocationManager lm = ((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
         List<String> accessibleProviders = lm.getProviders(true);
         return accessibleProviders != null && accessibleProviders.size() > 0;
     }
 
     @Override
     public boolean isWifiEnabled() {
-        TelephonyManager mgrTel = (TelephonyManager) context .getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager mgrTel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return ((getNetworkInfo() != null && getNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
                 .getNetworkType() == TelephonyManager.NETWORK_TYPE_UMTS);
     }
@@ -63,17 +73,85 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
     @Override
     public boolean isWifi() {
-        if (getNetworkInfo() != null  && getNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI) {
+        if (getNetworkInfo() != null && getNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI) {
             return true;
         }
         return false;
     }
 
-    private ConnectivityManager getConnectivityManager(){
-        return (ConnectivityManager) context .getSystemService(Context.CONNECTIVITY_SERVICE);
+    @Override
+    public <T> T create(Class<T> service) {
+        return getRestAdapter().create(service);
     }
 
-    private NetworkInfo getNetworkInfo(){
+    private ConnectivityManager getConnectivityManager() {
+        return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    private NetworkInfo getNetworkInfo() {
         return getConnectivityManager().getActiveNetworkInfo();
+    }
+
+    /**
+     * ø…“‘÷ÿ–¥
+     * RestAdapter.Builder b = super.newRestAdapterBuilder();
+     * <p/>
+     * if (mCacheLocation != null) {
+     * OkHttpClient client = new OkHttpClient();
+     * File cacheDir = new File(mCacheLocation, UUID.randomUUID().toString());
+     * Cache cache = new Cache(cacheDir, 1024);
+     * client.setCache(cache);
+     * <p/>
+     * client.setConnectTimeout(Constants.CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+     * client.setReadTimeout(Constants.READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+     * <p/>
+     * b.setClient(new OkClient(client));
+     * }
+     * <p/>
+     * return b;
+     */
+    public RestAdapter.Builder newRestAdapterBuilder() {
+        return new RestAdapter.Builder();
+    }
+
+    private RestAdapter getRestAdapter() {
+        if (this.restAdapter == null) {
+            RestAdapter.Builder builder = this.newRestAdapterBuilder();
+            builder.setEndpoint(getController().getConfig().getHost());
+            builder.setConverter(new GsonConverter(getGsonBuilder().create()));
+            if (getController().getConfig().isDebug()) {
+                builder.setLogLevel(RestAdapter.LogLevel.FULL);
+            }
+
+            this.restAdapter = builder.build();
+        }
+
+        return this.restAdapter;
+    }
+
+
+    private GsonBuilder getGsonBuilder() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Integer.class, new JsonDeserializer() {
+            public Integer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
+                    JsonParseException {
+                try {
+                    return json.getAsInt();
+                } catch (NumberFormatException var5) {
+                    return null;
+                }
+            }
+        });
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer() {
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                    throws JsonParseException {
+                try {
+                    return new SimpleDateFormat("yyy-MM-dd").parse(json.getAsString());
+                } catch (ParseException var5) {
+                    return null;
+                }
+            }
+        });
+        return builder;
     }
 }

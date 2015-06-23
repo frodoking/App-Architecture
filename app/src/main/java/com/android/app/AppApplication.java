@@ -5,6 +5,7 @@ import com.android.app.core.log.AndroidLogCollectorSystem;
 import com.android.app.framework.config.Configuration;
 import com.android.app.framework.context.Context;
 import com.android.app.framework.controller.MainController;
+import com.android.app.framework.controller.ModelFactory;
 import com.android.app.framework.net.NetworkInteractor;
 import com.android.app.framework.scene.Scene;
 import com.android.app.framework.theme.Theme;
@@ -25,6 +26,8 @@ public abstract class AppApplication extends Application implements Context {
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());
+        controller.setNetworkInteractor(loadNetworkInteractor());
+        controller.setModelFactory(new ModelFactory());
 
         enableCache(true);
         enableLogCollector(true);

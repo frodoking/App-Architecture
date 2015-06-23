@@ -11,7 +11,7 @@ public abstract class AbstractChildSystem implements ChildSystem {
     private IController controller;
 
     public AbstractChildSystem(IController controller) {
-        this.controller = Preconditions.checkNotNull(this.controller, "MainController cannot be null");
+        this.controller = Preconditions.checkNotNull(controller, "MainController cannot be null");
     }
 
     @Override

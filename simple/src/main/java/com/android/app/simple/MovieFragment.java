@@ -6,6 +6,7 @@ import java.util.List;
 import com.android.app.core.MainUINotifier;
 import com.android.app.framework.command.MacroCommand;
 import com.android.app.ui.fragment.AbstractBaseFragment;
+import com.jakewharton.trakt.services.MoviesService;
 import com.squareup.picasso.Picasso;
 
 import android.view.LayoutInflater;
@@ -22,10 +23,10 @@ import android.widget.TextView;
  * Created by frodo on 2015/4/2.
  */
 public class MovieFragment extends AbstractBaseFragment implements MoviePresenter.MovieView {
-    private MoviePresenter presenter;
-    private GridView gridView;
     List<Movie> movies = new ArrayList<>();
     BaseAdapter movieAdapter;
+    private MoviePresenter presenter;
+    private GridView gridView;
 
     @Override
     public void onCreatePresenter() {
@@ -99,14 +100,16 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void initBusiness() {
-        MacroCommand.getDefault().executeAsync(new FetchMoviesCommand(new MainUINotifier(getActivity()) {
-            @Override
-            public void onUiNotify(Object... args) {
-                List<Movie> movies = (List<Movie>) args[0];
-                showMovieList(movies);
-                getPresenter().setMovies(movies);
-            }
-        }));
+        MacroCommand.getDefault().executeAsync(
+                new FetchMoviesCommand(getMainController().getNetworkInteractor().create(MoviesService.class),
+                        new MainUINotifier(getActivity()) {
+                            @Override
+                            public void onUiNotify(Object... args) {
+                                List<Movie> movies = (List<Movie>) args[0];
+                                showMovieList(movies);
+                                getPresenter().setMovies(movies);
+                            }
+                        }));
     }
 
     @Override

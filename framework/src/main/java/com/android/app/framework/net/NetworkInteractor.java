@@ -15,4 +15,6 @@ public interface NetworkInteractor extends ChildSystem {
     boolean is3rd();
 
     boolean isWifi();
+
+    <T> T create(Class<T> service);
 }
