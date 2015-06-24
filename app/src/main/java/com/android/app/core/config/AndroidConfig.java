@@ -9,9 +9,10 @@ import android.content.Context;
 /**
  * Created by frodo on 2015/6/20.
  */
-public class AndroidConfig extends AbstractChildSystem implements Configuration{
+public class AndroidConfig extends AbstractChildSystem implements Configuration {
 
     private Context context;
+
     public AndroidConfig(IController controller) {
         super(controller);
         this.context = (Context) controller.getContext();

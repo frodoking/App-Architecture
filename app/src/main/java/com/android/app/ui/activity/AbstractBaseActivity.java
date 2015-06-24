@@ -1,13 +1,13 @@
 package com.android.app.ui.activity;
 
+import com.android.app.AppApplication;
+import com.android.app.BuildConfig;
+import com.android.app.framework.controller.MainController;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
-import com.android.app.AppApplication;
-import com.android.app.BuildConfig;
-import com.android.app.framework.controller.MainController;
 
 /**
  * Created by frodo on 2014/12/26.

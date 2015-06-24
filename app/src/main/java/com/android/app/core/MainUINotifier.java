@@ -1,9 +1,9 @@
 package com.android.app.core;
 
+import com.android.app.framework.controller.Notifier;
+
 import android.content.Context;
 import android.os.Handler;
-
-import com.android.app.framework.controller.Notifier;
 
 /**
  * 只需要在ui中做通知的回调接口

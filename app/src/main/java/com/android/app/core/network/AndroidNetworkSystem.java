@@ -24,6 +24,7 @@ import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
+ * 网络请求系统（采用retrofit+otto）
  * Created by frodo on 2015/6/20.
  */
 public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkInteractor {
@@ -128,7 +129,6 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
         return this.restAdapter;
     }
-
 
     private GsonBuilder getGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();

@@ -1,14 +1,14 @@
 package com.android.app.ui.activity;
 
+import com.android.app.R;
+import com.android.app.ui.fragment.AbstractBaseFragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-
-import com.android.app.R;
-import com.android.app.ui.fragment.AbstractBaseFragment;
 
 /**
  * Created by frodo on 2015/4/2.

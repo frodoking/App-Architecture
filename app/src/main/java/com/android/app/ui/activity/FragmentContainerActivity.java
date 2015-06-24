@@ -1,11 +1,11 @@
 package com.android.app.ui.activity;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-
 import com.android.app.R;
 import com.android.app.ui.FragmentStack;
 import com.android.app.ui.fragment.AbstractBaseFragment;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by frodo on 2015/1/27.

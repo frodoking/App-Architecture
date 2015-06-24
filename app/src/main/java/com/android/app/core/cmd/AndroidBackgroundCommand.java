@@ -4,6 +4,7 @@ import com.android.app.core.MainUINotifier;
 import com.android.app.framework.command.AbstractCommand;
 
 /**
+ * background cmd
  * Created by frodo on 2015/6/23.
  */
 public class AndroidBackgroundCommand extends AbstractCommand {

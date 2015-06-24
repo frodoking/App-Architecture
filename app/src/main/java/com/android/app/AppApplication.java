@@ -38,8 +38,11 @@ public abstract class AppApplication extends Application implements Context {
     }
 
     public abstract Configuration loadConfiguration();
+
     public abstract Scene loadScene();
+
     public abstract Theme loadTheme();
+
     public abstract NetworkInteractor loadNetworkInteractor();
 
     public final void enableCache(boolean enable) {
@@ -48,7 +51,7 @@ public abstract class AppApplication extends Application implements Context {
         }
     }
 
-    public final void enableLogCollector(boolean enable){
+    public final void enableLogCollector(boolean enable) {
         if (enable) {
             controller.setLogCollector(new AndroidLogCollectorSystem(this.controller));
         }

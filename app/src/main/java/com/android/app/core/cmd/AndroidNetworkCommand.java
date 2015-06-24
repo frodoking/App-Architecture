@@ -4,10 +4,12 @@ import com.android.app.framework.command.AbstractCommand;
 import com.android.app.framework.controller.Notifier;
 
 /**
+ * Õ¯¬Á«Î«Û¿‡cmd
  * Created by frodo on 2015/6/23.
  */
 public class AndroidNetworkCommand<S> extends AbstractCommand {
     private S service;
+
     protected AndroidNetworkCommand(S service, Notifier notifier) {
         super(notifier);
         this.service = service;

@@ -1,5 +1,9 @@
 package com.android.app.ui.fragment;
 
+import com.android.app.framework.controller.IView;
+import com.android.app.framework.controller.MainController;
+import com.android.app.ui.activity.AbstractBaseActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.app.framework.controller.IView;
-import com.android.app.framework.controller.MainController;
-import com.android.app.ui.activity.AbstractBaseActivity;
 
 /**
  * Created by frodo on 2015/1/12.

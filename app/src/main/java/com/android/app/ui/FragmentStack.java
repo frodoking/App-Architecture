@@ -1,5 +1,9 @@
 package com.android.app.ui;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,48 +12,20 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
 /**
  * A class that manages a stack of {@link Fragment}s in a single container.
  * Created by frodo on 2015/1/27.
  */
 public class FragmentStack {
 
-    public interface Callback {
-        void onStackChanged(int stackSize, Fragment topFragment);
-    }
-
-    /**
-     * Create an instance for a specific container.
-     */
-    public static FragmentStack forContainer(FragmentActivity activity, int containerId, Callback callback) {
-        return new FragmentStack(activity, containerId, callback);
-    }
-
     private static final String STATE_STACK = "net.simonvt.util.FragmentStack.stack";
-
     private LinkedList<Fragment> stack = new LinkedList<Fragment>();
     private Set<String> topLevelTags = new HashSet<String>();
-
     private Activity activity;
-
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-
     private int containerId;
-
     private Callback callback;
-
-    private Handler handler;
-
-    private int enterAnimation;
-    private int exitAnimation;
-    private int popStackEnterAnimation;
-    private int popStackExitAnimation;
-
     private final Runnable execPendingTransactions = new Runnable() {
         @Override
         public void run() {
@@ -62,7 +38,11 @@ public class FragmentStack {
             }
         }
     };
-
+    private Handler handler;
+    private int enterAnimation;
+    private int exitAnimation;
+    private int popStackEnterAnimation;
+    private int popStackExitAnimation;
     private FragmentStack(FragmentActivity activity, int containerId, Callback callback) {
         this.activity = activity;
         fragmentManager = activity.getSupportFragmentManager();
@@ -70,6 +50,13 @@ public class FragmentStack {
         this.callback = callback;
 
         handler = new Handler();
+    }
+
+    /**
+     * Create an instance for a specific container.
+     */
+    public static FragmentStack forContainer(FragmentActivity activity, int containerId, Callback callback) {
+        return new FragmentStack(activity, containerId, callback);
     }
 
     /**
@@ -324,6 +311,10 @@ public class FragmentStack {
         }
 
         return false;
+    }
+
+    public interface Callback {
+        void onStackChanged(int stackSize, Fragment topFragment);
     }
 }
 

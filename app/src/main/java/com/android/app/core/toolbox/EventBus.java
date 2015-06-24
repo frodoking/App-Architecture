@@ -11,18 +11,14 @@ import com.squareup.otto.Bus;
  */
 public final class EventBus {
 
-    private static class Holder {
-        private static EventBus DEFAULT = new EventBus();
-    }
-
-    public static EventBus getDefault() {
-        return Holder.DEFAULT;
-    }
-
     private Bus bus;
 
     private EventBus() {
         bus = new Bus();
+    }
+
+    public static EventBus getDefault() {
+        return Holder.DEFAULT;
     }
 
     public void register(Object object) {
@@ -35,5 +31,9 @@ public final class EventBus {
 
     public void post(Object object) {
         bus.post(object);
+    }
+
+    private static class Holder {
+        private static EventBus DEFAULT = new EventBus();
     }
 }
