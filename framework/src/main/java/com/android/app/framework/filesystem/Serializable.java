@@ -1,4 +1,4 @@
-package com.android.app.core.filesystem;
+package com.android.app.framework.filesystem;
 
 import java.io.IOException;
 

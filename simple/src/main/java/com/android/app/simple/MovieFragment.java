@@ -105,9 +105,12 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                         new MainUINotifier(getActivity()) {
                             @Override
                             public void onUiNotify(Object... args) {
-                                List<Movie> movies = (List<Movie>) args[0];
-                                showMovieList(movies);
-                                getPresenter().setMovies(movies);
+                                if (args!=null && args.length>0)
+                                    if (args[0] != null && args[0] instanceof List) {
+                                        List<Movie> movies = (List<Movie>) args[0];
+                                        showMovieList(movies);
+                                        getPresenter().setMovies(movies);
+                                    }
                             }
                         }));
     }

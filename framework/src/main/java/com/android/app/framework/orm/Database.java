@@ -1,15 +1,30 @@
 package com.android.app.framework.orm;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 纯数据库的操作
  * Created by frodo on 2015/6/20.
  */
 public interface Database {
-    boolean insert(String sql, Object[] objects);
+    long insert(Entity entity);
 
-    boolean delete(String sql);
+    long insertOrReplace(Entity entity);
 
-    boolean update(String sql, Object[] objects);
+    void refresh(Entity entity);
 
-    Object[] query(String sql);
+    void update(Entity entity);
+
+    void delete(Entity entity);
+
+    void deleteAll(Class entityClass);
+
+    Entity load(Class entityClass, String key);
+
+    List<Entity> loadAll(Class entityClass);
+
+    interface Entity {
+        Map<String, String> map();
+    }
 }

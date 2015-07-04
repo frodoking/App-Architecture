@@ -1,11 +1,11 @@
-package com.android.app.core.filesystem;
+package com.android.app.framework.filesystem;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UTFDataFormatException;
 
 /**
- * OutputStream ∞Ô÷˙¿‡
+ * OutputStream Êâ©Â±ï
  * Created by frodo on 2015/6/24.
  */
 public class Output extends OutputStream {

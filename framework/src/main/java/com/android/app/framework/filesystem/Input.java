@@ -1,4 +1,4 @@
-package com.android.app.core.filesystem;
+package com.android.app.framework.filesystem;
 
 import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.UTFDataFormatException;
 
 /**
- * InputStream ∞Ô÷˙¿‡
+ * InputStream Êâ©Â±ï
  * Created by frodo on 2015/6/24.
  */
 public class Input extends InputStream {
