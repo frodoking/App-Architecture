@@ -1,40 +1,55 @@
 package com.android.app.core.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.android.app.framework.config.Configuration;
+import com.android.app.framework.config.Environment;
 import com.android.app.framework.controller.AbstractChildSystem;
 import com.android.app.framework.controller.IController;
-
-import android.content.Context;
+import com.google.common.base.Preconditions;
 
 /**
  * Created by frodo on 2015/6/20.
  */
 public class AndroidConfig extends AbstractChildSystem implements Configuration {
 
-    private Context context;
+    private List<Environment> environments = new ArrayList<>();
+    private Environment environment;
 
-    public AndroidConfig(IController controller) {
+    public AndroidConfig(IController controller, Environment environment) {
         super(controller);
-        this.context = (Context) controller.getContext();
+        this.environment = Preconditions.checkNotNull(environment, "Environment cannot be null");
     }
 
     @Override
-    public String getHost() {
-        return null;
+    public List<Environment> readEnvironments() {
+        return this.environments;
     }
 
     @Override
-    public String getVersionName() {
-        return null;
+    public void addEnvironment(Environment environment) {
+        for (Environment tmp : environments) {
+            if (tmp.equals(environment)) {
+                return;
+            }
+        }
+        environments.add(environment);
     }
 
     @Override
-    public int getVersionCode() {
-        return 0;
+    public Environment getCurrentEnvironment() {
+        return this.environment;
+    }
+
+    @Override
+    public void setCurrentEnvironment(Environment environment) {
+        this.environment = environment;
+        addEnvironment(environment);
     }
 
     @Override
     public boolean isDebug() {
-        return false;
+        return this.environment.isDebug();
     }
 }

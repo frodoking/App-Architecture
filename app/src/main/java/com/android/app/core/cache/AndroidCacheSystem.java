@@ -9,7 +9,7 @@ import com.android.app.framework.orm.Database;
 import android.content.Context;
 
 /**
- * »º´æÊµÏÖ (sharepreference, db, fs)
+ * ç¼“å­˜å®žçŽ° (sharepreference, db, fs)
  * Created by frodo on 2015/6/20.
  */
 public class AndroidCacheSystem extends AbstractChildSystem implements Cache {

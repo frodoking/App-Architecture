@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Model¹¤³§
+ * Modelå·¥åŽ‚
  * Created by frodo on 2015/6/15.
  */
 public final class ModelFactory {

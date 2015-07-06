@@ -12,16 +12,16 @@ import com.android.app.framework.controller.IController;
  * 默认java 文件操作
  * Created by frodo on 2015/7/4.
  */
-public class DefaultFileSystem extends AbstractChildSystem implements FileSystem{
+public class DefaultFileSystem extends AbstractChildSystem implements FileSystem {
 
     private String rootDir;
     private String filePath;
+
     public DefaultFileSystem(IController controller, String rootDir, String filePath) {
         super(controller);
         this.rootDir = rootDir;
         this.filePath = filePath;
     }
-
 
     @Override
     public File createFile(String fileName) throws IOException {
@@ -83,7 +83,7 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     }
 
     @Override
-    public boolean moveFilesTo(String srcDirName, String destDirName)  throws IOException {
+    public boolean moveFilesTo(String srcDirName, String destDirName) throws IOException {
         File srcDir = new File(rootDir + srcDirName);
         File destDir = new File(rootDir + destDirName);
         return moveFilesTo(srcDir, destDir);
@@ -151,7 +151,7 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     }
 
     @Override
-    public boolean copyDataFilesTo(String srcDirName, String destDirName)  throws IOException {
+    public boolean copyDataFilesTo(String srcDirName, String destDirName) throws IOException {
         File srcDir = new File(filePath + srcDirName);
         File destDir = new File(filePath + destDirName);
         return copyFilesTo(srcDir, destDir);

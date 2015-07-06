@@ -1,7 +1,11 @@
 package com.android.app;
 
+import java.util.concurrent.Executors;
+
 import com.android.app.core.cache.AndroidCacheSystem;
 import com.android.app.core.log.AndroidLogCollectorSystem;
+import com.android.app.core.task.BackgroundExecutorImpl;
+import com.android.app.core.toolbox.ResourceManager;
 import com.android.app.framework.config.Configuration;
 import com.android.app.framework.context.Context;
 import com.android.app.framework.controller.MainController;
@@ -22,6 +26,10 @@ public abstract class AppApplication extends Application implements Context {
     public void onCreate() {
         super.onCreate();
         this.controller = new MainController();
+
+        final int numberCores = Runtime.getRuntime().availableProcessors();
+        controller.setBackgroundExecutor(new BackgroundExecutorImpl(Executors.newFixedThreadPool(numberCores * 2 + 1)));
+
         controller.setContext(this);
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
@@ -31,6 +39,8 @@ public abstract class AppApplication extends Application implements Context {
 
         enableCache(true);
         enableLogCollector(true);
+
+        ResourceManager.newInstance(this);
     }
 
     public final MainController getMainController() {

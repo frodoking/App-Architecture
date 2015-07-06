@@ -8,6 +8,7 @@ import com.android.app.framework.log.LogCollector;
 import com.android.app.framework.net.NetworkInteractor;
 import com.android.app.framework.orm.Database;
 import com.android.app.framework.scene.Scene;
+import com.android.app.framework.task.BackgroundExecutor;
 import com.android.app.framework.theme.Theme;
 
 /**
@@ -17,6 +18,10 @@ import com.android.app.framework.theme.Theme;
  * @date: 2014-11-28 fixed 2015.6.20
  */
 public interface IController {
+
+    void setBackgroundExecutor(BackgroundExecutor backgroundExecutor);
+
+    BackgroundExecutor getBackgroundExecutor();
 
     Cache getCache();
 

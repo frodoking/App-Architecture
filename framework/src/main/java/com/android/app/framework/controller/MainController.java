@@ -8,6 +8,7 @@ import com.android.app.framework.log.LogCollector;
 import com.android.app.framework.net.NetworkInteractor;
 import com.android.app.framework.orm.Database;
 import com.android.app.framework.scene.Scene;
+import com.android.app.framework.task.BackgroundExecutor;
 import com.android.app.framework.theme.Theme;
 import com.google.common.base.Preconditions;
 
@@ -16,6 +17,7 @@ import com.google.common.base.Preconditions;
  * Created by frodo on 2015/4/1.
  */
 public final class MainController implements IController {
+    private BackgroundExecutor backgroundExecutor;
     private Cache cache;
     private Configuration configuration;
     private Context context;
@@ -26,6 +28,16 @@ public final class MainController implements IController {
     private Scene scene;
     private LogCollector logCollector;
     private ModelFactory modelFactory;
+
+    @Override
+    public void setBackgroundExecutor(BackgroundExecutor backgroundExecutor) {
+        this.backgroundExecutor = Preconditions.checkNotNull(backgroundExecutor, "BackgroundExecutor cannot be null");
+    }
+
+    @Override
+    public BackgroundExecutor getBackgroundExecutor() {
+        return this.backgroundExecutor;
+    }
 
     @Override
     public Cache getCache() {

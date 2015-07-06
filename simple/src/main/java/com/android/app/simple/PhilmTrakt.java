@@ -1,12 +1,12 @@
 package com.android.app.simple;
 
-import com.jakewharton.trakt.Trakt;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-
 import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import com.jakewharton.trakt.Trakt;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -18,6 +18,15 @@ public class PhilmTrakt extends Trakt {
     private static final String TAG = "PhilmTrakt";
 
     private static PhilmTrakt philmTrakt;
+    private final File mCacheLocation;
+
+    public PhilmTrakt() {
+        this(null);
+    }
+
+    public PhilmTrakt(File cacheLocation) {
+        mCacheLocation = cacheLocation;
+    }
 
     public static PhilmTrakt getDefault() {
         if (philmTrakt == null) {
@@ -29,16 +38,6 @@ public class PhilmTrakt extends Trakt {
         }
 
         return philmTrakt;
-    }
-
-    private final File mCacheLocation;
-
-    public PhilmTrakt() {
-        this(null);
-    }
-
-    public PhilmTrakt(File cacheLocation) {
-        mCacheLocation = cacheLocation;
     }
 
     @Override

@@ -43,6 +43,7 @@ public class FragmentStack {
     private int exitAnimation;
     private int popStackEnterAnimation;
     private int popStackExitAnimation;
+
     private FragmentStack(FragmentActivity activity, int containerId, Callback callback) {
         this.activity = activity;
         fragmentManager = activity.getSupportFragmentManager();

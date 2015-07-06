@@ -3,7 +3,7 @@ package com.android.app.framework.cache;
 import com.android.app.framework.controller.ChildSystem;
 
 /**
- * ±¾µØ»º´æ(µ÷Åä»º´æ²ßÂÔ)
+ * æœ¬åœ°ç¼“å­˜(è°ƒé…ç¼“å­˜ç­–ç•¥)
  * Created by frodo on 2015/6/20.
  */
 public interface Cache extends ChildSystem {
@@ -12,21 +12,21 @@ public interface Cache extends ChildSystem {
     void setCacheDir(String dir);
 
     /**
-     * À´ÖÁÓÚ Êı¾İ¿â
+     * æ¥è‡³äº æ•°æ®åº“
      */
     boolean existCacheInDatabase(String sql);
 
     <T> T findCacheFromDatabase(String sql);
 
     /**
-     * À´ÖÁÓÚ Ó¦ÓÃÄÚ²¿±¾Éí
+     * æ¥è‡³äº åº”ç”¨å†…éƒ¨æœ¬èº«
      */
     boolean existCacheInApplication(String key);
 
     <T> T findCacheFromApplication(String key);
 
     /**
-     * À´ÖÁÓÚ ´ÅÅÌ
+     * æ¥è‡³äº ç£ç›˜
      */
     boolean existCacheInLocal(String fileName);
 

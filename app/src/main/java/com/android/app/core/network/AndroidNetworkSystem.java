@@ -24,7 +24,7 @@ import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
- * ÍøÂçÇëÇóÏµÍ³£¨²ÉÓÃretrofit+otto£©
+ * ç½‘ç»œè¯·æ±‚ç³»ç»Ÿï¼ˆé‡‡ç”¨retrofit+ottoï¼‰
  * Created by frodo on 2015/6/20.
  */
 public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkInteractor {
@@ -94,7 +94,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     }
 
     /**
-     * ¿ÉÒÔÖØĞ´
+     * å¯ä»¥é‡å†™
      * RestAdapter.Builder b = super.newRestAdapterBuilder();
      * <p/>
      * if (mCacheLocation != null) {
@@ -118,7 +118,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     private RestAdapter getRestAdapter() {
         if (this.restAdapter == null) {
             RestAdapter.Builder builder = this.newRestAdapterBuilder();
-            builder.setEndpoint(getController().getConfig().getHost());
+            builder.setEndpoint(getController().getConfig().getCurrentEnvironment().getUrl());
             builder.setConverter(new GsonConverter(getGsonBuilder().create()));
             if (getController().getConfig().isDebug()) {
                 builder.setLogLevel(RestAdapter.LogLevel.FULL);

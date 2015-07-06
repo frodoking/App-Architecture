@@ -3,10 +3,10 @@ package com.android.app.core.toolbox;
 import com.squareup.otto.Bus;
 
 /**
- * ½«ÊÂ¼þ×ÜÏßÓÃµ¥ÀýÀ´·â×°£¬Ìá¸ßÀûÓÃÂÊ<br>
- * Bus±ØÐëÔÚUIÖ÷Ïß³ÌÖÐÍê³É<br>
- * Ö÷Òª×÷ÓÃÊÇÓÃÀ´ÔÚviewÖ®¼ä´«µÝµÄ¹¤¾ß<br>
- * ½ûÖ¹ÓÃÀ´ÔÚÄ£¿éÖ®¼äµÄ´«µÝ(ÕâÑù»áÆÆ»µ´úÂëµÄÍ¨ÐÅ¼Ü¹¹)<br>
+ * å°†äº‹ä»¶æ€»çº¿ç”¨å•ä¾‹æ¥å°è£…ï¼Œæé«˜åˆ©ç”¨çŽ‡<br>
+ * Buså¿…é¡»åœ¨UIä¸»çº¿ç¨‹ä¸­å®Œæˆ<br>
+ * ä¸»è¦ä½œç”¨æ˜¯ç”¨æ¥åœ¨viewä¹‹é—´ä¼ é€’çš„å·¥å…·<br>
+ * ç¦æ­¢ç”¨æ¥åœ¨æ¨¡å—ä¹‹é—´çš„ä¼ é€’(è¿™æ ·ä¼šç ´åä»£ç çš„é€šä¿¡æž¶æž„)<br>
  * Created by frodo on 2015/4/20.
  */
 public final class EventBus {

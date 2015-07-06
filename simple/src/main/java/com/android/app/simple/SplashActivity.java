@@ -1,11 +1,11 @@
 package com.android.app.simple;
 
-import android.content.Intent;
-import android.widget.ImageView;
-
 import com.android.app.ui.activity.AbstractBaseActivity;
 import com.android.app.ui.activity.FragmentContainerActivity2;
 import com.squareup.picasso.Picasso;
+
+import android.content.Intent;
+import android.widget.ImageView;
 
 /**
  * Created by frodo on 2015/4/2.

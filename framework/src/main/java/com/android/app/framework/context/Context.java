@@ -1,8 +1,13 @@
 package com.android.app.framework.context;
 
 /**
- * Ô­Ê¼AppÉÏÏÂÎÄ¹ØÏµµÄ½Ó¹ÜÆ÷
+ * åŸå§‹Appä¸Šä¸‹æ–‡å…³ç³»çš„æ¥ç®¡å™¨
  * Created by frodo on 2015/6/20.
  */
 public interface Context {
+    String applicationName();
+
+    int versionCode();
+
+    String versionName();
 }

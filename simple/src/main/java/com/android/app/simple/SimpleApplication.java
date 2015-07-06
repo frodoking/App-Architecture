@@ -3,7 +3,9 @@ package com.android.app.simple;
 import com.android.app.AppApplication;
 import com.android.app.core.config.AndroidConfig;
 import com.android.app.core.network.AndroidNetworkSystem;
+import com.android.app.core.toolbox.ResourceManager;
 import com.android.app.framework.config.Configuration;
+import com.android.app.framework.config.Environment;
 import com.android.app.framework.controller.IController;
 import com.android.app.framework.net.NetworkInteractor;
 import com.android.app.framework.scene.DefaultScene;
@@ -21,12 +23,8 @@ public class SimpleApplication extends AppApplication {
 
     @Override
     public Configuration loadConfiguration() {
-        return new AndroidConfig(getMainController()){
-            @Override
-            public String getHost() {
-                return "https://api.trakt.tv";
-            }
-        };
+        final Environment environment = new Environment(0, "debug", "https://api.trakt.tv", true);
+        return new AndroidConfig(getMainController(), environment);
     }
 
     @Override
@@ -47,6 +45,21 @@ public class SimpleApplication extends AppApplication {
     @Override
     public NetworkInteractor loadNetworkInteractor() {
         return new SimpleAndroidNetworkSystem(getMainController(), null, null);
+    }
+
+    @Override
+    public String applicationName() {
+        return ResourceManager.getPackageInfo().packageName;
+    }
+
+    @Override
+    public int versionCode() {
+        return ResourceManager.getPackageInfo().versionCode;
+    }
+
+    @Override
+    public String versionName() {
+        return ResourceManager.getPackageInfo().versionName;
     }
 
     private class SimpleAndroidNetworkSystem extends AndroidNetworkSystem {

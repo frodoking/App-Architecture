@@ -1,7 +1,7 @@
 package com.android.app.framework.scene;
 
 /**
- * Ä¬ÈÏ³¡¾°
+ * é»˜è®¤åœºæ™¯
  * Created by frodo on 2015/6/15.
  */
 public class DefaultScene implements Scene {

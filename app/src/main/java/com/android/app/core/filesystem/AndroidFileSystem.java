@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Environment;
 
 /**
- * Android 文件管理系统
+ * Android 鏂囦欢绠＄悊绯荤粺
  * Created by frodo on 2015/6/20.
  */
 public class AndroidFileSystem extends DefaultFileSystem {

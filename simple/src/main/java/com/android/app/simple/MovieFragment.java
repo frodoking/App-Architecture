@@ -3,10 +3,7 @@ package com.android.app.simple;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.app.core.MainUINotifier;
-import com.android.app.framework.command.MacroCommand;
 import com.android.app.ui.fragment.AbstractBaseFragment;
-import com.jakewharton.trakt.services.MoviesService;
 import com.squareup.picasso.Picasso;
 
 import android.view.LayoutInflater;
@@ -17,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * a simple for movie
@@ -100,19 +98,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void initBusiness() {
-        MacroCommand.getDefault().executeAsync(
-                new FetchMoviesCommand(getMainController().getNetworkInteractor().create(MoviesService.class),
-                        new MainUINotifier(getActivity()) {
-                            @Override
-                            public void onUiNotify(Object... args) {
-                                if (args!=null && args.length>0)
-                                    if (args[0] != null && args[0] instanceof List) {
-                                        List<Movie> movies = (List<Movie>) args[0];
-                                        showMovieList(movies);
-                                        getPresenter().setMovies(movies);
-                                    }
-                            }
-                        }));
+        presenter.loadMovies();
     }
 
     @Override
@@ -125,5 +111,10 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
         this.movies.clear();
         this.movies.addAll(movies);
         movieAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        Toast.makeText(getActivity(),errorMsg,Toast.LENGTH_SHORT).show();
     }
 }

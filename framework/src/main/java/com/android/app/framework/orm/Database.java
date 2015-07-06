@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ´¿Êı¾İ¿âµÄ²Ù×÷
+ * æ•°æ®åº“æ“ä½œ
  * Created by frodo on 2015/6/20.
  */
 public interface Database {

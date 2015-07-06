@@ -16,13 +16,13 @@
 
 package com.android.app.simple;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import com.uwetrottmann.tmdb.Tmdb;
-
 import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+import com.uwetrottmann.tmdb.Tmdb;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -33,7 +33,7 @@ import retrofit.client.OkClient;
 public class PhilmTmdb extends Tmdb {
 
     private static final String TAG = "PhilmTmdb";
-
+    private static PhilmTmdb philmTmdb;
     private final File mCacheLocation;
 
     public PhilmTmdb() {
@@ -43,8 +43,6 @@ public class PhilmTmdb extends Tmdb {
     public PhilmTmdb(File cacheLocation) {
         mCacheLocation = cacheLocation;
     }
-
-    private static PhilmTmdb philmTmdb;
 
     public static PhilmTmdb getDefault() {
         if (philmTmdb == null) {

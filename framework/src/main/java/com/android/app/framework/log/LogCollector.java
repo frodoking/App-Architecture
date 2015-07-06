@@ -3,7 +3,7 @@ package com.android.app.framework.log;
 import com.android.app.framework.controller.ChildSystem;
 
 /**
- * 对日志操作器
+ * 瀵规棩蹇楁搷浣滃櫒
  * Created by frodo on 2015/6/20.
  */
 public interface LogCollector extends ChildSystem {

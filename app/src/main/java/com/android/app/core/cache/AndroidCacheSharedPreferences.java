@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
  * Created by frodo on 2015/6/24.
  */
 public class AndroidCacheSharedPreferences {
-   private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     public AndroidCacheSharedPreferences(Context context) {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
