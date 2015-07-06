@@ -15,7 +15,7 @@ public class FetchMoviesTask extends NetworkCallTask<List<Movie>> {
     private MoviesService moviesService;
     private MovieModel.OnFetchMoviesFinishedListener listener;
 
-    public FetchMoviesTask(MoviesService moviesService,MovieModel.OnFetchMoviesFinishedListener listener) {
+    public FetchMoviesTask(MoviesService moviesService, MovieModel.OnFetchMoviesFinishedListener listener) {
         this.listener = listener;
         this.moviesService = moviesService;
     }

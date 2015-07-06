@@ -115,6 +115,6 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void showError(String errorMsg) {
-        Toast.makeText(getActivity(),errorMsg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
