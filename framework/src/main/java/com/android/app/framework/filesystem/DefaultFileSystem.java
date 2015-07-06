@@ -24,6 +24,16 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     }
 
     @Override
+    public String getRootDir() {
+        return this.rootDir;
+    }
+
+    @Override
+    public String getFilePath() {
+        return this.filePath;
+    }
+
+    @Override
     public File createFile(String fileName) throws IOException {
         File file = new File(rootDir + fileName);
         file.createNewFile();
@@ -268,5 +278,10 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
 
         }
         return true;
+    }
+
+    @Override
+    public boolean write(String text, File file) {
+        return false;
     }
 }

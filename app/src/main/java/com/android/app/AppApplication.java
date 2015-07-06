@@ -3,6 +3,7 @@ package com.android.app;
 import java.util.concurrent.Executors;
 
 import com.android.app.core.cache.AndroidCacheSystem;
+import com.android.app.core.filesystem.AndroidFileSystem;
 import com.android.app.core.log.AndroidLogCollectorSystem;
 import com.android.app.core.task.BackgroundExecutorImpl;
 import com.android.app.core.toolbox.ResourceManager;
@@ -34,6 +35,7 @@ public abstract class AppApplication extends Application implements Context {
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());
+        controller.setFileSystem(new AndroidFileSystem(controller));
         controller.setNetworkInteractor(loadNetworkInteractor());
         controller.setModelFactory(new ModelFactory());
 
@@ -58,12 +60,16 @@ public abstract class AppApplication extends Application implements Context {
     public final void enableCache(boolean enable) {
         if (enable) {
             controller.setCache(new AndroidCacheSystem(this.controller, "/"));
+        }else {
+            controller.setCache(null);
         }
     }
 
     public final void enableLogCollector(boolean enable) {
         if (enable) {
             controller.setLogCollector(new AndroidLogCollectorSystem(this.controller));
+        }else{
+            controller.setLogCollector(null);
         }
     }
 }

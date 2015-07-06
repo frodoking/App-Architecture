@@ -25,7 +25,7 @@ public class MoviePresenter extends AbstractPresenter {
         setModel(movieModel);
     }
 
-    public void loadMovies(){
+    public void loadMovies() {
         movieModel = (MovieModel) getModel();
         movieModel.loadMovies(new MovieModel.OnFetchMoviesFinishedListener() {
             @Override
@@ -42,6 +42,7 @@ public class MoviePresenter extends AbstractPresenter {
 
     public interface MovieView extends UIView {
         void showMovieList(List<Movie> movies);
+
         void showError(String errorMsg);
     }
 }

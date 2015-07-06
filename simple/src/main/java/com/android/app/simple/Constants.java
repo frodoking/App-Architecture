@@ -26,7 +26,6 @@ public class Constants {
     public static final String TRAKT_AUTHTOKEN_PASSWORD_TYPE = "password";
     public static final long FULL_MOVIE_DETAIL_ATTEMPT_THRESHOLD = 60 * 60 * 1000; // 60 secs
     public static final int FILTER_HIGHLY_RATED = 70;
-    public static final boolean DEBUG = true;
     public static final boolean DEBUG_NETWORK = false;
     public static final String TRAKT_MESSAGE_ITEM_REPLACE = "[item]";
     public static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s

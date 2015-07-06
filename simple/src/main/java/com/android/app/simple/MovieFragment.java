@@ -21,8 +21,8 @@ import android.widget.Toast;
  * Created by frodo on 2015/4/2.
  */
 public class MovieFragment extends AbstractBaseFragment implements MoviePresenter.MovieView {
-    List<Movie> movies = new ArrayList<>();
-    BaseAdapter movieAdapter;
+    private List<Movie> movies = new ArrayList<>();
+    private BaseAdapter movieAdapter;
     private MoviePresenter presenter;
     private GridView gridView;
 
@@ -92,6 +92,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                redirect(RedirectFragment.class, false);
             }
         });
     }
@@ -115,6 +116,6 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void showError(String errorMsg) {
-        Toast.makeText(getActivity(),errorMsg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }

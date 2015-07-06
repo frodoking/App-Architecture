@@ -7,7 +7,15 @@ import com.android.app.framework.controller.ChildSystem;
  * Created by frodo on 2015/6/20.
  */
 public interface LogCollector extends ChildSystem {
-    boolean log(String tag, String msg, int logType);
+    /**
+     * 是否开启本地日志存储并上传功能
+     * @param enable
+     */
+    void enableCollect(boolean enable);
+
+    void logWarn(String tag, String msg );
+    void logError(String tag, String msg );
+    void logInfo(String tag, String msg );
 
     /**
      * Register crash handler to handle exception.

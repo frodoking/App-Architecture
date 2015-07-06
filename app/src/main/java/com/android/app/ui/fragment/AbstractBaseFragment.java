@@ -3,12 +3,12 @@ package com.android.app.ui.fragment;
 import com.android.app.framework.controller.IView;
 import com.android.app.framework.controller.MainController;
 import com.android.app.ui.activity.AbstractBaseActivity;
+import com.android.app.ui.activity.FragmentContainerActivity2;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +126,15 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
         printLeftCycle("onDestroy");
     }
 
+    public final void redirect(Class<?> clazz, boolean isFinished) {
+        Intent intent = new Intent(getActivity(), FragmentContainerActivity2.class);
+        intent.putExtra("fragment_class_name", clazz.getCanonicalName());
+        startActivity(intent);
+        if (isFinished) {
+            getActivity().finish();
+        }
+    }
+
     public boolean onBackPressed() {
         return false;
     }
@@ -135,10 +144,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     }
 
     private void printLeftCycle(String methodName) {
-        if (getMainController().getConfig().isDebug()) {
-            Log.d(TAG, " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode()
-                    + ") + activity (" + getActivity().hashCode() + ")");
-        }
+        getMainController().getLogCollector()
+                .logInfo(TAG, " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode()
+                        + ") + activity (" + getActivity().hashCode() + ")");
     }
 
     public String tag() {
@@ -146,9 +154,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     }
 
     public final void printLog(String log) {
-        if (getMainController().getConfig().isDebug()) {
-            Log.d("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
-        }
+        getMainController().getLogCollector().logInfo("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
     }
 }
 

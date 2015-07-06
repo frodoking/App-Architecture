@@ -6,7 +6,8 @@ import com.android.app.framework.net.NetworkCallTask;
 import com.android.app.framework.task.AbstractBackgroundExecutor;
 import com.android.app.framework.task.BackgroundCallTask;
 
-import android.os.*;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Process;
 import retrofit.RetrofitError;
 
@@ -68,7 +69,7 @@ public class BackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
     }
 
-    private class NetworkCallRunner<R>  implements Runnable {
+    private class NetworkCallRunner<R> implements Runnable {
 
         private final NetworkCallTask<R> mNetworkCallTask;
 

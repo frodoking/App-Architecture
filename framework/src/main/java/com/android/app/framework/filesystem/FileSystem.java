@@ -10,6 +10,10 @@ import com.android.app.framework.controller.ChildSystem;
  * Created by frodo on 2015/6/20.
  */
 public interface FileSystem extends ChildSystem {
+
+      String getRootDir();
+      String getFilePath();
+
     /**
      * 在FS上创建目录
      *
@@ -288,4 +292,6 @@ public interface FileSystem extends ChildSystem {
      * @throws IOException
      */
     boolean moveFilesTo(File srcDir, File destDir) throws IOException;
+
+    boolean write(String text, File file);
 }

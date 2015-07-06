@@ -14,6 +14,7 @@ import retrofit.client.OkClient;
 /**
  * Created by frodo on 2015/4/2.
  */
+@Deprecated
 public class PhilmTrakt extends Trakt {
     private static final String TAG = "PhilmTrakt";
 

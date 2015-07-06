@@ -30,6 +30,7 @@ import retrofit.client.OkClient;
 /**
  * Created by frodo on 2015/4/2.
  */
+@Deprecated
 public class PhilmTmdb extends Tmdb {
 
     private static final String TAG = "PhilmTmdb";

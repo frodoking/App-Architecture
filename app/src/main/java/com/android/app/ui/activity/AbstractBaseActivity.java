@@ -1,13 +1,11 @@
 package com.android.app.ui.activity;
 
 import com.android.app.AppApplication;
-import com.android.app.BuildConfig;
 import com.android.app.framework.controller.MainController;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 /**
  * Created by frodo on 2014/12/26.
@@ -19,8 +17,8 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        printLeftCycle("onCreate");
         controller = ((AppApplication) getApplication()).getMainController();
+        printLeftCycle("onCreate");
         init();
     }
 
@@ -98,9 +96,8 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     }
 
     private void printLeftCycle(String methodName) {
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, ">> " + getClass().getSimpleName() + "*********>> " + methodName + " <<********* <<");
-        }
+        getMainController().getLogCollector()
+                .logInfo(TAG, ">> " + getClass().getSimpleName() + "*********>> " + methodName + " <<********* <<");
     }
 
     public String tag() {
@@ -108,9 +105,7 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     }
 
     public final void printLog(String log) {
-        if (BuildConfig.DEBUG) {
-            Log.d("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
-        }
+        getMainController().getLogCollector().logInfo("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
     }
 }
 
