@@ -30,13 +30,13 @@ public final class MainController implements IController {
     private ModelFactory modelFactory;
 
     @Override
-    public void setBackgroundExecutor(BackgroundExecutor backgroundExecutor) {
-        this.backgroundExecutor = Preconditions.checkNotNull(backgroundExecutor, "BackgroundExecutor cannot be null");
+    public BackgroundExecutor getBackgroundExecutor() {
+        return this.backgroundExecutor;
     }
 
     @Override
-    public BackgroundExecutor getBackgroundExecutor() {
-        return this.backgroundExecutor;
+    public void setBackgroundExecutor(BackgroundExecutor backgroundExecutor) {
+        this.backgroundExecutor = Preconditions.checkNotNull(backgroundExecutor, "BackgroundExecutor cannot be null");
     }
 
     @Override

@@ -5,9 +5,11 @@ package com.android.app.framework.task;
  */
 public abstract class BackgroundCallTask<R> {
 
-    public void preExecute() {}
+    public void preExecute() {
+    }
 
     public abstract R runAsync();
 
-    public void postExecute(R result) { }
+    public void postExecute(R result) {
+    }
 }

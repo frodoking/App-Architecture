@@ -11,8 +11,9 @@ import com.android.app.framework.controller.ChildSystem;
  */
 public interface FileSystem extends ChildSystem {
 
-      String getRootDir();
-      String getFilePath();
+    String getRootDir();
+
+    String getFilePath();
 
     /**
      * 在FS上创建目录

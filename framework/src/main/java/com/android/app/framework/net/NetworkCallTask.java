@@ -5,7 +5,8 @@ package com.android.app.framework.net;
  */
 public abstract class NetworkCallTask<R> {
 
-    public void onPreCall() {}
+    public void onPreCall() {
+    }
 
     public abstract R doBackgroundCall() throws Exception;
 
@@ -13,6 +14,7 @@ public abstract class NetworkCallTask<R> {
 
     public abstract void onError(Exception re);
 
-    public void onFinished() {}
+    public void onFinished() {
+    }
 
 }

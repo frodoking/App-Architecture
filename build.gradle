@@ -1,6 +1,6 @@
 ext {
     compileSdkVersion = 21
-    buildToolsVersion = System.env.CUSTOM_BUILDTOOLS != null ? System.env.CUSTOM_BUILDTOOLS : '21.1.2'
+    buildToolsVersion = System.env.CUSTOM_BUILDTOOLS != null ? System.env.CUSTOM_BUILDTOOLS : '22.0.1'
 }
 
 buildscript {

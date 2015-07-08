@@ -19,9 +19,9 @@ import com.android.app.framework.theme.Theme;
  */
 public interface IController {
 
-    void setBackgroundExecutor(BackgroundExecutor backgroundExecutor);
-
     BackgroundExecutor getBackgroundExecutor();
+
+    void setBackgroundExecutor(BackgroundExecutor backgroundExecutor);
 
     Cache getCache();
 
