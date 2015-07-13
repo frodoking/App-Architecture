@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.frodo.android.app.framework.controller.AbstractModel;
 import com.frodo.android.app.framework.controller.MainController;
-import com.jakewharton.trakt.services.MoviesService;
+import com.uwetrottmann.tmdb.services.MoviesService;
 
 /**
  * Created by frodo on 2015/4/2.

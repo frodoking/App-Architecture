@@ -20,6 +20,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -120,6 +121,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
             RestAdapter.Builder builder = this.newRestAdapterBuilder();
             builder.setEndpoint(getController().getConfig().getCurrentEnvironment().getUrl());
             builder.setConverter(new GsonConverter(getGsonBuilder().create()));
+            builder.setRequestInterceptor(getRequestInterceptor());
             if (getController().getConfig().isDebug()) {
                 builder.setLogLevel(RestAdapter.LogLevel.FULL);
             }
@@ -128,6 +130,10 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
         }
 
         return this.restAdapter;
+    }
+
+    public RequestInterceptor getRequestInterceptor() {
+        return null;
     }
 
     private GsonBuilder getGsonBuilder() {

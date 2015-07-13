@@ -72,7 +72,9 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                 }
 
                 Movie movie = (Movie) getItem(position);
-                Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(200, 280).into(holder.imageView);
+                getMainController().getLogCollector().logInfo("Picasso", "Picasso loading image : " + movie.imageUrl);
+                Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(200, 300).into(
+                        holder.imageView);
                 holder.textView.setText(movie.name);
 
                 return convertView;
@@ -92,6 +94,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // only for test redirect function
                 redirect(RedirectFragment.class, false);
             }
         });
@@ -116,6 +119,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void showError(String errorMsg) {
-        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

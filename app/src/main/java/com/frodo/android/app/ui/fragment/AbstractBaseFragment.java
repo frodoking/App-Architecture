@@ -145,8 +145,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
 
     private void printLeftCycle(String methodName) {
         getMainController().getLogCollector()
-                .logInfo(TAG, " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode()
-                        + ") + activity (" + getActivity().hashCode() + ")");
+                .logInfo(TAG,
+                        " >> " + getClass().getSimpleName() + " ====== " + methodName + " ====== << (" + hashCode()
+                                + ") + activity (" + getActivity().hashCode() + ")");
     }
 
     public String tag() {

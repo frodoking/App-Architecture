@@ -60,7 +60,7 @@ public abstract class AppApplication extends Application implements Context {
     public final void enableCache(boolean enable) {
         if (enable) {
             controller.setCache(new AndroidCacheSystem(this.controller, "/"));
-        }else {
+        } else {
             controller.setCache(null);
         }
     }
@@ -68,7 +68,7 @@ public abstract class AppApplication extends Application implements Context {
     public final void enableLogCollector(boolean enable) {
         if (enable) {
             controller.setLogCollector(new AndroidLogCollectorSystem(this.controller));
-        }else{
+        } else {
             controller.setLogCollector(null);
         }
     }

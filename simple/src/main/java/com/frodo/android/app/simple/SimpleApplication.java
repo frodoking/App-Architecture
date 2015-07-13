@@ -23,7 +23,8 @@ public class SimpleApplication extends AppApplication {
 
     @Override
     public Configuration loadConfiguration() {
-        final Environment environment = new Environment(0, "debug", "https://api.trakt.tv", true);
+        final Environment environment =
+                new Environment(0, "tmdb", Constants.TMDB_ENDPOINT, Constants.TMDB_API_KEY, true);
         return new AndroidConfig(getMainController(), environment);
     }
 
@@ -74,18 +75,45 @@ public class SimpleApplication extends AppApplication {
 
         @Override
         public RestAdapter.Builder newRestAdapterBuilder() {
-            RestAdapter.Builder builder = super.newRestAdapterBuilder();
-            builder.setRequestInterceptor(new RequestInterceptor() {
+            RestAdapter.Builder b = super.newRestAdapterBuilder();
+
+            //            if (mCacheLocation != null) {
+            //                OkHttpClient client = new OkHttpClient();
+            //
+            //                try {
+            //                    File cacheDir = new File(mCacheLocation, UUID.randomUUID().toString());
+            //                    Cache cache = new Cache(cacheDir, 1024);
+            //                    client.setCache(cache);
+            //                } catch (IOException e) {
+            //                    Log.e(TAG, "Could not use OkHttp Cache", e);
+            //                }
+            //
+            //                client.setConnectTimeout(Constants.CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            //                client.setReadTimeout(Constants.READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            //
+            //                b.setClient(new OkClient(client));
+            //            }
+
+            return b;
+        }
+
+        @Override
+        public RequestInterceptor getRequestInterceptor() {
+            return new RequestInterceptor() {
                 public void intercept(RequestFacade requestFacade) {
-                    requestFacade.addPathParam("apikey", Constants.TRAKT_API_KEY);
+                    Environment env = getMainController().getConfig().getCurrentEnvironment();
+                    if (env.getName().contains("tmdb")) {
+                        requestFacade.addQueryParam("api_key", env.getApiKey());
+                    } else if (env.getName().contains("trakt")) {
+                        requestFacade.addQueryParam("apikey", env.getApiKey());
+                    }
                     if (userAccount != null && userPasswordSha1 != null) {
                         String source = userAccount + ":" + userPasswordSha1;
                         String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
                         requestFacade.addHeader("Authorization", authorization);
                     }
                 }
-            });
-            return builder;
+            };
         }
     }
 }

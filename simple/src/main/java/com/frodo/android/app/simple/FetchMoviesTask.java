@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frodo.android.app.framework.net.NetworkCallTask;
-import com.jakewharton.trakt.entities.Movie;
-import com.jakewharton.trakt.services.MoviesService;
+import com.uwetrottmann.tmdb.entities.Movie;
+import com.uwetrottmann.tmdb.entities.MovieResultsPage;
+import com.uwetrottmann.tmdb.services.MoviesService;
 
 /**
  * Created by frodo on 2015/7/6.
  */
-public class FetchMoviesTask extends NetworkCallTask<List<Movie>> {
+public class FetchMoviesTask extends NetworkCallTask<MovieResultsPage> {
 
     private MoviesService moviesService;
     private MovieModel.OnFetchMoviesFinishedListener listener;
@@ -21,16 +22,16 @@ public class FetchMoviesTask extends NetworkCallTask<List<Movie>> {
     }
 
     @Override
-    public List<Movie> doBackgroundCall() throws Exception {
-        return moviesService.trending();
+    public MovieResultsPage doBackgroundCall() throws Exception {
+        return moviesService.popular(1, "zh");
     }
 
     @Override
-    public void onSuccess(List<Movie> result) {
+    public void onSuccess(MovieResultsPage result) {
         MovieMapper movieMapper = new MovieMapper();
 
         List<com.frodo.android.app.simple.Movie> currentMovies = new ArrayList<>();
-        for (Movie movie : result) {
+        for (Movie movie : result.results) {
             currentMovies.add(movieMapper.map(movie));
         }
 
