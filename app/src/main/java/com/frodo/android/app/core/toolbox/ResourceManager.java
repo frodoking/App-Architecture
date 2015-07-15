@@ -50,26 +50,7 @@ public class ResourceManager {
         return getResources().getColor(resId);
     }
 
-    public static boolean isPortrait() {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-    }
-
-    public static float getScreenWidth() {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        return dm.widthPixels;
-    }
-
-    public static float getScreenHeight() {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        return dm.heightPixels;
-    }
-
-    public static float getScreenDensity() {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        return dm.density;
-    }
-
-    public static Resources getResources() {
+    private static Resources getResources() {
         return mContext.getResources();
     }
 
@@ -102,24 +83,5 @@ public class ResourceManager {
         } catch (NameNotFoundException e) {
         }
         return metaValue;
-    }
-
-    public static boolean debugable() {
-        try {
-            ApplicationInfo ai = mContext.getPackageManager().getApplicationInfo(mContext.getPackageName(),
-                    PackageManager.GET_META_DATA);
-            return (ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
-        } catch (Exception e) {
-
-        }
-        return false;
-    }
-
-    public static void globalToast(int strId) {
-        globalToast(getString(strId));
-    }
-
-    public static void globalToast(String text) {
-        Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
     }
 }
