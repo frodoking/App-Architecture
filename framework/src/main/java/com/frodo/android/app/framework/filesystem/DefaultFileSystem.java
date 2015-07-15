@@ -12,8 +12,7 @@ import com.frodo.android.app.framework.controller.IController;
  * 默认java 文件操作
  * Created by frodo on 2015/7/4.
  */
-public class DefaultFileSystem extends AbstractChildSystem implements
-        com.frodo.android.app.framework.filesystem.FileSystem {
+public class DefaultFileSystem extends AbstractChildSystem implements FileSystem {
 
     private String rootDir;
     private String filePath;

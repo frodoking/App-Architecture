@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
  * 整个app的核心
  * Created by frodo on 2015/4/1.
  */
-public final class MainController implements com.frodo.android.app.framework.controller.IController {
+public final class MainController implements IController {
     private BackgroundExecutor backgroundExecutor;
     private Cache cache;
     private Configuration configuration;
@@ -27,7 +27,7 @@ public final class MainController implements com.frodo.android.app.framework.con
     private Theme theme;
     private Scene scene;
     private LogCollector logCollector;
-    private com.frodo.android.app.framework.controller.ModelFactory modelFactory;
+    private ModelFactory modelFactory;
 
     @Override
     public BackgroundExecutor getBackgroundExecutor() {
@@ -120,7 +120,7 @@ public final class MainController implements com.frodo.android.app.framework.con
     }
 
     @Override
-    public com.frodo.android.app.framework.controller.ModelFactory getModelFactory() {
+    public ModelFactory getModelFactory() {
         return this.modelFactory;
     }
 

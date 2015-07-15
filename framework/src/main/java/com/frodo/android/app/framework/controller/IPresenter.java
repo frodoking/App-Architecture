@@ -7,7 +7,7 @@ package com.frodo.android.app.framework.controller;
  * Created by frodo on 2015/4/1.
  */
 public interface IPresenter {
-    com.frodo.android.app.framework.controller.IView getView();
+    IView getView();
 
     IModel getModel();
 

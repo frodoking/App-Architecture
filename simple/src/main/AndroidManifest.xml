@@ -47,8 +47,7 @@
 
         <activity
                 android:name="com.frodo.android.app.ui.activity.FragmentContainerActivity2"
-                android:screenOrientation="portrait"
-                android:theme="@style/ActivityWindowStyle"/>
+                android:screenOrientation="portrait" />
 
     </application>
 

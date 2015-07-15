@@ -95,7 +95,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // only for test redirect function
-                redirect(RedirectFragment.class, false);
+                redirectNextFragment(RedirectFragment.class, null, false);
             }
         });
     }

@@ -12,13 +12,13 @@ import com.frodo.android.app.framework.controller.ChildSystem;
  */
 public interface Configuration extends ChildSystem {
 
-    List<com.frodo.android.app.framework.config.Environment> readEnvironments();
+    List<Environment> readEnvironments();
 
-    void addEnvironment(com.frodo.android.app.framework.config.Environment environment);
+    void addEnvironment(Environment environment);
 
-    com.frodo.android.app.framework.config.Environment getCurrentEnvironment();
+    Environment getCurrentEnvironment();
 
-    void setCurrentEnvironment(com.frodo.android.app.framework.config.Environment environment);
+    void setCurrentEnvironment(Environment environment);
 
     boolean isDebug();
 }

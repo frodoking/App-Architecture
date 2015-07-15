@@ -11,8 +11,8 @@ import com.uwetrottmann.tmdb.services.MoviesService;
  */
 public class MovieModel extends AbstractModel {
 
-    FetchMoviesTask fetchMoviesTask;
-    MoviesService moviesService;
+    private FetchMoviesTask fetchMoviesTask;
+    private MoviesService moviesService;
 
     public MovieModel(MainController controller) {
         super(controller);

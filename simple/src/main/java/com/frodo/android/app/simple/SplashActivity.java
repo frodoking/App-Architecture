@@ -1,17 +1,15 @@
 package com.frodo.android.app.simple;
 
 import com.frodo.android.app.ui.activity.AbstractBaseActivity;
-import com.frodo.android.app.ui.activity.FragmentContainerActivity2;
 import com.squareup.picasso.Picasso;
 
-import android.content.Intent;
 import android.widget.ImageView;
 
 /**
  * Created by frodo on 2015/4/2.
  */
 public class SplashActivity extends AbstractBaseActivity {
-    ImageView ad;
+    private ImageView ad;
 
     @Override
     public int getLayoutId() {
@@ -35,12 +33,8 @@ public class SplashActivity extends AbstractBaseActivity {
         ad.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent achievementIntent = new Intent(SplashActivity.this, FragmentContainerActivity2.class);
-                achievementIntent.putExtra("fragment_class_name", MovieFragment.class.getCanonicalName());
-                startActivity(achievementIntent);
-                finish();
+                redirectToFragment(MovieFragment.class, null, true);
             }
         }, 5000);
-
     }
 }

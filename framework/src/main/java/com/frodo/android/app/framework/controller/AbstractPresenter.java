@@ -5,16 +5,16 @@ import com.google.common.base.Preconditions;
 /**
  * Created by frodo on 2015/4/1.
  */
-public abstract class AbstractPresenter implements com.frodo.android.app.framework.controller.IPresenter {
-    private com.frodo.android.app.framework.controller.IModel model;
-    private com.frodo.android.app.framework.controller.IView view;
+public abstract class AbstractPresenter implements IPresenter {
+    private IModel model;
+    private IView view;
 
-    protected AbstractPresenter(com.frodo.android.app.framework.controller.IView view) {
+    protected AbstractPresenter(IView view) {
         this.view = view;
     }
 
     @Override
-    public final com.frodo.android.app.framework.controller.IModel getModel() {
+    public final IModel getModel() {
         Preconditions.checkNotNull(model, "model cannot be null");
         return model;
     }

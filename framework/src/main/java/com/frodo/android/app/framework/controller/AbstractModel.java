@@ -3,7 +3,7 @@ package com.frodo.android.app.framework.controller;
 /**
  * Created by frodo on 2015/4/1.
  */
-public abstract class AbstractModel implements com.frodo.android.app.framework.controller.IModel {
+public abstract class AbstractModel implements IModel {
 
     private MainController mainController;
 

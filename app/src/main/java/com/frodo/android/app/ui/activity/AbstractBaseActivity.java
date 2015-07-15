@@ -5,6 +5,7 @@ import com.frodo.android.app.framework.controller.MainController;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -89,6 +90,27 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         printLeftCycle("onDestroy");
+    }
+
+    /**
+     * Ìø×ªµ½Fragment
+     * @param clazz
+     * @param extra
+     * @param isFinished
+     */
+    public final void redirectToFragment(Class<? extends Fragment> clazz, Bundle extra, boolean isFinished) {
+        Intent intent = new Intent(this, FragmentContainerActivity2.class);
+        if (extra == null) {
+            extra = new Bundle();
+            if (clazz != null) {
+                extra.putString("fragment_class_name", clazz.getCanonicalName());
+            }
+        }
+        intent.putExtra("extra", extra);
+        startActivity(intent);
+        if (isFinished) {
+            finish();
+        }
     }
 
     public MainController getMainController() {

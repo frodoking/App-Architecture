@@ -126,9 +126,21 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
         printLeftCycle("onDestroy");
     }
 
-    public final void redirect(Class<?> clazz, boolean isFinished) {
+    /**
+     * 跳转到下一个Fragment
+     * @param clazz
+     * @param extra
+     * @param isFinished
+     */
+    public final void redirectNextFragment(Class<?> clazz, Bundle extra, boolean isFinished) {
         Intent intent = new Intent(getActivity(), FragmentContainerActivity2.class);
-        intent.putExtra("fragment_class_name", clazz.getCanonicalName());
+        if (extra == null) {
+            extra = new Bundle();
+            if (clazz != null) {
+                extra.putString("fragment_class_name", clazz.getCanonicalName());
+            }
+        }
+        intent.putExtra("extra", extra);
         startActivity(intent);
         if (isFinished) {
             getActivity().finish();

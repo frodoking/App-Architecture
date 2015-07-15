@@ -6,11 +6,11 @@ import com.google.common.base.Preconditions;
  * Base ChildSystem
  * Created by frodo on 2015/6/20.
  */
-public abstract class AbstractChildSystem implements com.frodo.android.app.framework.controller.ChildSystem {
+public abstract class AbstractChildSystem implements ChildSystem {
 
-    private com.frodo.android.app.framework.controller.IController controller;
+    private IController controller;
 
-    public AbstractChildSystem(com.frodo.android.app.framework.controller.IController controller) {
+    public AbstractChildSystem(IController controller) {
         this.controller = Preconditions.checkNotNull(controller, "MainController cannot be null");
     }
 
