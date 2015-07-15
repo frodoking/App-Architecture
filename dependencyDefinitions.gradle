@@ -20,3 +20,11 @@ ext.libraries = [
         // event bus
         otto                : "com.squareup:otto:${versions.otto}",
 ]
+
+ext.jars = [
+        android_support_v4:files('libs/android-support-v4.jar'),
+        tmdb_java_philm:files('libs/tmdb-java-philm.jar'),
+        trakt_java_philm:files('libs/trakt-java-philm.jar'),
+]
+
+
