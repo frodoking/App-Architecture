@@ -5,7 +5,7 @@ android {
     buildToolsVersion customBuildToolsVersion
 
     defaultConfig {
-        applicationId "com.android.app.simple"
+        applicationId "com.frodo.android.app.simple"
         minSdkVersion 8
         targetSdkVersion 22
         versionCode 1
