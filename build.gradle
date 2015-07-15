@@ -1,17 +1,15 @@
 ext {
-    compileSdkVersion = 21
-    buildToolsVersion = System.env.CUSTOM_BUILDTOOLS != null ? System.env.CUSTOM_BUILDTOOLS : '22.0.1'
+    customCompileSdkVersion = 21
+    customBuildToolsVersion = '22.0.1'
 }
 
+apply from: 'dependencyDefinitions.gradle'
+
 buildscript {
-    def gradleVersion = System.env.CUSTOM_GRADLE != null ? System.env.CUSTOM_GRADLE : '1.0.1'
+    def gradleVersion = '1.0.1'
 
     repositories {
-        if (System.env.CUSTOM_REPO != null) {
-            maven { url System.env.CUSTOM_REPO }
-        } else {
-            jcenter();
-        }
+        jcenter();
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
