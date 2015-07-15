@@ -22,9 +22,9 @@ ext.libraries = [
 ]
 
 ext.jars = [
-        android_support_v4:file('libs/android-support-v4.jar'),
-        tmdb_java_philm:file('libs/tmdb-java-philm.jar'),
-        trakt_java_philm:file('libs/trakt-java-philm.jar'),
+        android_support_v4:files('libs/android-support-v4.jar'),
+        tmdb_java_philm:files('libs/tmdb-java-philm.jar'),
+        trakt_java_philm:files('libs/trakt-java-philm.jar'),
 ]
 
 
