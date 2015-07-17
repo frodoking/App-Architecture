@@ -20,7 +20,7 @@ public interface FileSystem extends ChildSystem {
      *
      * @param dirName
      */
-    File createDir(String dirName);
+    File createDir(String dirName) throws IOException;
 
     /**
      * 删除SD卡上的目录
@@ -110,7 +110,7 @@ public interface FileSystem extends ChildSystem {
      *
      * @throws IOException
      */
-    com.frodo.android.app.framework.filesystem.Output writeFile(String fileName) throws IOException;
+    Output writeFile(String fileName) throws IOException;
 
     /**
      * 在原有文件上继续写文件。如:appendSDFile("test.txt");
@@ -121,7 +121,7 @@ public interface FileSystem extends ChildSystem {
      *
      * @throws IOException
      */
-    com.frodo.android.app.framework.filesystem.Output appendFile(String fileName) throws IOException;
+    Output appendFile(String fileName) throws IOException;
 
     /**
      * 从FS读取文件。如:readFile("test.txt");

@@ -23,6 +23,7 @@ ext.libraries = [
 
 ext.jars = [
         android_support_v4: files('libs/android-support-v4.jar'),
+        realm: files('libs/realm-0.81.1.jar'),
         tmdb_java_philm   : files('libs/tmdb-java-philm.jar'),
         trakt_java_philm  : files('libs/trakt-java-philm.jar'),
 ]

@@ -10,4 +10,8 @@ public interface Context {
     int versionCode();
 
     String versionName();
+
+    String getRootDirName();
+
+    String getFilesDirName();
 }

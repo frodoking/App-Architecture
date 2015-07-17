@@ -1,5 +1,10 @@
 package com.frodo.android.app.core.toolbox;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.http.util.EncodingUtils;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -80,5 +85,60 @@ public class ResourceManager {
         } catch (NameNotFoundException e) {
         }
         return metaValue;
+    }
+
+    public static String getRaw(int rawResourceId) {
+        String res = "";
+        InputStream in = null;
+        try {
+            //得到资源中的Raw数据流
+            in = getResources().openRawResource(rawResourceId);
+
+            //得到数据的大小
+            int length = in.available();
+            byte[] buffer = new byte[length];
+
+            //读取数据
+            in.read(buffer);
+            //依test.txt的编码类型选择合适的编码，如果不调整会乱码
+            res = EncodingUtils.getString(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return res;
+    }
+
+    public static String getAsset(String fileName) {
+        String res = "";
+        InputStream in = null;
+        try {
+            //得到资源中的asset数据流
+            in = getResources().getAssets().open(fileName);
+            int length = in.available();
+            byte[] buffer = new byte[length];
+
+            in.read(buffer);
+            res = EncodingUtils.getString(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return res;
     }
 }

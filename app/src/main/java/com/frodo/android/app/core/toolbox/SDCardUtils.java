@@ -6,7 +6,7 @@ import android.os.Environment;
 import android.os.StatFs;
 
 /**
- * SD¿¨Ïà¹ØµÄ¸¨ÖúÀà
+ * SDå¡ç›¸å…³çš„è¾…åŠ©ç±»
  * Created by frodo on 2015/7/15.
  */
 public class SDCardUtils {
@@ -16,7 +16,7 @@ public class SDCardUtils {
     }
 
     /**
-     * ÅĞ¶ÏSDCardÊÇ·ñ¿ÉÓÃ
+     * åˆ¤æ–­SDCardæ˜¯å¦å¯ç”¨
      *
      * @return
      */
@@ -27,7 +27,7 @@ public class SDCardUtils {
     }
 
     /**
-     * »ñÈ¡SD¿¨Â·¾¶
+     * è·å–SDå¡è·¯å¾„
      *
      * @return
      */
@@ -36,16 +36,16 @@ public class SDCardUtils {
     }
 
     /**
-     * »ñÈ¡SD¿¨µÄÊ£ÓàÈİÁ¿ µ¥Î»byte
+     * è·å–SDå¡çš„å‰©ä½™å®¹é‡ å•ä½byte
      *
      * @return
      */
     public static long getSDCardAllSize() {
         if (isSDCardEnable()) {
             StatFs stat = new StatFs(getSDCardPath());
-            // »ñÈ¡¿ÕÏĞµÄÊı¾İ¿éµÄÊıÁ¿
+            // è·å–ç©ºé—²çš„æ•°æ®å—çš„æ•°é‡
             long availableBlocks = (long) stat.getAvailableBlocks() - 4;
-            // »ñÈ¡µ¥¸öÊı¾İ¿éµÄ´óĞ¡£¨byte£©
+            // è·å–å•ä¸ªæ•°æ®å—çš„å¤§å°ï¼ˆbyteï¼‰
             long freeBlocks = stat.getAvailableBlocks();
             return freeBlocks * availableBlocks;
         }
@@ -53,17 +53,17 @@ public class SDCardUtils {
     }
 
     /**
-     * »ñÈ¡Ö¸¶¨Â·¾¶ËùÔÚ¿Õ¼äµÄÊ£Óà¿ÉÓÃÈİÁ¿×Ö½ÚÊı£¬µ¥Î»byte
+     * è·å–æŒ‡å®šè·¯å¾„æ‰€åœ¨ç©ºé—´çš„å‰©ä½™å¯ç”¨å®¹é‡å­—èŠ‚æ•°ï¼Œå•ä½byte
      *
      * @param filePath
      *
-     * @return ÈİÁ¿×Ö½Ú SDCard¿ÉÓÃ¿Õ¼ä£¬ÄÚ²¿´æ´¢¿ÉÓÃ¿Õ¼ä
+     * @return å®¹é‡å­—èŠ‚ SDCardå¯ç”¨ç©ºé—´ï¼Œå†…éƒ¨å­˜å‚¨å¯ç”¨ç©ºé—´
      */
     public static long getFreeBytes(String filePath) {
-        // Èç¹ûÊÇsd¿¨µÄÏÂµÄÂ·¾¶£¬Ôò»ñÈ¡sd¿¨¿ÉÓÃÈİÁ¿
+        // å¦‚æœæ˜¯sdå¡çš„ä¸‹çš„è·¯å¾„ï¼Œåˆ™è·å–sdå¡å¯ç”¨å®¹é‡
         if (filePath.startsWith(getSDCardPath())) {
             filePath = getSDCardPath();
-        } else {// Èç¹ûÊÇÄÚ²¿´æ´¢µÄÂ·¾¶£¬Ôò»ñÈ¡ÄÚ´æ´æ´¢µÄ¿ÉÓÃÈİÁ¿
+        } else {// å¦‚æœæ˜¯å†…éƒ¨å­˜å‚¨çš„è·¯å¾„ï¼Œåˆ™è·å–å†…å­˜å­˜å‚¨çš„å¯ç”¨å®¹é‡
             filePath = Environment.getDataDirectory().getAbsolutePath();
         }
         StatFs stat = new StatFs(filePath);
@@ -72,7 +72,7 @@ public class SDCardUtils {
     }
 
     /**
-     * »ñÈ¡ÏµÍ³´æ´¢Â·¾¶
+     * è·å–ç³»ç»Ÿå­˜å‚¨è·¯å¾„
      *
      * @return
      */

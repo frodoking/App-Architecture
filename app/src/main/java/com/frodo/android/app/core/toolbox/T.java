@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * ToastÍ³Ò»¹ÜÀíÀà
+ * Toastç»Ÿä¸€ç®¡ç†ç±»
  * Created by frodo on 2015/7/15.
  */
 public class T {
@@ -16,7 +16,7 @@ public class T {
     }
 
     /**
-     * ¶ÌÊ±¼äÏÔÊ¾Toast
+     * çŸ­æ—¶é—´æ˜¾ç¤ºToast
      *
      * @param context
      * @param message
@@ -28,7 +28,7 @@ public class T {
     }
 
     /**
-     * ¶ÌÊ±¼äÏÔÊ¾Toast
+     * çŸ­æ—¶é—´æ˜¾ç¤ºToast
      *
      * @param context
      * @param message
@@ -40,7 +40,7 @@ public class T {
     }
 
     /**
-     * ³¤Ê±¼äÏÔÊ¾Toast
+     * é•¿æ—¶é—´æ˜¾ç¤ºToast
      *
      * @param context
      * @param message
@@ -52,7 +52,7 @@ public class T {
     }
 
     /**
-     * ³¤Ê±¼äÏÔÊ¾Toast
+     * é•¿æ—¶é—´æ˜¾ç¤ºToast
      *
      * @param context
      * @param message
@@ -64,7 +64,7 @@ public class T {
     }
 
     /**
-     * ×Ô¶¨ÒåÏÔÊ¾ToastÊ±¼ä
+     * è‡ªå®šä¹‰æ˜¾ç¤ºToastæ—¶é—´
      *
      * @param context
      * @param message
@@ -77,7 +77,7 @@ public class T {
     }
 
     /**
-     * ×Ô¶¨ÒåÏÔÊ¾ToastÊ±¼ä
+     * è‡ªå®šä¹‰æ˜¾ç¤ºToastæ—¶é—´
      *
      * @param context
      * @param message

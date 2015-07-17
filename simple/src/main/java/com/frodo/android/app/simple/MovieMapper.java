@@ -10,6 +10,7 @@ public class MovieMapper extends EntityMapper<com.uwetrottmann.tmdb.entities.Mov
     @Override
     public Movie map(com.uwetrottmann.tmdb.entities.Movie entity) {
         Movie movie = new Movie();
+        movie.id = entity.id;
         movie.imageUrl = Constants.TMDB_IMAGE_BASE_PATH + entity.poster_path;
         movie.name = entity.title;
         return movie;

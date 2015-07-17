@@ -17,10 +17,10 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     private String rootDir;
     private String filePath;
 
-    public DefaultFileSystem(IController controller, String rootDir, String filePath) {
+    public DefaultFileSystem(IController controller) {
         super(controller);
-        this.rootDir = rootDir;
-        this.filePath = filePath;
+        this.rootDir = controller.getContext().getRootDirName();
+        this.filePath = controller.getContext().getFilesDirName();
     }
 
     @Override
@@ -36,7 +36,11 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     @Override
     public File createFile(String fileName) throws IOException {
         File file = new File(rootDir + fileName);
-        file.createNewFile();
+        if (file.isFile()) {
+            file.createNewFile();
+        } else {
+            throw new IOException("file is not a file");
+        }
         return file;
     }
 
@@ -51,15 +55,22 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     }
 
     @Override
-    public File createDir(String dirName) {
+    public File createDir(String dirName) throws IOException {
         File dir = new File(rootDir + dirName);
-        dir.mkdir();
+        if (dir.isDirectory()) {
+            dir.mkdir();
+        } else {
+            throw new IOException("file is not a dir");
+        }
         return dir;
     }
 
     @Override
     public boolean deleteDir(String dirName) {
         File dir = new File(rootDir + dirName);
+        if (!dir.exists() || !dir.isDirectory()) {
+            return false;
+        }
         return deleteDir(dir);
     }
 
@@ -100,21 +111,21 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     }
 
     @Override
-    public com.frodo.android.app.framework.filesystem.Output writeFile(String fileName) throws IOException {
+    public Output writeFile(String fileName) throws IOException {
         File file = new File(rootDir + fileName);
         FileOutputStream fos = new FileOutputStream(file);
         return new com.frodo.android.app.framework.filesystem.Output(fos);
     }
 
     @Override
-    public com.frodo.android.app.framework.filesystem.Output appendFile(String fileName) throws IOException {
+    public Output appendFile(String fileName) throws IOException {
         File file = new File(rootDir + fileName);
         FileOutputStream fos = new FileOutputStream(file, true);
         return new Output(fos);
     }
 
     @Override
-    public com.frodo.android.app.framework.filesystem.Input readFile(String fileName) throws IOException {
+    public Input readFile(String fileName) throws IOException {
         File file = new File(rootDir + fileName);
         FileInputStream fis = new FileInputStream(file);
         return new Input(fis);
@@ -235,11 +246,11 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
         for (int i = 0; i < srcFiles.length; i++) {
             if (srcFiles[i].isFile()) {
                 // 获得目标文件
-                File destFile = new File(destDir.getPath() + "//"
+                File destFile = new File(destDir.getPath() + File.separator
                         + srcFiles[i].getName());
                 copyFileTo(srcFiles[i], destFile);
             } else if (srcFiles[i].isDirectory()) {
-                File theDestDir = new File(destDir.getPath() + "//"
+                File theDestDir = new File(destDir.getPath() + File.separator
                         + srcFiles[i].getName());
                 copyFilesTo(srcFiles[i], theDestDir);
             }

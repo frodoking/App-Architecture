@@ -11,6 +11,9 @@ android {
 dependencies {
     compile jars.android_support_v4
 
+    // database realm
+    compile jars.realm
+
     //net
     compile(
             libraries.retrofit,

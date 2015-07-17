@@ -1,16 +1,15 @@
 package com.frodo.android.app.core.database;
 
 import java.util.List;
-import java.util.Map;
 
 import com.frodo.android.app.framework.controller.AbstractChildSystem;
 import com.frodo.android.app.framework.controller.IController;
+import com.frodo.android.app.framework.entity.Entity;
 import com.frodo.android.app.framework.orm.Database;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * DB
@@ -19,22 +18,26 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class AndroidDatabaseSystem extends AbstractChildSystem implements Database {
 
     private Context context;
-    private SQLiteOpenHelper sqLiteOpenHelper;
+    private Realm realm;
 
     public AndroidDatabaseSystem(IController controller, String db) {
         super(controller);
         this.context = (Context) controller.getContext();
-        sqLiteOpenHelper = new DatabaseHelper(context, db);
+
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this.context).build();
+        Realm.deleteRealm(realmConfig);
+        realm = Realm.getInstance(realmConfig);
+    }
+
+    @Override
+    public <E extends Entity> E createObject(Class<E> clazz) {
+        Class<? extends RealmEntity> object = (Class<? extends RealmEntity>) clazz;
+        return (E) realm.createObject(object);
     }
 
     @Override
     public long insert(Entity entity) {
-        SQLiteDatabase sqliteDatabase = sqLiteOpenHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        for (Map.Entry<String, String> entry : entity.map().entrySet()) {
-            values.put(entry.getKey(), entry.getValue());
-        }
-        return sqliteDatabase.insert(getTable(entity.getClass()), null, values);
+        return 1;
     }
 
     @Override
@@ -71,32 +74,13 @@ public class AndroidDatabaseSystem extends AbstractChildSystem implements Databa
         return null;
     }
 
+    @Override
+    public void close() {
+        realm.close();
+    }
+
     private String getTable(Class clazz) {
         return clazz.getName().toLowerCase();
     }
 
-    private class DatabaseHelper extends SQLiteOpenHelper {
-
-        private static final int VERSION = 1;
-
-        public DatabaseHelper(Context context, String name) {
-            this(context, name, VERSION);
-        }
-
-        public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
-        }
-
-        public DatabaseHelper(Context context, String name, int version) {
-            this(context, name, null, version);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        }
-    }
 }

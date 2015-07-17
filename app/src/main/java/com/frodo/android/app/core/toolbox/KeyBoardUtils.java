@@ -5,15 +5,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
- * ´ò¿ª»ò¹Ø±ÕÈí¼üÅÌ
+ * æ‰“å¼€æˆ–å…³é—­è½¯é”®ç›˜
  * Created by frodo on 2015/7/15.
  */
 public class KeyBoardUtils {
     /**
-     * ´ò¿¨Èí¼üÅÌ
+     * æ‰“å¡è½¯é”®ç›˜
      *
-     * @param mEditText ÊäÈë¿ò
-     * @param mContext  ÉÏÏÂÎÄ
+     * @param mEditText è¾“å…¥æ¡†
+     * @param mContext  ä¸Šä¸‹æ–‡
      */
     public static void openKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -22,10 +22,10 @@ public class KeyBoardUtils {
     }
 
     /**
-     * ¹Ø±ÕÈí¼üÅÌ
+     * å…³é—­è½¯é”®ç›˜
      *
-     * @param mEditText ÊäÈë¿ò
-     * @param mContext  ÉÏÏÂÎÄ
+     * @param mEditText è¾“å…¥æ¡†
+     * @param mContext  ä¸Šä¸‹æ–‡
      */
     public static void closeKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
