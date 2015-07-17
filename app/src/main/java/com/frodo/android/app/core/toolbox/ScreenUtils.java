@@ -69,6 +69,7 @@ public class ScreenUtils {
 
     /**
      * ºáÊúÆÁÅĞ¶Ï
+     *
      * @return
      */
     public static boolean isPortrait(Context context) {

@@ -1,7 +1,5 @@
 package com.frodo.android.app.ui.activity;
 
-import javax.sql.PooledConnection;
-
 import com.android.app.R;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 import com.google.common.base.Preconditions;
@@ -25,11 +23,11 @@ public class FragmentContainerActivity2 extends AbstractBaseActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        Bundle extra  = intent.getBundleExtra("extra");
-        Preconditions.checkNotNull(extra,"extra is not null...");
+        Bundle extra = intent.getBundleExtra("extra");
+        Preconditions.checkNotNull(extra, "extra is not null...");
 
         String fragmentName = extra.getString("fragment_class_name");
-        Preconditions.checkNotNull(fragmentName,"fragmentName is not null...");
+        Preconditions.checkNotNull(fragmentName, "fragmentName is not null...");
 
         final FragmentManager fm = getSupportFragmentManager();
         final FragmentTransaction ft = fm.beginTransaction();

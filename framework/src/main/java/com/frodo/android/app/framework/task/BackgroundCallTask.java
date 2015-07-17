@@ -3,7 +3,7 @@ package com.frodo.android.app.framework.task;
 /**
  * Created by frodo on 2015/7/6.
  */
-public abstract class BackgroundCallTask<R> {
+public abstract class BackgroundCallTask<R> extends CallTask {
 
     public void preExecute() {
     }

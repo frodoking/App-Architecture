@@ -128,6 +128,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
 
     /**
      * 跳转到下一个Fragment
+     *
      * @param clazz
      * @param extra
      * @param isFinished

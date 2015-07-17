@@ -1,9 +1,11 @@
 package com.frodo.android.app.framework.net;
 
+import com.frodo.android.app.framework.task.CallTask;
+
 /**
  * Created by frodo on 2015/7/6.
  */
-public abstract class NetworkCallTask<R> {
+public abstract class NetworkCallTask<R> extends CallTask {
 
     public void onPreCall() {
     }
