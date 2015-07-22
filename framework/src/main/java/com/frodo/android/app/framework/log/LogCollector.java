@@ -7,6 +7,16 @@ import com.frodo.android.app.framework.controller.ChildSystem;
  * Created by frodo on 2015/6/20.
  */
 public interface LogCollector extends ChildSystem {
+
+    // Log levels
+    public static final int VERBOSE = 2;
+    public static final int DEBUG = 3;
+    public static final int INFO = 4;
+    public static final int WARN = 5;
+    public static final int ERROR = 6;
+    public static final int ASSERT = 7;
+    public static final int NONE = 8;
+
     /**
      * 是否开启本地日志存储并上传功能
      *
@@ -14,29 +24,23 @@ public interface LogCollector extends ChildSystem {
      */
     void enableCollect(boolean enable);
 
-    void logWarn(String tag, String msg);
+    void v(String tag, String message);
 
-    void logError(String tag, String msg);
+    void v(String tag, String message, Throwable t);
 
-    void logInfo(String tag, String msg);
+    void d(String tag, String message);
 
-    /**
-     * Register crash handler to handle exception.
-     */
-    boolean registerCrashHandler();
+    void d(String tag, String message, Throwable t);
 
-    /**
-     * Unregister crash handler to handle exception.
-     */
-    boolean unregisterCrashHandler();
+    void i(String tag, String message);
 
-    /**
-     * Register Object into the stack.
-     */
-    boolean register(final Object activity);
+    void i(String tag, String message, Throwable t);
 
-    /**
-     * Unregister Object into the stack.
-     */
-    boolean unregister(final Object activity);
+    void w(String tag, String message);
+
+    void w(String tag, String message, Throwable t);
+
+    void e(String tag, String message);
+
+    void e(String tag, String message, Throwable t);
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import com.frodo.android.app.core.cache.AndroidCacheSystem;
 import com.frodo.android.app.core.filesystem.AndroidFileSystem;
 import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
-import com.frodo.android.app.core.task.BackgroundExecutorImpl;
+import com.frodo.android.app.core.task.AndroidBackgroundExecutorImpl;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.context.Context;
@@ -31,7 +31,7 @@ public abstract class AppApplication extends Application implements Context {
         this.controller = new MainController();
 
         final int numberCores = Runtime.getRuntime().availableProcessors();
-        controller.setBackgroundExecutor(new BackgroundExecutorImpl(Executors.newFixedThreadPool(numberCores * 2 + 1)));
+        controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(Executors.newFixedThreadPool(numberCores * 2 + 1)));
 
         controller.setContext(this);
         controller.setConfiguration(loadConfiguration());

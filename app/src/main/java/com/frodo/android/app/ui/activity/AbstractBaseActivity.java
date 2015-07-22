@@ -120,7 +120,7 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
 
     private void printLeftCycle(String methodName) {
         getMainController().getLogCollector()
-                .logInfo(TAG, ">> " + getClass().getSimpleName() + "*********>> " + methodName + " <<********* <<");
+                .d(TAG, ">> " + getClass().getSimpleName() + "*********>> " + methodName + " <<********* <<");
     }
 
     public String tag() {
@@ -128,7 +128,7 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     }
 
     public final void printLog(String log) {
-        getMainController().getLogCollector().logInfo("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
+        getMainController().getLogCollector().i("tag_" + tag(), " >> -----------> " + log + " <------------ <<");
     }
 }
 
