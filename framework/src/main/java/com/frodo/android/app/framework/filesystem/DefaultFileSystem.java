@@ -22,6 +22,14 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
         super(controller);
         this.rootDir = controller.getContext().getRootDirName();
         this.filePath = controller.getContext().getFilesDirName();
+
+        File file = new File(filePath);
+        if (!file.exists()) {
+            boolean success = file.mkdirs();
+            if (!success) {
+                throw new IllegalArgumentException("create file system dir fail.");
+            }
+        }
     }
 
     @Override
@@ -37,15 +45,18 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     @Override
     public File createFile(String fileName) {
         File file = new File(fileName);
-        if (file.isFile()){
 
-            if (file.exists()){
+        if (file.exists()) {
+            return file;
+        } else {
+            boolean success = false;
+            try {
+                success = file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (success) {
                 return file;
-            }else{
-                final  boolean success = file.mkdir();
-                if (success){
-                    return file;
-                }
             }
         }
 
@@ -55,18 +66,15 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
     @Override
     public File createDirectory(String dirName) {
         File file = new File(dirName);
-        if (file.isDirectory()){
-
-            if (file.exists()){
+        if (file.exists()) {
+            return file;
+        } else {
+            final boolean success = file.mkdirs();
+            if (success) {
                 return file;
-            }else{
-                final  boolean success = file.mkdirs();
-                if (success){
-                    return file;
-                }
             }
         }
-    return null;
+        return null;
     }
 
     /**
@@ -78,14 +86,12 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
      */
     @Override
     public void writeToFile(File file, String fileContent) {
-        if (!file.exists()) {
-            try {
-                FileWriter writer = new FileWriter(file);
-                writer.write(fileContent);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(fileContent);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

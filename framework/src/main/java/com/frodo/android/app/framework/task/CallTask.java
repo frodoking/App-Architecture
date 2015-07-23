@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public abstract class CallTask {
     private AtomicBoolean mayInterruptIfRunning = new AtomicBoolean(true);
-    private AtomicBoolean cancel = new AtomicBoolean(true);
+    private AtomicBoolean cancel = new AtomicBoolean(false);
 
     public final boolean isCanCancelled() {
         return mayInterruptIfRunning.get();
@@ -37,4 +37,11 @@ public abstract class CallTask {
 
     public void onCancel() {
     }
+
+    /**
+     * task key as for cache key
+     *
+     * @return String
+     */
+    public abstract String key();
 }

@@ -30,11 +30,11 @@ public class RedirectFragment extends AbstractBaseFragment {
     @Override
     public void registerListener() {
         TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = tm.getDeviceId();       //È¡³öIMEI
-        String tel = tm.getLine1Number();     //È¡³öMSISDN£¬ºÜ¿ÉÄÜÎª¿Õ
-        String iccid = tm.getSimSerialNumber();  //È¡³öICCID
-        String imsi = tm.getSubscriberId();     //È¡³öIMSI
-        String networkOperatorName = tm.getNetworkOperatorName();     //·µ»Ø×¢²áµÄÍøÂçÔËÓªÉÌµÄÃû×Ö
+        String imei = tm.getDeviceId();       //å–å‡ºIMEI
+        String tel = tm.getLine1Number();     //å–å‡ºMSISDNï¼Œå¾ˆå¯èƒ½ä¸ºç©º
+        String iccid = tm.getSimSerialNumber();  //å–å‡ºICCID
+        String imsi = tm.getSubscriberId();     //å–å‡ºIMSI
+        String networkOperatorName = tm.getNetworkOperatorName();     //è¿”å›æ³¨å†Œçš„ç½‘ç»œè¿è¥å•†çš„åå­—
 
         TextView tv = (TextView) getView().findViewById(R.id.imei);
 
@@ -96,7 +96,7 @@ public class RedirectFragment extends AbstractBaseFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getMainController().getLogCollector().logInfo("simi", sb.toString());
+        getMainController().getLogCollector().i("simi", sb.toString());
         return sb.toString();
     }
 

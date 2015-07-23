@@ -1,6 +1,6 @@
 package com.frodo.android.app.framework.controller;
 
-import com.frodo.android.app.framework.cache.Cache;
+import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.context.Context;
 import com.frodo.android.app.framework.filesystem.FileSystem;
@@ -23,9 +23,9 @@ public interface IController {
 
     void setBackgroundExecutor(BackgroundExecutor backgroundExecutor);
 
-    Cache getCache();
+    CacheSystem getCacheSystem();
 
-    void setCache(Cache cache);
+    void setCacheSystem(CacheSystem cache);
 
     void setConfiguration(Configuration configuration);
 

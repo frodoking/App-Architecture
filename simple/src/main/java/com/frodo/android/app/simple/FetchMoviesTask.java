@@ -32,7 +32,7 @@ public class FetchMoviesTask extends NetworkCallTask<MovieResultsPage> {
 
         List<com.frodo.android.app.simple.Movie> currentMovies = new ArrayList<>();
         for (Movie movie : result.results) {
-            currentMovies.add(movieMapper.map(movie));
+            currentMovies.add(movieMapper.transform(movie));
         }
 
         listener.onSuccess(currentMovies);
@@ -41,5 +41,10 @@ public class FetchMoviesTask extends NetworkCallTask<MovieResultsPage> {
     @Override
     public void onError(Exception re) {
         listener.onError(re.getMessage());
+    }
+
+    @Override
+    public String key() {
+        return "movies?page=1&lang=zh";
     }
 }

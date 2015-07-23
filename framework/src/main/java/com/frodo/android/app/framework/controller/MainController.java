@@ -1,6 +1,6 @@
 package com.frodo.android.app.framework.controller;
 
-import com.frodo.android.app.framework.cache.Cache;
+import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.context.Context;
 import com.frodo.android.app.framework.filesystem.FileSystem;
@@ -18,7 +18,7 @@ import com.google.common.base.Preconditions;
  */
 public final class MainController implements IController {
     private BackgroundExecutor backgroundExecutor;
-    private Cache cache;
+    private CacheSystem cacheSystem;
     private Configuration configuration;
     private Context context;
     private NetworkInteractor networkInteractor;
@@ -40,13 +40,13 @@ public final class MainController implements IController {
     }
 
     @Override
-    public Cache getCache() {
-        return this.cache;
+    public CacheSystem getCacheSystem() {
+        return this.cacheSystem;
     }
 
     @Override
-    public void setCache(Cache cache) {
-        this.cache = Preconditions.checkNotNull(cache, "Cache cannot be null");
+    public void setCacheSystem(CacheSystem cacheSystem) {
+        this.cacheSystem = Preconditions.checkNotNull(cacheSystem, "CacheSystem cannot be null");
     }
 
     @Override

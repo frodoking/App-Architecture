@@ -61,9 +61,9 @@ public abstract class AppApplication extends Application implements Context {
 
     public final void enableCache(boolean enable) {
         if (enable) {
-            controller.setCache(new AndroidCacheSystem(this.controller, "/"));
+            controller.setCacheSystem(new AndroidCacheSystem(this.controller, "/"));
         } else {
-            controller.setCache(null);
+            controller.setCacheSystem(null);
         }
     }
 

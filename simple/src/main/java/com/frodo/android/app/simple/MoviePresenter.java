@@ -27,15 +27,25 @@ public class MoviePresenter extends AbstractPresenter {
 
     public void loadMovies() {
         movieModel = (MovieModel) getModel();
+        movieModel.setEnableCached(true);
         movieModel.loadMovies(new MovieModel.OnFetchMoviesFinishedListener() {
             @Override
             public void onError(String errorMsg) {
+                if (movieModel.isEnableCached()) {
+                    List<Movie> movies = movieModel.getMoviesFromCache();
+                    if (movies != null) {
+                        movieView.showMovieList(movies);
+                        return;
+                    }
+                }
+
                 movieView.showError(errorMsg);
             }
 
             @Override
             public void onSuccess(List<Movie> movies) {
                 movieView.showMovieList(movies);
+                movieModel.setMovies(movies);
             }
         });
     }

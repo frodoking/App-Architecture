@@ -1,34 +1,63 @@
 package com.frodo.android.app.framework.cache;
 
-import com.frodo.android.app.framework.controller.ChildSystem;
-
 /**
- * 本地缓存(调配缓存策略)
+ * An interface representing a E Cache.
  * Created by frodo on 2015/6/20.
  */
-public interface Cache extends ChildSystem {
-    String getCacheDir();
-
-    void setCacheDir(String dir);
+public interface Cache<K, V> {
 
     /**
-     * 来至于 数据库
+     * Get CacheSystem.
+     *
+     * @return CacheSystem
      */
-    boolean existCacheInDatabase(String sql);
-
-    <T> T findCacheFromDatabase(String sql);
+    CacheSystem getCacheSystem();
 
     /**
-     * 来至于 应用内部本身
+     * Get cache Type
+     *
+     * @return Type
      */
-    boolean existCacheInApplication(String key);
-
-    <T> T findCacheFromApplication(String key);
+    Type getType();
 
     /**
-     * 来至于 磁盘
+     * Get an V by K.
+     *
+     * @param key
+     *
+     * @return E
      */
-    boolean existCacheInLocal(String fileName);
+    V get(K key);
 
-    <F> F findCacheFromLocal(String fileName);
+    /**
+     * Puts and element into the cache.
+     *
+     * @param value Element to insert in the cache by key.
+     */
+    void put(K key, V value);
+
+    /**
+     * Checks if an element (E) exists in the cache.
+     *
+     * @param key The id used to look for inside the cache.
+     *
+     * @return true if the element is cached, otherwise false.
+     */
+    boolean isCached(K key);
+
+    /**
+     * Checks if the cache is expired.
+     *
+     * @return true, the cache is expired, otherwise false.
+     */
+    boolean isExpired();
+
+    /**
+     * Evict all elements of the cache.
+     */
+    void evictAll();
+
+    enum Type {
+        INTERNAL, DATABASE, DISK,
+    }
 }
