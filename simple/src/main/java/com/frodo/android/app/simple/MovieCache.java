@@ -6,6 +6,7 @@ import java.util.List;
 import com.frodo.android.app.framework.cache.AbstractCache;
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.filesystem.FileSystem;
+import com.frodo.android.app.simple.entities.amdb.Movie;
 import com.google.gson.reflect.TypeToken;
 
 /**

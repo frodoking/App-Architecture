@@ -5,6 +5,7 @@ import java.util.List;
 import com.frodo.android.app.core.UIView;
 import com.frodo.android.app.framework.controller.AbstractPresenter;
 import com.frodo.android.app.framework.controller.MainController;
+import com.frodo.android.app.simple.entities.amdb.Movie;
 
 /**
  * Created by frodo on 2015/4/2.

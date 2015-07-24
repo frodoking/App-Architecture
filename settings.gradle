@@ -1,1 +1,1 @@
-include ':app', ':framework', ':simple'
+include ':app', ':framework', ':simple', ':simplecloudentity', ':simpleentity'

@@ -5,7 +5,8 @@ import java.util.List;
 import com.frodo.android.app.framework.cache.Cache;
 import com.frodo.android.app.framework.controller.AbstractModel;
 import com.frodo.android.app.framework.controller.MainController;
-import com.uwetrottmann.tmdb.services.MoviesService;
+import com.frodo.android.app.simple.cloud.amdb.services.MoviesService;
+import com.frodo.android.app.simple.entities.amdb.Movie;
 
 /**
  * Created by frodo on 2015/4/2.

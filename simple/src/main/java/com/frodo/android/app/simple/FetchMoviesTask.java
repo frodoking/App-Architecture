@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frodo.android.app.framework.net.NetworkCallTask;
-import com.uwetrottmann.tmdb.entities.Movie;
-import com.uwetrottmann.tmdb.entities.MovieResultsPage;
-import com.uwetrottmann.tmdb.services.MoviesService;
+import com.frodo.android.app.simple.cloud.amdb.entities.Movie;
+import com.frodo.android.app.simple.cloud.amdb.entities.MovieResultsPage;
+import com.frodo.android.app.simple.cloud.amdb.services.MoviesService;
+import com.frodo.android.app.simple.entities.amdb.mapper.MovieMapper;
 
 /**
  * Created by frodo on 2015/7/6.
@@ -30,9 +31,12 @@ public class FetchMoviesTask extends NetworkCallTask<MovieResultsPage> {
     public void onSuccess(MovieResultsPage result) {
         MovieMapper movieMapper = new MovieMapper();
 
-        List<com.frodo.android.app.simple.Movie> currentMovies = new ArrayList<>();
+        List< com.frodo.android.app.simple.entities.amdb.Movie> currentMovies = new ArrayList<>();
         for (Movie movie : result.results) {
-            currentMovies.add(movieMapper.transform(movie));
+            // tmp fix
+            com.frodo.android.app.simple.entities.amdb.Movie tmp = movieMapper.transform(movie);
+            tmp.imageUrl = Constants.TMDB_IMAGE_BASE_PATH +  tmp.imageUrl;
+            currentMovies.add(tmp);
         }
 
         listener.onSuccess(currentMovies);

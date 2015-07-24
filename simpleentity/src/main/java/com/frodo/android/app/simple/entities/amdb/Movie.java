@@ -1,4 +1,4 @@
-package com.frodo.android.app.simple;
+package com.frodo.android.app.simple.entities.amdb;
 
 import com.google.gson.Gson;
 
@@ -6,9 +6,9 @@ import com.google.gson.Gson;
  * Created by frodo on 2015/4/2.
  */
 public class Movie {
-    int id;
-    String imageUrl;
-    String name;
+    public int id;
+    public String imageUrl;
+    public String name;
 
     @Override
     public String toString() {

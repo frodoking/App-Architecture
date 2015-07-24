@@ -3,6 +3,7 @@ package com.frodo.android.app.simple;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.frodo.android.app.simple.entities.amdb.Movie;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 import com.squareup.picasso.Picasso;
 

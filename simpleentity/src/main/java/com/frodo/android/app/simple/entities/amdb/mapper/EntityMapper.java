@@ -1,4 +1,4 @@
-package com.frodo.android.app.framework.entity;
+package com.frodo.android.app.simple.entities.amdb.mapper;
 
 import java.util.Collection;
 
