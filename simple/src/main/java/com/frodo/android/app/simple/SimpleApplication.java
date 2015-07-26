@@ -11,7 +11,7 @@ import com.frodo.android.app.framework.net.NetworkInteractor;
 import com.frodo.android.app.framework.scene.DefaultScene;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.theme.Theme;
-import com.jakewharton.trakt.util.Base64;
+import com.frodo.android.app.simple.cloud.trakt.utils.Base64;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -20,6 +20,8 @@ import retrofit.RestAdapter;
  * Created by frodo on 2015/4/2.
  */
 public class SimpleApplication extends AppApplication {
+
+    private ConfigurationModel configurationModel;
 
     @Override
     public Configuration loadConfiguration() {
@@ -46,6 +48,17 @@ public class SimpleApplication extends AppApplication {
     @Override
     public NetworkInteractor loadNetworkInteractor() {
         return new SimpleAndroidNetworkSystem(getMainController(), null, null);
+    }
+
+    @Override
+    public void loadServerConfiguration() {
+        if (configurationModel == null) {
+            configurationModel = new ConfigurationModel(getMainController());
+        }
+
+        if (!configurationModel.isValid()) {
+            configurationModel.loadServerConfig();
+        }
     }
 
     @Override

@@ -7,12 +7,13 @@ android {
     defaultConfig {
         minSdkVersion 8
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 dependencies {
-    compile jars.android_support_v4
-
-    // database realm
-    compile jars.realm
+    compile libraries.support_v4
 
     //net
     compile(
@@ -24,7 +25,9 @@ dependencies {
     compile libraries.picasso
 
     // event bus
-    compile libraries.otto
+    // compile libraries.otto
+    // replace with rxjava
+    compile libraries.rxjava
 
     compile project(':framework')
 }

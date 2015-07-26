@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frodo.android.app.simple.entities.amdb.Movie;
+import com.frodo.android.app.simple.entities.amdb.TmdbConfiguration;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 import com.squareup.picasso.Picasso;
 
@@ -73,7 +74,10 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                 }
 
                 Movie movie = (Movie) getItem(position);
-                printLog("Picasso loading image : " + movie.imageUrl);
+                final TmdbConfiguration serverConfig =
+                        (TmdbConfiguration) getMainController().getConfig().serverConfig();
+                final String baseImageUrl = serverConfig.imagesBaseUrl + 'w' + serverConfig.imagesPosterSizes[3];
+                printLog("Picasso loading image : " + baseImageUrl + movie.imageUrl);
                 Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(200, 300).into(
                         holder.imageView);
                 holder.textView.setText(movie.name);
@@ -123,5 +127,11 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
         if (getActivity() != null) {
             Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int[] calcPosterSize() {
+        int[] size = new int[2];
+
+        return null;
     }
 }

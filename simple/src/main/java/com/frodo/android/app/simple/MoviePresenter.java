@@ -29,7 +29,7 @@ public class MoviePresenter extends AbstractPresenter {
     public void loadMovies() {
         movieModel = (MovieModel) getModel();
         movieModel.setEnableCached(true);
-        movieModel.loadMovies(new MovieModel.OnFetchMoviesFinishedListener() {
+        movieModel.loadMovies(new OnFetchFinishedListener<List<Movie>>() {
             @Override
             public void onError(String errorMsg) {
                 if (movieModel.isEnableCached()) {

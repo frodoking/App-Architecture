@@ -16,6 +16,7 @@ public class AndroidConfig extends AbstractChildSystem implements Configuration 
 
     private List<Environment> environments = new ArrayList<>();
     private Environment environment;
+    private Object serverConfig;
 
     public AndroidConfig(IController controller, Environment environment) {
         super(controller);
@@ -23,12 +24,12 @@ public class AndroidConfig extends AbstractChildSystem implements Configuration 
     }
 
     @Override
-    public List<Environment> readEnvironments() {
+    public final List<Environment> readEnvironments() {
         return this.environments;
     }
 
     @Override
-    public void addEnvironment(Environment environment) {
+    public final void addEnvironment(Environment environment) {
         for (Environment tmp : environments) {
             if (tmp.equals(environment)) {
                 return;
@@ -38,18 +39,28 @@ public class AndroidConfig extends AbstractChildSystem implements Configuration 
     }
 
     @Override
-    public Environment getCurrentEnvironment() {
+    public final Environment getCurrentEnvironment() {
         return this.environment;
     }
 
     @Override
-    public void setCurrentEnvironment(Environment environment) {
+    public final void setCurrentEnvironment(Environment environment) {
         this.environment = environment;
         addEnvironment(environment);
     }
 
     @Override
-    public boolean isDebug() {
+    public final Object serverConfig() {
+        return this.serverConfig;
+    }
+
+    @Override
+    public final void setServerConfig(Object serverConfigObject) {
+        this.serverConfig = serverConfigObject;
+    }
+
+    @Override
+    public final boolean isDebug() {
         return this.environment.isDebug();
     }
 }

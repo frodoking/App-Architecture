@@ -29,9 +29,13 @@ public abstract class AppApplication extends Application implements Context {
     public void onCreate() {
         super.onCreate();
         this.controller = new MainController();
+        init();
+    }
 
+    public void init() {
         final int numberCores = Runtime.getRuntime().availableProcessors();
-        controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(Executors.newFixedThreadPool(numberCores * 2 + 1)));
+        controller.setBackgroundExecutor(
+                new AndroidBackgroundExecutorImpl(Executors.newFixedThreadPool(numberCores * 2 + 1)));
 
         controller.setContext(this);
         controller.setConfiguration(loadConfiguration());
@@ -45,6 +49,8 @@ public abstract class AppApplication extends Application implements Context {
         enableLogCollector(true);
 
         ResourceManager.newInstance(this);
+
+        loadServerConfiguration();
     }
 
     public final MainController getMainController() {
@@ -74,6 +80,8 @@ public abstract class AppApplication extends Application implements Context {
             controller.setLogCollector(null);
         }
     }
+
+    public abstract void loadServerConfiguration();
 
     @Override
     public String getRootDirName() {

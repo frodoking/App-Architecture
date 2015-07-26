@@ -23,12 +23,6 @@ public class Constants {
     public static final String TMDB_ENDPOINT = "https://api.themoviedb.org/3";
     public static final String TMDB_API_KEY = "f413bc4bacac8dff174a909f8ef535ae";
 
-    /**
-     * TODO
-     * this is from server config
-     */
-    public static final String TMDB_IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/w500";
-
     public static final String TRAKT_ACCOUNT_TYPE = "app.philm.in.account";
     public static final String TRAKT_AUTHTOKEN_PASSWORD_TYPE = "password";
     public static final long FULL_MOVIE_DETAIL_ATTEMPT_THRESHOLD = 60 * 60 * 1000; // 60 secs

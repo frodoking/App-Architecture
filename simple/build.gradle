@@ -14,10 +14,10 @@ android {
 }
 
 dependencies {
-//    compile(
-//            jars.tmdb_java_philm,
-//            jars.trakt_java_philm,
-//    )
+    compile(
+            jars.tmdb_java_philm,
+            jars.trakt_java_philm,
+    )
     compile project(':simpleentity')
     compile project(':app')
 }

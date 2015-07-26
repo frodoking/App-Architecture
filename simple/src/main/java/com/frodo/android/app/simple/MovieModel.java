@@ -26,7 +26,7 @@ public class MovieModel extends AbstractModel {
         }
     }
 
-    public void loadMovies(OnFetchMoviesFinishedListener listener) {
+    public void loadMovies(OnFetchFinishedListener listener) {
         fetchMoviesTask = new FetchMoviesTask(moviesService, listener);
         getMainController().getBackgroundExecutor().execute(fetchMoviesTask);
     }
@@ -51,11 +51,5 @@ public class MovieModel extends AbstractModel {
         if (movieCache == null) {
             movieCache = new MovieCache(getMainController().getCacheSystem(), Cache.Type.DISK);
         }
-    }
-
-    public interface OnFetchMoviesFinishedListener {
-        void onError(String errorMsg);
-
-        void onSuccess(List<Movie> movies);
     }
 }

@@ -53,7 +53,7 @@ public class MovieCache extends AbstractCache<String, List<Movie>> {
     private String createAbsoluteKey(String relativeKey) {
         final FileSystem fs = getCacheSystem().getController().getFileSystem();
         final String absoluteKey = fs.getFilePath() + File.separator + relativeKey + ".cache.tmp";
-        getCacheSystem().getController().getLogCollector().d("MovieCache" ,"Cache path >>>> " + absoluteKey);
+        getCacheSystem().getController().getLogCollector().d("MovieCache", "Cache path >>>> " + absoluteKey);
         return absoluteKey;
     }
 }

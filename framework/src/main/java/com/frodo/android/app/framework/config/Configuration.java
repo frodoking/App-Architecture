@@ -20,5 +20,9 @@ public interface Configuration extends ChildSystem {
 
     void setCurrentEnvironment(Environment environment);
 
+    Object serverConfig();
+
+    void setServerConfig(Object serverConfigObject);
+
     boolean isDebug();
 }
