@@ -81,9 +81,10 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                 final TmdbConfiguration serverConfig =
                         (TmdbConfiguration) getMainController().getConfig().serverConfig();
                 final String baseImageUrl = serverConfig.imagesBaseUrl + 'w' + serverConfig.imagesPosterSizes[2];
-                printLog("Picasso loading image : " + baseImageUrl + movie.imageUrl);
-                Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(imageSize[0], imageSize[1]).into(
-                        holder.imageView);
+                final String imageUrl = baseImageUrl + movie.imageUrl;
+                printLog("Picasso loading image : " + imageUrl);
+                Picasso.with(getActivity()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])
+                        .into(holder.imageView);
                 holder.textView.setText(movie.name);
 
                 return convertView;

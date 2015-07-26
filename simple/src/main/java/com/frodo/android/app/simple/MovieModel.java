@@ -26,7 +26,7 @@ public class MovieModel extends AbstractModel {
         }
     }
 
-    public void loadMovies(OnFetchFinishedListener listener) {
+    public void loadMovies(OnFetchFinishedListener<List<Movie>> listener) {
         fetchMoviesTask = new FetchMoviesTask(moviesService, listener);
         getMainController().getBackgroundExecutor().execute(fetchMoviesTask);
     }

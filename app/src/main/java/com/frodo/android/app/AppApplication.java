@@ -15,6 +15,8 @@ import com.frodo.android.app.framework.controller.ModelFactory;
 import com.frodo.android.app.framework.net.NetworkInteractor;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.theme.Theme;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
 import android.app.Application;
 import android.os.Environment;
@@ -68,6 +70,7 @@ public abstract class AppApplication extends Application implements Context {
     public final void enableCache(boolean enable) {
         if (enable) {
             controller.setCacheSystem(new AndroidCacheSystem(this.controller, "/"));
+            loadImageCache();
         } else {
             controller.setCacheSystem(null);
         }
@@ -82,6 +85,13 @@ public abstract class AppApplication extends Application implements Context {
     }
 
     public abstract void loadServerConfiguration();
+
+    private void loadImageCache() {
+        final String imageCacheDir = getMainController().getFileSystem().getFilePath() + File.separator + "image";
+        Picasso picasso = new Picasso.Builder(this).downloader(
+                new OkHttpDownloader(new File(imageCacheDir))).build();
+        Picasso.setSingletonInstance(picasso);
+    }
 
     @Override
     public String getRootDirName() {
