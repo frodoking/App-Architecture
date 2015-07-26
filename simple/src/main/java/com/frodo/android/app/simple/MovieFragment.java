@@ -3,6 +3,7 @@ package com.frodo.android.app.simple;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.frodo.android.app.core.toolbox.ScreenUtils;
 import com.frodo.android.app.simple.entities.amdb.Movie;
 import com.frodo.android.app.simple.entities.amdb.TmdbConfiguration;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
@@ -28,6 +29,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
     private MoviePresenter presenter;
     private GridView gridView;
 
+    private int[] imageSize;
+
     @Override
     public void onCreatePresenter() {
         presenter = new MoviePresenter(this);
@@ -41,6 +44,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void initView() {
+        imageSize = calcPosterSize();
         gridView = (GridView) getView().findViewById(R.id.gridview);
 
         movieAdapter = new BaseAdapter() {
@@ -76,9 +80,9 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                 Movie movie = (Movie) getItem(position);
                 final TmdbConfiguration serverConfig =
                         (TmdbConfiguration) getMainController().getConfig().serverConfig();
-                final String baseImageUrl = serverConfig.imagesBaseUrl + 'w' + serverConfig.imagesPosterSizes[3];
+                final String baseImageUrl = serverConfig.imagesBaseUrl + 'w' + serverConfig.imagesPosterSizes[2];
                 printLog("Picasso loading image : " + baseImageUrl + movie.imageUrl);
-                Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(200, 300).into(
+                Picasso.with(getActivity()).load(movie.imageUrl).centerCrop().resize(imageSize[0], imageSize[1]).into(
                         holder.imageView);
                 holder.textView.setText(movie.name);
 
@@ -130,8 +134,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
     }
 
     private int[] calcPosterSize() {
-        int[] size = new int[2];
-
-        return null;
+        int itemWidth = (ScreenUtils.getScreenWidth(getActivity()) - 4 * 20) / 3;
+        int itemHeight = itemWidth * 278 / 135;
+        return new int[] {itemWidth, itemHeight};
     }
 }

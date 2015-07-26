@@ -20,15 +20,14 @@ public class ConfigurationModel extends AbstractModel {
         ConfigurationService configurationService =
                 controller.getNetworkInteractor().create(ConfigurationService.class);
         fetchTmdbConfigurationTask = new FetchTmdbConfigurationTask(configurationService,
-                new OnFetchFinishedListener() {
+                new OnFetchFinishedListener<TmdbConfiguration>() {
                     @Override
                     public void onError(String errorMsg) {
-
                     }
 
                     @Override
-                    public void onSuccess(Object resultObject) {
-                        setTmdbConfiguration(tmdbConfiguration);
+                    public void onSuccess(TmdbConfiguration resultObject) {
+                        setTmdbConfiguration(resultObject);
                     }
                 });
     }
