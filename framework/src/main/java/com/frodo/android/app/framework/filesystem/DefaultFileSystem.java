@@ -27,7 +27,7 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
         if (!file.exists()) {
             boolean success = file.mkdirs();
             if (!success) {
-                throw new IllegalArgumentException("create file system dir fail.");
+                throw new IllegalArgumentException("create file system " + filePath + " fail.");
             }
         }
     }

@@ -8,6 +8,7 @@ import com.frodo.android.app.core.filesystem.AndroidFileSystem;
 import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.task.AndroidBackgroundExecutorImpl;
 import com.frodo.android.app.core.toolbox.ResourceManager;
+import com.frodo.android.app.core.toolbox.SDCardUtils;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.context.Context;
 import com.frodo.android.app.framework.controller.MainController;
@@ -19,7 +20,6 @@ import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 import android.app.Application;
-import android.os.Environment;
 
 /**
  * Created by frodo on 2014/12/19.
@@ -95,11 +95,11 @@ public abstract class AppApplication extends Application implements Context {
 
     @Override
     public String getRootDirName() {
-        return Environment.getExternalStorageDirectory().getPath() + File.separator;
+        return SDCardUtils.getSDCardPath() + File.separator;
     }
 
     @Override
     public String getFilesDirName() {
-        return getRootDirName() + File.separator + getPackageName() + File.separator;
+        return getRootDirName() + getPackageName() + File.separator;
     }
 }

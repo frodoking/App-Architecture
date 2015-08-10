@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.frodo.android.app.simple"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -18,6 +18,8 @@ dependencies {
             jars.tmdb_java_philm,
             jars.trakt_java_philm,
     )
+
+    compile libraries.rxandroid
     compile project(':simpleentity')
     compile project(':app')
 }
