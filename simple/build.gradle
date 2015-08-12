@@ -20,7 +20,7 @@ android {
         def flavorData = rootProject.ext[flavor.name]
         flavor.applicationId flavorData.packageName
         flavor.versionCode flavorData.versionCode
-        flavor.versionName flavorData.versionNAme
+        flavor.versionName flavorData.versionName
     }
 
     productFlavors {
@@ -29,10 +29,10 @@ android {
     }
 
     dependencies {
-        compile(
+        /*compile(
                 jars.tmdb_java_philm,
                 jars.trakt_java_philm,
-        )
+        )*/
 
         compile libraries.rxandroid
         compile project(':simpleentity')

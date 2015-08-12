@@ -2,7 +2,7 @@ apply from: 'dependencyDefinitions.gradle'
 apply from: 'variants.gradle'
 
 ext {
-    androidMinSdkVersion = 21
+    androidMinSdkVersion = 9
     androidSdkVersion = 22
     androidToolsVersion = "22.0.1"
 }
