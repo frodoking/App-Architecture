@@ -27,8 +27,8 @@ public class RxJavaApi {
 
     public static void test(final TextView textView) {
         /**
-         * ¶à¸ö city ÇëÇó
-         * map£¬flatMap ¶Ô Observable½øĞĞ±ä»»
+         * å¤šä¸ª city è¯·æ±‚
+         * mapï¼ŒflatMap å¯¹ Observableè¿›è¡Œå˜æ¢
          */
         Observable.from(CITIES)
                 .flatMap(new Func1<String, Observable<WeatherData>>() {
@@ -53,8 +53,8 @@ public class RxJavaApi {
     }
 
     /**
-     * ½«·şÎñ½Ó¿Ú·µ»ØµÄÊı¾İ£¬·â×°³É{@link rx.Observable}
-     * ÕâÖÖĞ´·¨ÊÊÓÃÓÚ½«¾É´úÂë·â×°
+     * å°†æœåŠ¡æ¥å£è¿”å›çš„æ•°æ®ï¼Œå°è£…æˆ{@link rx.Observable}
+     * è¿™ç§å†™æ³•é€‚ç”¨äºå°†æ—§ä»£ç å°è£…
      *
      * @param city
      *
@@ -64,7 +64,7 @@ public class RxJavaApi {
         return Observable.create(new Observable.OnSubscribe<WeatherData>() {
             @Override
             public void call(Subscriber<? super WeatherData> subscriber) {
-                //¶©ÔÄÕß»Øµ÷ onNext ºÍ onCompleted
+                //è®¢é˜…è€…å›è°ƒ onNext å’Œ onCompleted
                 subscriber.onNext(apiManager.getWeather(city, "metric"));
                 subscriber.onCompleted();
             }
@@ -72,15 +72,15 @@ public class RxJavaApi {
     }
 
     /**
-     * ·şÎñ½Ó¿Ú
+     * æœåŠ¡æ¥å£
      */
     private interface ApiManagerService {
         @GET("/weather")
         WeatherData getWeather(@Query("q") String place, @Query("units") String units);
 
         /**
-         * retrofit Ö§³Ö rxjava ÕûºÏ
-         * ÕâÖÖ·½·¨ÊÊÓÃÓÚĞÂ½Ó¿Ú
+         * retrofit æ”¯æŒ rxjava æ•´åˆ
+         * è¿™ç§æ–¹æ³•é€‚ç”¨äºæ–°æ¥å£
          */
         @GET("/weather")
         Observable<WeatherData> getWeatherData(@Query("q") String place, @Query("units") String units);

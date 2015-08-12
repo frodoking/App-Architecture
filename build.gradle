@@ -1,24 +1,23 @@
+apply from: 'dependencyDefinitions.gradle'
+apply from: 'variants.gradle'
+
 ext {
-    customCompileSdkVersion = 21
-    customBuildToolsVersion = '22.0.1'
+    androidMinSdkVersion = 21
+    androidSdkVersion = 22
+    androidToolsVersion = "22.0.1"
 }
 
-apply from: 'dependencyDefinitions.gradle'
-
 buildscript {
-    def gradleVersion = '1.0.1'
-
     repositories {
-        jcenter();
+        jcenter()
     }
+
     dependencies {
-        classpath "com.android.tools.build:gradle:$gradleVersion"
+        classpath 'com.android.tools.build:gradle:1.3.0'
     }
 }
 
 allprojects {
-    group = 'com.frodo.android.app'
-
     repositories {
         jcenter()
     }

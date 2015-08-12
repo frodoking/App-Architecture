@@ -1,15 +1,22 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion customCompileSdkVersion
-    buildToolsVersion customBuildToolsVersion
+    compileSdkVersion   androidSdkVersion
+    buildToolsVersion   androidToolsVersion
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion     androidMinSdkVersion
+        targetSdkVersion  androidSdkVersion
     }
 
     lintOptions {
         abortOnError false
+    }
+
+    compileOptions {
+        encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 dependencies {

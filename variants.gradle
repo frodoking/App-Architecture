@@ -1,0 +1,19 @@
+ext {
+    basePackageName = 'com.android.app.simple'
+    resAppColorName = 'build_brand_primary'
+    resAppName = 'build_app_name'
+
+    paid = [
+            packageName: "${basePackageName}.premium",
+            appName    : "Android Framework Compile With Gradle For Paid",
+            versionName: "2.3.2",
+            versionCode: 4
+    ]
+
+    free = [
+            packageName: "${basePackageName}.free",
+            appName    : "Android Framework Compile With Gradle For Free",
+            versionName: "4.1.1",
+            versionCode: 15
+    ]
+}

@@ -1,25 +1,47 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion customCompileSdkVersion
-    buildToolsVersion customBuildToolsVersion
+    compileSdkVersion androidSdkVersion
+    buildToolsVersion androidToolsVersion
 
     defaultConfig {
-        applicationId "com.frodo.android.app.simple"
-        minSdkVersion 9
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        applicationId basePackageName
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidSdkVersion
     }
-}
 
-dependencies {
-    compile(
-            jars.tmdb_java_philm,
-            jars.trakt_java_philm,
-    )
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
+    }
 
-    compile libraries.rxandroid
-    compile project(':simpleentity')
-    compile project(':app')
+    compileOptions {
+        encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    productFlavors.whenObjectAdded { flavor ->
+        def flavorData = rootProject.ext[flavor.name]
+        flavor.applicationId flavorData.packageName
+        flavor.versionCode flavorData.versionCode
+        flavor.versionName flavorData.versionNAme
+    }
+
+    productFlavors {
+        paid {}
+        free {}
+    }
+
+    dependencies {
+        compile(
+                jars.tmdb_java_philm,
+                jars.trakt_java_philm,
+        )
+
+        compile libraries.rxandroid
+        compile project(':simpleentity')
+        compile project(':app')
+    }
 }
