@@ -10,12 +10,6 @@ android {
         targetSdkVersion androidSdkVersion
     }
 
-    buildTypes {
-        debug {
-            applicationIdSuffix '.debug'
-        }
-    }
-
     compileOptions {
         encoding "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_7
