@@ -7,12 +7,16 @@ import com.frodo.android.app.simple.entities.amdb.TmdbConfiguration;
 
 import android.text.TextUtils;
 
+import rx.Subscriber;
+import rx.observers.SafeSubscriber;
+
 /**
  * Created by frodo on 2015/7/24.
  */
 public class ConfigurationModel extends AbstractModel {
 
     private FetchTmdbConfigurationTask fetchTmdbConfigurationTask;
+    private FetchTmdbConfigurationWithRxjavaTask fetchTmdbConfigurationWithRxjavaTask;
     private TmdbConfiguration tmdbConfiguration;
 
     public ConfigurationModel(MainController controller) {
@@ -30,6 +34,20 @@ public class ConfigurationModel extends AbstractModel {
                         setTmdbConfiguration(resultObject);
                     }
                 });
+
+        fetchTmdbConfigurationWithRxjavaTask = new FetchTmdbConfigurationWithRxjavaTask(configurationService, new Subscriber<TmdbConfiguration>(){
+            @Override
+            public void onNext(TmdbConfiguration tmdbConfiguration) {
+                setTmdbConfiguration(tmdbConfiguration);
+            }
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+        });
     }
 
     public boolean isValid() {
@@ -41,7 +59,7 @@ public class ConfigurationModel extends AbstractModel {
     }
 
     public void loadServerConfig() {
-        getMainController().getBackgroundExecutor().execute(fetchTmdbConfigurationTask);
+        getMainController().getBackgroundExecutor().execute(/*fetchTmdbConfigurationTask*/fetchTmdbConfigurationWithRxjavaTask);
     }
 
     public void setTmdbConfiguration(TmdbConfiguration tmdbConfiguration) {
