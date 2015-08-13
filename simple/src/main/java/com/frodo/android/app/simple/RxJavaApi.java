@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.util.Log;
 import android.widget.TextView;
+
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -57,7 +58,6 @@ public class RxJavaApi {
      * 这种写法适用于将旧代码封装
      *
      * @param city
-     *
      * @return
      */
     public static Observable<WeatherData> getWeatherData(final String city) {

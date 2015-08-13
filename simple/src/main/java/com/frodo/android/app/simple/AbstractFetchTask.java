@@ -8,6 +8,7 @@ import com.frodo.android.app.framework.net.NetworkCallTask;
  * LR represent Local Result
  * Created by frodo on 2015/7/26.
  */
+@Deprecated
 public abstract class AbstractFetchTask<S, SR, LR> extends NetworkCallTask<SR> {
 
     private S service;

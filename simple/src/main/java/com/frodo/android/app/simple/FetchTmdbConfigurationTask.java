@@ -9,7 +9,7 @@ import com.frodo.android.app.simple.entities.amdb.mapper.TmdbConfigurationMapper
  * get configuration from server
  * Created by frodo on 2015/7/24.
  */
-public class FetchTmdbConfigurationTask extends AbstractFetchTask<ConfigurationService, Configuration,TmdbConfiguration> {
+public class FetchTmdbConfigurationTask extends AbstractFetchTask<ConfigurationService, Configuration, TmdbConfiguration> {
 
     public FetchTmdbConfigurationTask(ConfigurationService service,
                                       OnFetchFinishedListener<TmdbConfiguration> l) {

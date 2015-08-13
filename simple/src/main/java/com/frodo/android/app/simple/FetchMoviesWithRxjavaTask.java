@@ -1,24 +1,24 @@
 package com.frodo.android.app.simple;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.frodo.android.app.core.task.AndroidFetchTask;
 import com.frodo.android.app.simple.cloud.amdb.entities.MovieResultsPage;
 import com.frodo.android.app.simple.cloud.amdb.services.MoviesService;
 import com.frodo.android.app.simple.entities.amdb.Movie;
 import com.frodo.android.app.simple.entities.amdb.mapper.MovieMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Subscriber;
+
 /**
- * fetch movies from tmdb
- * Created by frodo on 2015/7/6.
+ * Created by frodo on 2015/8/13.
  */
-@Deprecated
-public class FetchMoviesTask extends AbstractFetchTask<MoviesService, MovieResultsPage, List<Movie>> {
+public class FetchMoviesWithRxjavaTask extends AndroidFetchTask<MoviesService, MovieResultsPage, List<Movie>> {
     private String requestParams = "";
 
-    public FetchMoviesTask(MoviesService service,
-                           OnFetchFinishedListener<List<Movie>> l) {
-        super(service, l);
+    protected FetchMoviesWithRxjavaTask(MoviesService service, Subscriber<List<Movie>> subscriber) {
+        super(service, subscriber);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class FetchMoviesTask extends AbstractFetchTask<MoviesService, MovieResul
     }
 
     @Override
-    public final void onSuccess(MovieResultsPage result) {
+    public void onSuccess(MovieResultsPage result) {
         MovieMapper movieMapper = new MovieMapper();
 
         List<Movie> currentMovies = new ArrayList<>();
@@ -36,7 +36,7 @@ public class FetchMoviesTask extends AbstractFetchTask<MoviesService, MovieResul
             currentMovies.add(movieMapper.transform(movie));
         }
 
-        getListener().onSuccess(currentMovies);
+        getSubscriber().onNext(currentMovies);
     }
 
     @Override

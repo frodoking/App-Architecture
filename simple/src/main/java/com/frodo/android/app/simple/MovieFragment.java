@@ -112,7 +112,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
     @Override
     public void initBusiness() {
-        presenter.loadMovies();
+//        presenter.loadMovies();
+        presenter.loadMoviesWithRxjava();
     }
 
     @Override
@@ -137,6 +138,6 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
     private int[] calcPosterSize() {
         int itemWidth = (ScreenUtils.getScreenWidth(getActivity()) - 4 * 20) / 3;
         int itemHeight = itemWidth * 278 / 135;
-        return new int[] {itemWidth, itemHeight};
+        return new int[]{itemWidth, itemHeight};
     }
 }

@@ -20,6 +20,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
+
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -29,6 +30,10 @@ import retrofit.converter.GsonConverter;
  * Created by frodo on 2015/6/20.
  */
 public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkInteractor {
+    public static final int DEFAULT_READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
+    public static final int DEFAULT_WRITE_TIMEOUT_MILLIS = 20 * 1000; // 20s
+    public static final int DEFAULT_CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
+
     private Context context;
     private RestAdapter restAdapter;
 
@@ -97,19 +102,19 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     /**
      * 可以重写
      * RestAdapter.Builder b = super.newRestAdapterBuilder();
-     * <p/>
+     * <p>
      * if (mCacheLocation != null) {
      * OkHttpClient client = new OkHttpClient();
      * File cacheDir = new File(mCacheLocation, UUID.randomUUID().toString());
      * Cache cache = new Cache(cacheDir, 1024);
      * client.setCache(cache);
-     * <p/>
+     * <p>
      * client.setConnectTimeout(Constants.CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
      * client.setReadTimeout(Constants.READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-     * <p/>
+     * <p>
      * b.setClient(new OkClient(client));
      * }
-     * <p/>
+     * <p>
      * return b;
      */
     public RestAdapter.Builder newRestAdapterBuilder() {
@@ -122,6 +127,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
             builder.setEndpoint(getController().getConfig().getCurrentEnvironment().getUrl());
             builder.setConverter(new GsonConverter(getGsonBuilder().create()));
             builder.setRequestInterceptor(getRequestInterceptor());
+            builder.setLogLevel(getController().getConfig().isDebug() ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
             if (getController().getConfig().isDebug()) {
                 builder.setLogLevel(RestAdapter.LogLevel.FULL);
             }
@@ -133,10 +139,15 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     }
 
     public RequestInterceptor getRequestInterceptor() {
-        return null;
+        return new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                // do nothing
+            }
+        };
     }
 
-    private GsonBuilder getGsonBuilder() {
+    public GsonBuilder getGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Integer.class, new JsonDeserializer() {
             public Integer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws

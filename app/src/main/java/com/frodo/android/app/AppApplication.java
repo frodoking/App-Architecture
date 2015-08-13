@@ -1,12 +1,12 @@
 package com.frodo.android.app;
 
-import java.io.File;
-import java.util.concurrent.Executors;
+import android.app.Application;
 
 import com.frodo.android.app.core.cache.AndroidCacheSystem;
 import com.frodo.android.app.core.filesystem.AndroidFileSystem;
 import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.task.AndroidBackgroundExecutorImpl;
+import com.frodo.android.app.core.task.AndroidExecutor;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.core.toolbox.SDCardUtils;
 import com.frodo.android.app.framework.config.Configuration;
@@ -19,10 +19,10 @@ import com.frodo.android.app.framework.theme.Theme;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
-import android.app.Application;
+import java.io.File;
 
 /**
- * Created by frodo on 2014/12/19.
+ * Created by frodo on 2014/12/19. Base Application
  */
 public abstract class AppApplication extends Application implements Context {
     private MainController controller;
@@ -36,8 +36,8 @@ public abstract class AppApplication extends Application implements Context {
 
     public void init() {
         final int numberCores = Runtime.getRuntime().availableProcessors();
-        controller.setBackgroundExecutor(
-                new AndroidBackgroundExecutorImpl(Executors.newFixedThreadPool(numberCores * 2 + 1)));
+        final AndroidExecutor executor = new AndroidExecutor("app-default",numberCores * 2 + 1);
+        controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(executor));
 
         controller.setContext(this);
         controller.setConfiguration(loadConfiguration());

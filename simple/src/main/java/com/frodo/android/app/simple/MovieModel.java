@@ -1,19 +1,21 @@
 package com.frodo.android.app.simple;
 
-import java.util.List;
-
 import com.frodo.android.app.framework.cache.Cache;
 import com.frodo.android.app.framework.controller.AbstractModel;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.simple.cloud.amdb.services.MoviesService;
 import com.frodo.android.app.simple.entities.amdb.Movie;
 
+import java.util.List;
+
+import rx.Subscriber;
+
 /**
  * Created by frodo on 2015/4/2.
  */
 public class MovieModel extends AbstractModel {
-
-    private FetchMoviesTask fetchMoviesTask;
+    //    private FetchMoviesTask fetchMoviesTask;
+    private FetchMoviesWithRxjavaTask fetchMoviesWithRxjavaTask;
     private MoviesService moviesService;
     private MovieCache movieCache;
     private boolean enableCached;
@@ -26,19 +28,24 @@ public class MovieModel extends AbstractModel {
         }
     }
 
-    public void loadMovies(OnFetchFinishedListener<List<Movie>> listener) {
+    /*public void loadMovies(OnFetchFinishedListener<List<Movie>> listener) {
         fetchMoviesTask = new FetchMoviesTask(moviesService, listener);
         getMainController().getBackgroundExecutor().execute(fetchMoviesTask);
+    }*/
+
+    public void loadMoviesWithRxjava(Subscriber<List<Movie>> subscriber) {
+        fetchMoviesWithRxjavaTask = new FetchMoviesWithRxjavaTask(moviesService, subscriber);
+        getMainController().getBackgroundExecutor().execute(fetchMoviesWithRxjavaTask);
     }
 
     public void setMovies(List<Movie> movies) {
         if (enableCached) {
-            movieCache.put(fetchMoviesTask.key(), movies);
+            movieCache.put(fetchMoviesWithRxjavaTask.key(), movies);
         }
     }
 
     public List<Movie> getMoviesFromCache() {
-        return enableCached ? movieCache.get(fetchMoviesTask.key()) : null;
+        return enableCached ? movieCache.get(fetchMoviesWithRxjavaTask.key()) : null;
     }
 
     public boolean isEnableCached() {
