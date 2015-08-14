@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion   androidSdkVersion
-    buildToolsVersion   androidToolsVersion
+    compileSdkVersion androidSdkVersion
+    buildToolsVersion androidToolsVersion
 
     defaultConfig {
-        minSdkVersion     androidMinSdkVersion
-        targetSdkVersion  androidSdkVersion
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidSdkVersion
     }
 
     lintOptions {
@@ -31,6 +31,9 @@ dependencies {
     compile libraries.rxjava
 
     compile project(':framework')
+
+    debugCompile libraries.leakcanary_android
+    releaseCompile libraries.leakcanary_android_no_op
 }
 
 

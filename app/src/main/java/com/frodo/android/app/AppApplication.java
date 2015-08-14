@@ -7,6 +7,7 @@ import com.frodo.android.app.core.filesystem.AndroidFileSystem;
 import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.task.AndroidBackgroundExecutorImpl;
 import com.frodo.android.app.core.task.AndroidExecutor;
+import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.core.toolbox.SDCardUtils;
 import com.frodo.android.app.framework.config.Configuration;
@@ -51,6 +52,8 @@ public abstract class AppApplication extends Application implements Context {
         enableLogCollector(true);
 
         ResourceManager.newInstance(this);
+
+        AndroidLeakcanary.newInstance(this);
 
         loadServerConfiguration();
     }

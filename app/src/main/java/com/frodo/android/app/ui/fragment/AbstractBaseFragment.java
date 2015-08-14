@@ -1,9 +1,11 @@
 package com.frodo.android.app.ui.fragment;
 
+import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
 import com.frodo.android.app.framework.controller.IView;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.ui.activity.AbstractBaseActivity;
 import com.frodo.android.app.ui.activity.FragmentContainerActivity2;
+import com.squareup.leakcanary.RefWatcher;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -123,6 +125,11 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        // leakcanary
+        RefWatcher refWatcher = AndroidLeakcanary.get().getRefWatcher();
+        refWatcher.watch(this);
+
         printLeftCycle("onDestroy");
     }
 
