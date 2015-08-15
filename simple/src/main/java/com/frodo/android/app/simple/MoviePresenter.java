@@ -63,6 +63,8 @@ public class MoviePresenter extends AbstractPresenter {
      * Use RxJava for callback
      */
     public void loadMoviesWithRxjava() {
+        movieModel = (MovieModel) getModel();
+        movieModel.setEnableCached(true);
         Observable.from(DEFAULT)
                 .flatMap(new Func1<String, Observable<List<Movie>>>() {
                     @Override

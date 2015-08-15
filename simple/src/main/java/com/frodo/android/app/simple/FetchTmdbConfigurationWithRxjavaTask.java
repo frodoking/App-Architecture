@@ -1,10 +1,8 @@
 package com.frodo.android.app.simple;
 
-import com.frodo.android.app.core.task.AndroidFetchTask;
+import com.frodo.android.app.core.task.AndroidFetchNetworkDataTask;
 import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.cloud.amdb.services.ConfigurationService;
-import com.frodo.android.app.simple.entities.amdb.TmdbConfiguration;
-import com.frodo.android.app.simple.entities.amdb.mapper.TmdbConfigurationMapper;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -12,8 +10,9 @@ import rx.Subscriber;
 /**
  * Created by frodo on 2015/8/13. use rxjava Observable & Subscriber
  */
-public class FetchTmdbConfigurationWithRxjavaTask extends AndroidFetchTask<ConfigurationService, Configuration, TmdbConfiguration> {
-    protected FetchTmdbConfigurationWithRxjavaTask(ConfigurationService service, Subscriber<TmdbConfiguration> subscriber) {
+public class FetchTmdbConfigurationWithRxjavaTask extends AndroidFetchNetworkDataTask<ConfigurationService,Configuration> {
+
+    protected FetchTmdbConfigurationWithRxjavaTask(ConfigurationService service, Subscriber<Configuration> subscriber) {
         super(service, subscriber);
     }
 
@@ -23,16 +22,15 @@ public class FetchTmdbConfigurationWithRxjavaTask extends AndroidFetchTask<Confi
     }
 
     @Override
-    public final void onSuccess(Configuration result) {
-        final TmdbConfigurationMapper mapper = new TmdbConfigurationMapper();
-        final TmdbConfiguration tmdbConfiguration = mapper.transform(result);
-        Observable<TmdbConfiguration> observable = Observable.create(new Observable.OnSubscribe<TmdbConfiguration>() {
+    public void onSuccess(final Configuration configuration) {
+        Observable<Configuration> observable = Observable.create(new Observable.OnSubscribe<Configuration>() {
             @Override
-            public void call(Subscriber<? super TmdbConfiguration> subscriber) {
-                subscriber.onNext(tmdbConfiguration);
+            public void call(Subscriber<? super Configuration> subscriber) {
+                subscriber.onNext(configuration);
                 subscriber.onCompleted();
             }
         });
         observable.subscribe(getSubscriber());
     }
+
 }

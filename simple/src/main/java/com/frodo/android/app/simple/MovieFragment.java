@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frodo.android.app.core.toolbox.ScreenUtils;
+import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.entities.amdb.Movie;
-import com.frodo.android.app.simple.entities.amdb.TmdbConfiguration;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 import com.squareup.picasso.Picasso;
 
@@ -78,9 +78,8 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
                 }
 
                 Movie movie = (Movie) getItem(position);
-                final TmdbConfiguration serverConfig =
-                        (TmdbConfiguration) getMainController().getConfig().serverConfig();
-                final String baseImageUrl = serverConfig.imagesBaseUrl + 'w' + serverConfig.imagesPosterSizes[2];
+                final Configuration serverConfig = (Configuration) getMainController().getConfig().serverConfig();
+                final String baseImageUrl = serverConfig.images.base_url + 'w' + serverConfig.images.poster_sizes.get(2);
                 final String imageUrl = baseImageUrl + movie.imageUrl;
                 printLog("Picasso loading image : " + imageUrl);
                 Picasso.with(getActivity()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])

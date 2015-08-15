@@ -14,7 +14,6 @@ import rx.Subscriber;
  * Created by frodo on 2015/4/2.
  */
 public class MovieModel extends AbstractModel {
-    //    private FetchMoviesTask fetchMoviesTask;
     private FetchMoviesWithRxjavaTask fetchMoviesWithRxjavaTask;
     private MoviesService moviesService;
     private MovieCache movieCache;
@@ -27,11 +26,6 @@ public class MovieModel extends AbstractModel {
             movieCache = new MovieCache(getMainController().getCacheSystem(), Cache.Type.DISK);
         }
     }
-
-    /*public void loadMovies(OnFetchFinishedListener<List<Movie>> listener) {
-        fetchMoviesTask = new FetchMoviesTask(moviesService, listener);
-        getMainController().getBackgroundExecutor().execute(fetchMoviesTask);
-    }*/
 
     public void loadMoviesWithRxjava(Subscriber<List<Movie>> subscriber) {
         fetchMoviesWithRxjavaTask = new FetchMoviesWithRxjavaTask(moviesService, subscriber);

@@ -14,6 +14,7 @@ import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.context.Context;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.framework.controller.ModelFactory;
+import com.frodo.android.app.framework.log.LogCollector;
 import com.frodo.android.app.framework.net.NetworkInteractor;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.theme.Theme;
@@ -41,6 +42,7 @@ public abstract class AppApplication extends Application implements Context {
         controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(executor));
 
         controller.setContext(this);
+        controller.setLogCollector(loadLogCollector());
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());
@@ -49,7 +51,6 @@ public abstract class AppApplication extends Application implements Context {
         controller.setModelFactory(new ModelFactory());
 
         enableCache(true);
-        enableLogCollector(true);
 
         ResourceManager.newInstance(this);
 
@@ -61,6 +62,8 @@ public abstract class AppApplication extends Application implements Context {
     public final MainController getMainController() {
         return this.controller;
     }
+
+    public abstract LogCollector loadLogCollector();
 
     public abstract Configuration loadConfiguration();
 
@@ -76,14 +79,6 @@ public abstract class AppApplication extends Application implements Context {
             loadImageCache();
         } else {
             controller.setCacheSystem(null);
-        }
-    }
-
-    public final void enableLogCollector(boolean enable) {
-        if (enable) {
-            controller.setLogCollector(new AndroidLogCollectorSystem(this.controller));
-        } else {
-            controller.setLogCollector(null);
         }
     }
 

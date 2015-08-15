@@ -1,6 +1,6 @@
 package com.frodo.android.app.simple;
 
-import com.frodo.android.app.core.task.AndroidFetchTask;
+import com.frodo.android.app.core.task.AndroidFetchAndMapperNetworkDataTask;
 import com.frodo.android.app.simple.cloud.amdb.entities.MovieResultsPage;
 import com.frodo.android.app.simple.cloud.amdb.services.MoviesService;
 import com.frodo.android.app.simple.entities.amdb.Movie;
@@ -14,7 +14,7 @@ import rx.Subscriber;
 /**
  * Created by frodo on 2015/8/13.
  */
-public class FetchMoviesWithRxjavaTask extends AndroidFetchTask<MoviesService, MovieResultsPage, List<Movie>> {
+public class FetchMoviesWithRxjavaTask extends AndroidFetchAndMapperNetworkDataTask<MoviesService, MovieResultsPage, List<Movie>> {
     private String requestParams = "";
 
     protected FetchMoviesWithRxjavaTask(MoviesService service, Subscriber<List<Movie>> subscriber) {

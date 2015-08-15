@@ -2,44 +2,34 @@ package com.frodo.android.app.simple;
 
 import com.frodo.android.app.framework.controller.AbstractModel;
 import com.frodo.android.app.framework.controller.MainController;
+import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.cloud.amdb.services.ConfigurationService;
-import com.frodo.android.app.simple.entities.amdb.TmdbConfiguration;
 
 import android.text.TextUtils;
 
+import java.util.List;
+
 import rx.Subscriber;
-import rx.observers.SafeSubscriber;
 
 /**
  * Created by frodo on 2015/7/24.
  */
 public class ConfigurationModel extends AbstractModel {
 
-    private FetchTmdbConfigurationTask fetchTmdbConfigurationTask;
     private FetchTmdbConfigurationWithRxjavaTask fetchTmdbConfigurationWithRxjavaTask;
-    private TmdbConfiguration tmdbConfiguration;
+    private Configuration tmdbConfiguration;
 
     public ConfigurationModel(MainController controller) {
         super(controller);
         ConfigurationService configurationService =
                 controller.getNetworkInteractor().create(ConfigurationService.class);
-        fetchTmdbConfigurationTask = new FetchTmdbConfigurationTask(configurationService,
-                new OnFetchFinishedListener<TmdbConfiguration>() {
-                    @Override
-                    public void onError(String errorMsg) {
-                    }
 
-                    @Override
-                    public void onSuccess(TmdbConfiguration resultObject) {
-                        setTmdbConfiguration(resultObject);
-                    }
-                });
-
-        fetchTmdbConfigurationWithRxjavaTask = new FetchTmdbConfigurationWithRxjavaTask(configurationService, new Subscriber<TmdbConfiguration>(){
+        fetchTmdbConfigurationWithRxjavaTask = new FetchTmdbConfigurationWithRxjavaTask(configurationService, new Subscriber<Configuration>() {
             @Override
-            public void onNext(TmdbConfiguration tmdbConfiguration) {
+            public void onNext(Configuration tmdbConfiguration) {
                 setTmdbConfiguration(tmdbConfiguration);
             }
+
             @Override
             public void onCompleted() {
             }
@@ -52,17 +42,21 @@ public class ConfigurationModel extends AbstractModel {
 
     public boolean isValid() {
         return tmdbConfiguration != null
-                && !TextUtils.isEmpty(tmdbConfiguration.imagesBaseUrl)
-                && tmdbConfiguration.imagesBackdropSizes != null
-                && tmdbConfiguration.imagesPosterSizes != null
-                && tmdbConfiguration.imagesProfileSizes != null;
+                && !TextUtils.isEmpty(tmdbConfiguration.images.base_url)
+                && isListEmpty(tmdbConfiguration.images.backdrop_sizes)
+                && isListEmpty(tmdbConfiguration.images.poster_sizes)
+                && isListEmpty(tmdbConfiguration.images.profile_sizes);
+    }
+
+    private boolean isListEmpty(List<?> list) {
+        return list == null || list.isEmpty();
     }
 
     public void loadServerConfig() {
         getMainController().getBackgroundExecutor().execute(/*fetchTmdbConfigurationTask*/fetchTmdbConfigurationWithRxjavaTask);
     }
 
-    public void setTmdbConfiguration(TmdbConfiguration tmdbConfiguration) {
+    public void setTmdbConfiguration(Configuration tmdbConfiguration) {
         this.tmdbConfiguration = tmdbConfiguration;
         getMainController().getConfig().setServerConfig(tmdbConfiguration);
     }

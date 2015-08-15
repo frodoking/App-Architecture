@@ -126,10 +126,6 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     public void onDestroy() {
         super.onDestroy();
 
-        // leakcanary
-        RefWatcher refWatcher = AndroidLeakcanary.get().getRefWatcher();
-        refWatcher.watch(this);
-
         printLeftCycle("onDestroy");
     }
 

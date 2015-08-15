@@ -2,11 +2,13 @@ package com.frodo.android.app.simple;
 
 import com.frodo.android.app.AppApplication;
 import com.frodo.android.app.core.config.AndroidConfig;
+import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.network.AndroidNetworkSystem;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.config.Environment;
 import com.frodo.android.app.framework.controller.IController;
+import com.frodo.android.app.framework.log.LogCollector;
 import com.frodo.android.app.framework.net.NetworkInteractor;
 import com.frodo.android.app.framework.scene.DefaultScene;
 import com.frodo.android.app.framework.scene.Scene;
@@ -30,6 +32,25 @@ import retrofit.client.OkClient;
 public class SimpleApplication extends AppApplication {
 
     private ConfigurationModel configurationModel;
+
+    @Override
+    public void init() {
+        super.init();
+        getMainController().getLogCollector().enableCollect(true);
+    }
+
+    @Override
+    public LogCollector loadLogCollector() {
+        return new AndroidLogCollectorSystem(getMainController()) {
+            @Override
+            public void uploadLeakBlocking(File file, String leakInfo) {
+                final UploadFileToServerTask.FileWebService service =
+                        getMainController().getNetworkInteractor().create(UploadFileToServerTask.FileWebService.class);
+                final UploadFileToServerTask task = new UploadFileToServerTask(service, file, null);
+                getMainController().getBackgroundExecutor().execute(task);
+            }
+        };
+    }
 
     @Override
     public Configuration loadConfiguration() {

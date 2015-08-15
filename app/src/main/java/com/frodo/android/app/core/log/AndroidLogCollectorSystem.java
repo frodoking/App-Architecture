@@ -4,16 +4,18 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
 import com.frodo.android.app.framework.controller.AbstractChildSystem;
 import com.frodo.android.app.framework.controller.IController;
 import com.frodo.android.app.framework.log.LogCollector;
+import com.squareup.leakcanary.RefWatcher;
 
 import android.util.Log;
 
 /**
  * Created by frodo on 2015/6/20.
  */
-public final class AndroidLogCollectorSystem extends AbstractChildSystem implements LogCollector {
+public class AndroidLogCollectorSystem extends AbstractChildSystem implements LogCollector {
     private static final int LOG_ENTRY_MAX_LENGTH = 4000;
     private boolean enable;
     private String logDir;
@@ -77,6 +79,16 @@ public final class AndroidLogCollectorSystem extends AbstractChildSystem impleme
     @Override
     public void e(String tag, String message, Throwable t) {
         log(tag, ERROR, message, t);
+    }
+
+    @Override
+    public void watchLeak(Object watchedReference) {
+        RefWatcher refWatcher = AndroidLeakcanary.get().getRefWatcher();
+        refWatcher.watch(watchedReference);
+    }
+
+    @Override
+    public void uploadLeakBlocking(File file, String leakInfo) {
     }
 
     // Inspired by https://github.com/JakeWharton/timber/blob/master/timber/src/main/java/timber/log/Timber.java

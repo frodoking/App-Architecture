@@ -5,13 +5,13 @@ import com.frodo.android.app.framework.net.NetworkCallTask;
 import rx.Subscriber;
 
 /**
- * Created by frodo on 2015/8/13.
+ * Created by frodo on 2015/8/13. fetch data from net
  */
-public abstract class AndroidFetchTask<S, SR, LR> extends NetworkCallTask<SR> {
+public abstract class AndroidFetchAndMapperNetworkDataTask<S, SR, LR> extends NetworkCallTask<SR> {
     private S service;
     private Subscriber<LR> subscriber;
 
-    protected AndroidFetchTask(S service, Subscriber<LR> subscriber) {
+    protected AndroidFetchAndMapperNetworkDataTask(S service, Subscriber<LR> subscriber) {
         this.service = service;
         this.subscriber = subscriber;
     }

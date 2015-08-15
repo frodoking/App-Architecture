@@ -2,6 +2,8 @@ package com.frodo.android.app.framework.log;
 
 import com.frodo.android.app.framework.controller.ChildSystem;
 
+import java.io.File;
+
 /**
  * 对日志操作器
  * Created by frodo on 2015/6/20.
@@ -43,4 +45,8 @@ public interface LogCollector extends ChildSystem {
     void e(String tag, String message);
 
     void e(String tag, String message, Throwable t);
+
+    void watchLeak(Object watchedReference);
+
+    void uploadLeakBlocking(File file, String leakInfo);
 }
