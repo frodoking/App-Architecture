@@ -1,15 +1,15 @@
 package com.frodo.android.app.core.task;
 
-import java.util.concurrent.ExecutorService;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Process;
 
 import com.frodo.android.app.framework.net.NetworkCallTask;
 import com.frodo.android.app.framework.task.AbstractBackgroundExecutor;
 import com.frodo.android.app.framework.task.BackgroundCallTask;
-import com.frodo.android.app.framework.task.CallTask;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Process;
+import java.util.concurrent.ExecutorService;
+
 import retrofit.RetrofitError;
 
 /**
@@ -21,10 +21,6 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
     public AndroidBackgroundExecutorImpl(ExecutorService executorService) {
         super(executorService);
-    }
-
-    private static boolean checkCancel(CallTask task) {
-        return task.isCanCancelled() && task.isCancelled();
     }
 
     @Override
@@ -46,30 +42,30 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
         @Override
         public final void run() {
-            if (checkCancel(mBackgroundCallTask)) {
+            if (mBackgroundCallTask.isCancelled()) {
                 return;
             }
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
-            if (checkCancel(mBackgroundCallTask)) {
+            if (mBackgroundCallTask.isCancelled()) {
                 return;
             }
             sHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (checkCancel(mBackgroundCallTask)) {
+                    if (mBackgroundCallTask.isCancelled()) {
                         return;
                     }
                     mBackgroundCallTask.preExecute();
                 }
             });
 
-            if (checkCancel(mBackgroundCallTask)) {
+            if (mBackgroundCallTask.isCancelled()) {
                 return;
             }
             R result = mBackgroundCallTask.runAsync();
 
-            if (checkCancel(mBackgroundCallTask)) {
+            if (mBackgroundCallTask.isCancelled()) {
                 return;
             }
             sHandler.post(new ResultCallback(result));
@@ -84,7 +80,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
             @Override
             public void run() {
-                if (checkCancel(mBackgroundCallTask)) {
+                if (mBackgroundCallTask.isCancelled()) {
                     return;
                 }
                 mBackgroundCallTask.postExecute(mResult);
@@ -102,7 +98,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
         @Override
         public final void run() {
-            if (checkCancel(mNetworkCallTask)) {
+            if (mNetworkCallTask.isCancelled()) {
                 return;
             }
             android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
@@ -110,7 +106,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             sHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (checkCancel(mNetworkCallTask)) {
+                    if (mNetworkCallTask.isCancelled()) {
                         return;
                     }
                     mNetworkCallTask.onPreCall();
@@ -121,7 +117,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             RetrofitError retrofitError = null;
 
             try {
-                if (checkCancel(mNetworkCallTask)) {
+                if (mNetworkCallTask.isCancelled()) {
                     return;
                 }
                 result = mNetworkCallTask.doBackgroundCall();
@@ -131,7 +127,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
                 e.printStackTrace();
             }
 
-            if (checkCancel(mNetworkCallTask)) {
+            if (mNetworkCallTask.isCancelled()) {
                 return;
             }
             sHandler.post(new ResultCallback(result, retrofitError));
@@ -148,7 +144,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
             @Override
             public void run() {
-                if (checkCancel(mNetworkCallTask)) {
+                if (mNetworkCallTask.isCancelled()) {
                     return;
                 }
                 if (mResult != null) {

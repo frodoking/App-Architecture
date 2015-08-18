@@ -1,41 +1,22 @@
 package com.frodo.android.app.framework.task;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  * Created by frodo on 2015/7/17.
  */
-public abstract class CallTask {
-    private AtomicBoolean mayInterruptIfRunning = new AtomicBoolean(true);
-    private AtomicBoolean cancel = new AtomicBoolean(false);
+public abstract class CallTask implements Terminatable {
+    private final TerminationToken terminationToken;
 
-    public final boolean isCanCancelled() {
-        return mayInterruptIfRunning.get();
-    }
-
-    public final boolean cancel(boolean mayInterruptIfRunning) {
-        return this.mayInterruptIfRunning.getAndSet(mayInterruptIfRunning);
+    public CallTask() {
+        this.terminationToken = new TerminationToken();
     }
 
     public final boolean isCancelled() {
-        return cancel.get();
+        return terminationToken.isToShutdown();
     }
 
-    public final void doCancel() {
-        if (!isCanCancelled()) {
-            return;
-        }
-
-        if (isCancelled()) {
-            return;
-        }
-
-        cancel.getAndSet(true);
-
-        onCancel();
-    }
-
-    public void onCancel() {
+    @Override
+    public void terminate() {
+        terminationToken.setToShutdown(true);
     }
 
     /**
