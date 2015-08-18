@@ -79,7 +79,7 @@ public class MovieFragment extends AbstractBaseFragment implements MoviePresente
 
                 Movie movie = (Movie) getItem(position);
                 final Configuration serverConfig = (Configuration) getMainController().getConfig().serverConfig();
-                final String baseImageUrl = serverConfig.images.base_url + 'w' + serverConfig.images.poster_sizes.get(2);
+                final String baseImageUrl = serverConfig.images.base_url + serverConfig.images.poster_sizes.get(2);
                 final String imageUrl = baseImageUrl + movie.imageUrl;
                 printLog("Picasso loading image : " + imageUrl);
                 Picasso.with(getActivity()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])

@@ -1,12 +1,5 @@
 package com.frodo.android.app.ui.fragment;
 
-import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
-import com.frodo.android.app.framework.controller.IView;
-import com.frodo.android.app.framework.controller.MainController;
-import com.frodo.android.app.ui.activity.AbstractBaseActivity;
-import com.frodo.android.app.ui.activity.FragmentContainerActivity2;
-import com.squareup.leakcanary.RefWatcher;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.frodo.android.app.framework.controller.IView;
+import com.frodo.android.app.framework.controller.MainController;
+import com.frodo.android.app.ui.activity.AbstractBaseActivity;
+import com.frodo.android.app.ui.activity.FragmentContainerActivity2;
 
 /**
  * Created by frodo on 2015/1/12.
@@ -125,8 +123,8 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         printLeftCycle("onDestroy");
+        getMainController().getLogCollector().watchLeak(this);
     }
 
     /**

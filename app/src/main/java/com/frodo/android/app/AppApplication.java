@@ -4,12 +4,12 @@ import android.app.Application;
 
 import com.frodo.android.app.core.cache.AndroidCacheSystem;
 import com.frodo.android.app.core.filesystem.AndroidFileSystem;
-import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.task.AndroidBackgroundExecutorImpl;
 import com.frodo.android.app.core.task.AndroidExecutor;
 import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.core.toolbox.SDCardUtils;
+import com.frodo.android.app.core.toolbox.StrictModeWrapper;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.context.Context;
 import com.frodo.android.app.framework.controller.MainController;
@@ -23,6 +23,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.GINGERBREAD;
+
 /**
  * Created by frodo on 2014/12/19. Base Application
  */
@@ -34,6 +37,7 @@ public abstract class AppApplication extends Application implements Context {
         super.onCreate();
         this.controller = new MainController();
         init();
+        enabledStrictMode();
     }
 
     public void init() {
@@ -42,13 +46,13 @@ public abstract class AppApplication extends Application implements Context {
         controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(executor));
 
         controller.setContext(this);
-        controller.setLogCollector(loadLogCollector());
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());
         controller.setFileSystem(new AndroidFileSystem(controller));
         controller.setNetworkInteractor(loadNetworkInteractor());
         controller.setModelFactory(new ModelFactory());
+        controller.setLogCollector(loadLogCollector());
 
         enableCache(true);
 
@@ -91,6 +95,8 @@ public abstract class AppApplication extends Application implements Context {
         Picasso.setSingletonInstance(picasso);
     }
 
+
+
     @Override
     public String getRootDirName() {
         return SDCardUtils.getSDCardPath() + File.separator;
@@ -99,5 +105,11 @@ public abstract class AppApplication extends Application implements Context {
     @Override
     public String getFilesDirName() {
         return getRootDirName() + getPackageName() + File.separator;
+    }
+
+    private void enabledStrictMode() {
+        if (SDK_INT >= GINGERBREAD) {
+            StrictModeWrapper.init(this);
+        }
     }
 }
