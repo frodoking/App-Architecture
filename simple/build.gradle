@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion androidSdkVersion
-    buildToolsVersion androidToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId basePackageName
-        minSdkVersion androidMinSdkVersion
-        targetSdkVersion androidSdkVersion
+        applicationId BASE_PACKAGENAME
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
     }
 
     productFlavors.whenObjectAdded { flavor ->

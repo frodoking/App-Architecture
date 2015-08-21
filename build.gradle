@@ -1,12 +1,6 @@
 apply from: 'dependencyDefinitions.gradle'
 apply from: 'variants.gradle'
 
-ext {
-    androidMinSdkVersion = 9
-    androidSdkVersion = 22
-    androidToolsVersion = "22.0.1"
-}
-
 buildscript {
     repositories {
         jcenter()
