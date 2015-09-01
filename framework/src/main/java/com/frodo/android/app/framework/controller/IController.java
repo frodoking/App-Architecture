@@ -59,6 +59,8 @@ public interface IController {
 
     void setModelFactory(ModelFactory modelFactory);
 
+    PluginManager getPluginManager();
+
     LogCollector getLogCollector();
 
     void setLogCollector(LogCollector logCollector);

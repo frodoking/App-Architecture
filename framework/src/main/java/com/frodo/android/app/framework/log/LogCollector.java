@@ -11,13 +11,13 @@ import java.io.File;
 public interface LogCollector extends ChildSystem {
 
     // Log levels
-    public static final int VERBOSE = 2;
-    public static final int DEBUG = 3;
-    public static final int INFO = 4;
-    public static final int WARN = 5;
-    public static final int ERROR = 6;
-    public static final int ASSERT = 7;
-    public static final int NONE = 8;
+    int VERBOSE = 2;
+    int DEBUG = 3;
+    int INFO = 4;
+    int WARN = 5;
+    int ERROR = 6;
+    int ASSERT = 7;
+    int NONE = 8;
 
     /**
      * 是否开启本地日志存储并上传功能

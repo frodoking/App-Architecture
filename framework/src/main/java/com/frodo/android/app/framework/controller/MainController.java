@@ -27,6 +27,7 @@ public final class MainController implements IController {
     private Theme theme;
     private Scene scene;
     private LogCollector logCollector;
+    private PluginManager pluginManager;
     private ModelFactory modelFactory;
 
     @Override
@@ -127,6 +128,11 @@ public final class MainController implements IController {
     @Override
     public void setModelFactory(ModelFactory modelFactory) {
         this.modelFactory = Preconditions.checkNotNull(modelFactory, "ModelFactory cannot be null");
+    }
+
+    @Override
+    public PluginManager getPluginManager() {
+        return pluginManager == null ? pluginManager = new PluginManager() : pluginManager;
     }
 
     @Override

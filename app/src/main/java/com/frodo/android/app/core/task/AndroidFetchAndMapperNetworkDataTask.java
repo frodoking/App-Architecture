@@ -5,7 +5,10 @@ import com.frodo.android.app.framework.net.NetworkCallTask;
 import rx.Subscriber;
 
 /**
- * Created by frodo on 2015/8/13. fetch data from net
+ * Created by frodo on 2015/8/13. fetch data from net <p/>
+ * S: NetService use retrofit  <p/>
+ * SR: Service Result  <p/>
+ * LR: Locale Result  <p/>
  */
 public abstract class AndroidFetchAndMapperNetworkDataTask<S, SR, LR> extends NetworkCallTask<SR> {
     private S service;
