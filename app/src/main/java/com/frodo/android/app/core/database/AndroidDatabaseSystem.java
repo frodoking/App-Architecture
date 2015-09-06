@@ -43,19 +43,19 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     private static HashMap<String, AndroidDatabaseSystem> daoMap = new HashMap<>();
     /////////////////////// temp cache ////////////////////////////////////////////////////////////////
     private final FindTempCache findTempCache = new FindTempCache();
-    private Context context;
     private SQLiteDatabase database;
     private DaoConfig daoConfig;
     private boolean allowTransaction = false;
     private Lock writeLock = new ReentrantLock();
     private volatile boolean writeLocked = false;
 
-    public AndroidDatabaseSystem(IController controller, DaoConfig daoConfig) {
+    private AndroidDatabaseSystem(IController controller, DaoConfig daoConfig) {
         super(controller);
         this.database = createDatabase(daoConfig);
         this.daoConfig = Preconditions.checkNotNull(daoConfig, "DaoConfig cannot be null");
+    }
 
-        this.context = (Context) controller.getContext();
+    private synchronized static AndroidDatabaseSystem getInstance(IController controller, DaoConfig daoConfig) {
         AndroidDatabaseSystem dao = daoMap.get(daoConfig.getDbName());
         if (dao == null) {
             dao = new AndroidDatabaseSystem(controller, daoConfig);
@@ -77,31 +77,32 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
                     try {
                         dao.dropDb();
                     } catch (DbException e) {
-                        controller.getLogCollector().e(systemName(), e.getMessage());
+                        controller.getLogCollector().e(dao.systemName(), e.getMessage());
                     }
                 }
             }
             database.setVersion(newVersion);
         }
+
+        return dao;
     }
 
-    //*************************************** create instance ****************************************************
     public static AndroidDatabaseSystem create(IController controller) {
         DaoConfig config = new DaoConfig(controller.getContext());
-        return new AndroidDatabaseSystem(controller, config);
+        return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbName) {
         DaoConfig config = new DaoConfig(controller.getContext());
         config.setDbName(dbName);
-        return new AndroidDatabaseSystem(controller, config);
+        return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbDir, String dbName) {
         DaoConfig config = new DaoConfig(controller.getContext());
         config.setDbDir(dbDir);
         config.setDbName(dbName);
-        return new AndroidDatabaseSystem(controller, config);
+        return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbName, int dbVersion, DbUpgradeListener dbUpgradeListener) {
@@ -109,7 +110,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
         config.setDbName(dbName);
         config.setDbVersion(dbVersion);
         config.setDbUpgradeListener(dbUpgradeListener);
-        return new AndroidDatabaseSystem(controller, config);
+        return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbDir, String dbName, int dbVersion, DbUpgradeListener dbUpgradeListener) {
@@ -118,7 +119,11 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
         config.setDbName(dbName);
         config.setDbVersion(dbVersion);
         config.setDbUpgradeListener(dbUpgradeListener);
-        return new AndroidDatabaseSystem(controller, config);
+        return getInstance(controller, config);
+    }
+
+    public static AndroidDatabaseSystem create(IController controller, DaoConfig daoConfig) {
+        return getInstance(controller, daoConfig);
     }
 
     public AndroidDatabaseSystem configAllowTransaction(boolean allowTransaction) {
