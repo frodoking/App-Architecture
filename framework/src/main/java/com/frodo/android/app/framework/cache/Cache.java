@@ -24,7 +24,6 @@ public interface Cache<K, V> {
      * Get an V by K.
      *
      * @param key
-     *
      * @return E
      */
     V get(K key);
@@ -40,7 +39,6 @@ public interface Cache<K, V> {
      * Checks if an element (E) exists in the cache.
      *
      * @param key The id used to look for inside the cache.
-     *
      * @return true if the element is cached, otherwise false.
      */
     boolean isCached(K key);

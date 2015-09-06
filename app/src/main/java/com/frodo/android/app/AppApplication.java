@@ -3,6 +3,7 @@ package com.frodo.android.app;
 import android.app.Application;
 
 import com.frodo.android.app.core.cache.AndroidCacheSystem;
+import com.frodo.android.app.core.database.AndroidDatabaseSystem;
 import com.frodo.android.app.core.filesystem.AndroidFileSystem;
 import com.frodo.android.app.core.task.AndroidBackgroundExecutorImpl;
 import com.frodo.android.app.core.task.AndroidExecutor;
@@ -50,6 +51,10 @@ public abstract class AppApplication extends Application implements Context {
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());
         controller.setFileSystem(new AndroidFileSystem(controller));
+
+        AndroidDatabaseSystem databaseSystem = AndroidDatabaseSystem.create(controller);
+        databaseSystem.configAllowTransaction(true);
+        controller.setDatabase(databaseSystem);
         controller.setNetworkInteractor(loadNetworkInteractor());
         controller.setModelFactory(new ModelFactory());
         controller.setLogCollector(loadLogCollector());

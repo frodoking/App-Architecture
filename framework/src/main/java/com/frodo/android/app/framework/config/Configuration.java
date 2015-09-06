@@ -1,8 +1,8 @@
 package com.frodo.android.app.framework.config;
 
-import java.util.List;
-
 import com.frodo.android.app.framework.controller.ChildSystem;
+
+import java.util.List;
 
 /**
  * Configure 全局配置

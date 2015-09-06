@@ -3,6 +3,7 @@ package com.frodo.android.app.simple;
 import java.io.File;
 import java.util.List;
 
+import com.frodo.android.app.core.toolbox.HashUtils;
 import com.frodo.android.app.framework.cache.AbstractCache;
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.filesystem.FileSystem;
@@ -52,8 +53,12 @@ public class MovieCache extends AbstractCache<String, List<Movie>> {
 
     private String createAbsoluteKey(String relativeKey) {
         final FileSystem fs = getCacheSystem().getController().getFileSystem();
-        final String absoluteKey = fs.getFilePath() + File.separator + relativeKey + ".cache.tmp";
+        final String absoluteKey = fs.getFilePath() + File.separator + getCacheKey(relativeKey) + ".cache.tmp";
         getCacheSystem().getController().getLogCollector().d("MovieCache", "Cache path >>>> " + absoluteKey);
         return absoluteKey;
+    }
+
+    private String getCacheKey(String cacheKey) {
+        return HashUtils.computeWeakHash(cacheKey.trim()) + String.format("%04x", cacheKey.length());
     }
 }

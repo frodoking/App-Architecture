@@ -1,13 +1,13 @@
 package com.frodo.android.app.framework.filesystem;
 
+import com.frodo.android.app.framework.controller.AbstractChildSystem;
+import com.frodo.android.app.framework.controller.IController;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import com.frodo.android.app.framework.controller.AbstractChildSystem;
-import com.frodo.android.app.framework.controller.IController;
 
 /**
  * 默认java 文件操作
@@ -101,7 +101,6 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
      * perform the operation using another thread.
      *
      * @param file The file to read from.
-     *
      * @return A string with the content of the file.
      */
     @Override
@@ -129,7 +128,6 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
      * Returns a boolean indicating whether this file can be found on the underlying file system.
      *
      * @param file The file to check existence.
-     *
      * @return true if this file exists, false otherwise.
      */
     @Override

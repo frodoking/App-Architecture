@@ -1,8 +1,8 @@
 package com.frodo.android.app.framework.task;
 
-import java.util.concurrent.ExecutorService;
-
 import com.google.common.base.Preconditions;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by frodo on 2015/7/6.
