@@ -7,7 +7,7 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 项目主要包括两大部分
 
 ## Framework层
-   <p>依托以java级别，主要提供底层API框架接口，提供一种编程思想同时从平台中剥离出来</p>
+依托以java级别，主要提供底层API框架接口，提供一种编程思想同时从平台中剥离出来
 1. CacheSystem 缓存系统
 2. Configuration  基础应用配置
 3. Context 接管App层级上下文
@@ -21,7 +21,7 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 11. LogCollector    日志收集系统，针对所有日志做处理（开关，打印，本地保持，上传server等功能）
 
 ## App层
-   <p>依赖于Framework Library。实现基于Android平台下的一系列接口</p>
+依赖于Framework Library。实现基于Android平台下的一系列接口
 1. 主要接管Activity和Fragment中的架构，采用了MVP的方式来解放UI
 2. Activity启动采用schema的方式，同时用Activity做Fragment的宿主容器，详细见FragmentContainerActivity2
 3. 也实现了FragmentManager加入栈的方式来启动新页面，详细见FragmentContainerActivity
