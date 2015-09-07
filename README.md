@@ -32,7 +32,13 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
 
 ## 注
-由于整个工程项目开发是一个很耗时的迭代过程，所以有考虑不全面的地方希望引用同学继续补充(贡献分支[branche_contributors](https://github.com/frodoking/GradleAndroid-App-Framework/tree/branche_contributors))。在补充过程中尽量通知到作者本人。希望有兴趣的同学加入进来，把这个工程完善得更好。**依赖注入和事件总线思想在本项目里是排斥的，原因很简单，依赖让代码指向混乱同时给开发者造成结构的不清晰。事件总线思想很容易造成滥用的现象，就像广播一样，没有目的的注册和广播很容易导致内存泄露发生**。
+
+由于整个工程项目开发是一个很耗时的迭代过程，所以有考虑不全面的地方希望引用同学继续补充(贡献分支[branche_contributors](https://github.com/frodoking/GradleAndroid-App-Framework/tree/branche_contributors))。在补充过程中尽量通知到作者本人。希望有兴趣的同学加入进来，把这个工程完善得更好。
+
+**依赖注入和事件总线思想在本项目里是排斥的，原因很简单，不仅仅从性能方面的考虑,同时：**
+
+1. 依赖让代码指向混乱同时也给开发者造成结构的不清晰
+2. 事件总线思想很容易造成滥用的现象，就像广播一样，没有目的的注册和广播很容易导致内存泄露发生
 
 ## 第三方依赖
 1. 基础库guava
