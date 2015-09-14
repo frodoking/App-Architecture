@@ -16,6 +16,7 @@ import com.frodo.android.app.framework.context.Context;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.framework.controller.ModelFactory;
 import com.frodo.android.app.framework.log.LogCollector;
+import com.frodo.android.app.framework.log.Logger;
 import com.frodo.android.app.framework.net.NetworkInteractor;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.theme.Theme;
@@ -57,7 +58,9 @@ public abstract class AppApplication extends Application implements Context {
         controller.setDatabase(databaseSystem);
         controller.setNetworkInteractor(loadNetworkInteractor());
         controller.setModelFactory(new ModelFactory());
-        controller.setLogCollector(loadLogCollector());
+        final LogCollector logCollector = loadLogCollector();
+        Logger.instance = new Logger(logCollector);
+        controller.setLogCollector(logCollector);
 
         enableCache(true);
 

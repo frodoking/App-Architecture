@@ -1,5 +1,6 @@
 package com.frodo.android.app.simple;
 
+import com.frodo.android.app.core.toolbox.FragmentScheduler;
 import com.frodo.android.app.ui.activity.AbstractBaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +34,7 @@ public class SplashActivity extends AbstractBaseActivity {
         ad.postDelayed(new Runnable() {
             @Override
             public void run() {
-                redirectToFragment(MovieFragment.class, null, true);
+                FragmentScheduler.redirectNextFragment(SplashActivity.this, MovieFragment.class, null, true);
             }
         }, 5000);
     }

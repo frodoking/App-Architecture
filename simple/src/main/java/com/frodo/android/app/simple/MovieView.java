@@ -15,6 +15,7 @@ import com.frodo.android.app.core.AndroidUIViewController;
 import com.frodo.android.app.core.UIView;
 import com.frodo.android.app.core.toolbox.FragmentScheduler;
 import com.frodo.android.app.core.toolbox.ScreenUtils;
+import com.frodo.android.app.framework.log.Logger;
 import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.entities.amdb.Movie;
 import com.squareup.picasso.Picasso;
@@ -77,7 +78,7 @@ public class MovieView extends UIView {
 
                 Movie movie = (Movie) getItem(position);
                 final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig.images, movie.imageUrl);
-                // printLog("Picasso loading image : " + imageUrl);
+                Logger.tag("MovieView").printLog("Picasso loading image : " + imageUrl);
                 Picasso.with(getPresenter().getAndroidContext()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])
                         .into(holder.imageView);
                 holder.textView.setText(movie.name);
