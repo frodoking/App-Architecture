@@ -86,7 +86,7 @@ public class SimpleApplication extends AppApplication {
         }
 
         if (!configurationModel.isValid()) {
-            configurationModel.loadServerConfig();
+            configurationModel.initBusiness();
         }
     }
 

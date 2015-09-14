@@ -13,4 +13,6 @@ public interface IModel {
     String name();
 
     MainController getMainController();
+
+    void initBusiness();
 }

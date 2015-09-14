@@ -53,4 +53,9 @@ public class MovieModel extends AbstractModel {
             movieCache = new MovieCache(getMainController().getCacheSystem(), Cache.Type.DISK);
         }
     }
+
+    @Override
+    public void initBusiness() {
+
+    }
 }

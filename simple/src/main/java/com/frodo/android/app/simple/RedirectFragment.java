@@ -1,40 +1,36 @@
 package com.frodo.android.app.simple;
 
-import com.frodo.android.app.framework.controller.IPresenter;
-import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
-
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.frodo.android.app.core.UIView;
+import com.frodo.android.app.framework.controller.IModel;
+import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 
 /**
  * Created by frodo on 2015/7/10.
  */
 public class RedirectFragment extends AbstractBaseFragment {
+
     @Override
-    public void onCreatePresenter() {
+    public UIView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {
+        return new UIView(null,inflater,container, R.layout.layout_redirect) {
+            @Override
+            public void initView() {
+                TextView tv = (TextView) getRootView().findViewById(R.id.imei);
+                RxJavaApi.test(tv);
+            }
+
+            @Override
+            public void registerListener() {
+            }
+        };
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.layout_redirect;
-    }
-
-    @Override
-    public void initView() {
-    }
-
-    @Override
-    public void registerListener() {
-        TextView tv = (TextView) getView().findViewById(R.id.imei);
-        RxJavaApi.test(tv);
-    }
-
-    @Override
-    public void initBusiness() {
-
-    }
-
-    @Override
-    public IPresenter getPresenter() {
+    public IModel createModel() {
         return null;
     }
 }

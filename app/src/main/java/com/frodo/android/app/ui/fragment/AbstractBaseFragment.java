@@ -1,6 +1,7 @@
 package com.frodo.android.app.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,17 +9,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.frodo.android.app.framework.controller.IView;
+import com.frodo.android.app.core.AndroidUIViewController;
+import com.frodo.android.app.core.UIView;
+import com.frodo.android.app.framework.controller.IModel;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.ui.activity.AbstractBaseActivity;
 import com.frodo.android.app.ui.activity.FragmentContainerActivity2;
 
 /**
- * Created by frodo on 2015/1/12.
+ * Created by frodo on 2015/1/12. base Fragment, contain UIView and Model
  */
-public abstract class AbstractBaseFragment extends Fragment implements IView {
+public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> extends Fragment implements AndroidUIViewController<V,M> {
     public static final String TAG = "tag_fragment_lifecycle";
     private MainController controller;
+    private V uiView;
+    private M model;
+
+    @Override
+    public final Context getAndroidContext() {
+        return getActivity();
+    }
+
+    public abstract V createUIView(Context context, LayoutInflater inflater, ViewGroup container);
+
+    public abstract M createModel();
+
+    @Override
+    public final V getUIView() {
+        return uiView;
+    }
+
+    @Override
+    public final M getModel() {
+        return model;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -30,11 +54,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onCreatePresenter();
         printLeftCycle("onCreate");
+        createModel();
     }
-
-    public abstract void onCreatePresenter();
 
     /**
      * 初始化界面相关
@@ -42,20 +64,23 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         printLeftCycle("onCreateView");
-        return inflater.inflate(getLayoutId(), container, false);
+        this.uiView = createUIView(getActivity(), inflater, container);
+        return uiView.getRootView();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         printLeftCycle("onViewCreated");
-        init();
+        getUIView().initView();
+        getUIView().registerListener();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         printLeftCycle("onActivityCreated");
+        getModel().initBusiness();
     }
 
     @Override
@@ -69,20 +94,6 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
         super.onViewStateRestored(savedInstanceState);
         printLeftCycle("onViewStateRestored");
     }
-
-    public void init() {
-        initView();
-        registerListener();
-        initBusiness();
-    }
-
-    public abstract int getLayoutId();
-
-    public abstract void initView();
-
-    public abstract void registerListener();
-
-    public abstract void initBusiness();
 
     @Override
     public void onStart() {
@@ -127,27 +138,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IView {
         getMainController().getLogCollector().watchLeak(this);
     }
 
-    /**
-     * 跳转到下一个Fragment
-     *
-     * @param clazz
-     * @param extra
-     * @param isFinished
-     */
-    public final void redirectNextFragment(Class<?> clazz, Bundle extra, boolean isFinished) {
-        Intent intent = new Intent(getActivity(), FragmentContainerActivity2.class);
-        if (extra == null) {
-            extra = new Bundle();
-            if (clazz != null) {
-                extra.putString("fragment_class_name", clazz.getCanonicalName());
-            }
-        }
-        intent.putExtra("extra", extra);
-        startActivity(intent);
-        if (isFinished) {
-            getActivity().finish();
-        }
-    }
+
 
     public boolean onBackPressed() {
         return false;

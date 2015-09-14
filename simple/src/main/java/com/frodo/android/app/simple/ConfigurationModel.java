@@ -52,12 +52,13 @@ public class ConfigurationModel extends AbstractModel {
         return list == null || list.isEmpty();
     }
 
-    public void loadServerConfig() {
-        getMainController().getBackgroundExecutor().execute(/*fetchTmdbConfigurationTask*/fetchTmdbConfigurationWithRxjavaTask);
-    }
-
     public void setTmdbConfiguration(Configuration tmdbConfiguration) {
         this.tmdbConfiguration = tmdbConfiguration;
         getMainController().getConfig().setServerConfig(tmdbConfiguration);
+    }
+
+    @Override
+    public void initBusiness() {
+        getMainController().getBackgroundExecutor().execute(/*fetchTmdbConfigurationTask*/fetchTmdbConfigurationWithRxjavaTask);
     }
 }

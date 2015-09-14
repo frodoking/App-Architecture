@@ -5,5 +5,7 @@ package com.frodo.android.app.framework.controller;
  * Created by frodo on 2015/4/1.
  */
 public interface IView {
-    IPresenter getPresenter();
+    UIViewController getPresenter();
+    boolean isOnShown();
+    void show(boolean show);
 }
