@@ -41,7 +41,7 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 
 ## 注
 
-由于整个工程项目开发是一个很耗时的迭代过程，所以有考虑不全面的地方希望引用同学继续补充(贡献分支[branche_contributors](https://github.com/frodoking/GradleAndroid-App-Framework/tree/branche_contributors))。在补充过程中尽量通知到作者本人。希望有兴趣的同学加入进来，把这个工程完善得更好。
+由于整个工程项目开发是一个很耗时的迭代过程，所以有考虑不全面的地方希望引用同学继续补充(贡献分支[branch_contributors](https://github.com/frodoking/GradleAndroid-App-Framework/tree/branch_contributors))。在补充过程中尽量通知到作者本人。希望有兴趣的同学加入进来，把这个工程完善得更好。
 
 **依赖注入和事件总线思想在本项目里是排斥的，原因很简单，不仅仅从性能方面的考虑,同时：**
 
