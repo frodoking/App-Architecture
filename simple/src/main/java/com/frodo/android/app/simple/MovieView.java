@@ -1,6 +1,5 @@
 package com.frodo.android.app.simple;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.frodo.android.app.core.toolbox.ScreenUtils;
 import com.frodo.android.app.framework.log.Logger;
 import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.entities.amdb.Movie;
+import com.frodo.android.app.ui.activity.FragmentContainerActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class MovieView extends UIView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // only for test redirect function
-                FragmentScheduler.redirectNextFragment(((Activity)getPresenter().getAndroidContext()), RedirectFragment.class, null, false);
+                FragmentScheduler.nextFragment(((FragmentContainerActivity) getPresenter().getAndroidContext()), RedirectFragment.class, null, false);
             }
         });
     }
@@ -112,13 +112,13 @@ public class MovieView extends UIView {
         return new int[]{itemWidth, itemHeight};
     }
 
-    public void showMovieList(List<Movie> movies){
+    public void showMovieList(List<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         movieAdapter.notifyDataSetChanged();
     }
 
-    public void showError(String errorMsg){
+    public void showError(String errorMsg) {
         if (isOnShown()) {
             Toast.makeText(getPresenter().getAndroidContext(), errorMsg, Toast.LENGTH_SHORT).show();
         }

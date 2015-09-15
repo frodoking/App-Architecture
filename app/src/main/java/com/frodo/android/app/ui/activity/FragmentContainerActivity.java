@@ -1,14 +1,16 @@
 package com.frodo.android.app.ui.activity;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
+
 import com.android.app.R;
+import com.frodo.android.app.framework.log.Logger;
 import com.frodo.android.app.ui.FragmentStack;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-
 /**
- * Created by frodo on 2015/1/27.
+ * Created by frodo on 2015/1/27. FragmentContainer
  */
 public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
@@ -20,6 +22,7 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
                 new FragmentStack.Callback() {
                     @Override
                     public void onStackChanged(int stackSize, Fragment topFragment) {
+                        Logger.tag(FragmentStack.STATE_STACK).printLog("onStackChanged stackSize:" + stackSize + ", topFragment: " + topFragment.getTag());
                     }
                 });
         mStack.setDefaultAnimation(R.anim.slide_in_left,
@@ -30,18 +33,16 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState == null) {
-            mStack.replace(mStack.peek().getClass(),
-                    String.valueOf(System.currentTimeMillis()),
-                    mStack.peek().getArguments());
-            mStack.commit();
+            if (mStack.size() > 0) {
+                final Class clazz = mStack.peek().getClass();
+                mStack.replace(clazz,
+                        clazz.getCanonicalName() + System.currentTimeMillis(),
+                        mStack.peek().getArguments());
+                mStack.commit();
+            }
         } else {
             mStack.restoreState(savedInstanceState);
         }
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override
@@ -56,27 +57,40 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
     }
 
     @Override
-    public final void onBackPressed() {
-        if (isForPop()) {
-            return;
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mStack.restoreState(savedInstanceState);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (isForPop()) {
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public final void addFragment(Class<? extends Fragment> fragment, Bundle args, boolean isFinishTopFragment) {
+        addFragment(fragment, fragment.getCanonicalName() + System.currentTimeMillis(), args, isFinishTopFragment);
+    }
+
+    private void addFragment(Class<? extends Fragment> fragment, String tag, Bundle args, boolean isFinishTopFragment) {
+        if (args == null) {
+            args = new Bundle();
         }
 
-        super.onBackPressed();
-    }
+        if (isFinishTopFragment) {
+            if (mStack.size() > 1) {
+                mStack.pop(true);
+            } else {
+                mStack.replace(fragment, tag, args);
+                mStack.commit();
+                return;
+            }
+        }
 
-    public final void addFragment(Class<? extends Fragment> fragment) {
-        addFragment(fragment, String.valueOf(System.currentTimeMillis()), null);
-    }
-
-    public final void addFragment(Class<? extends Fragment> fragment, Bundle args) {
-        addFragment(fragment, String.valueOf(System.currentTimeMillis()), args);
-    }
-
-    public final void addFragment(Class<? extends Fragment> fragment, String tag) {
-        addFragment(fragment, tag, null);
-    }
-
-    private void addFragment(Class<? extends Fragment> fragment, String tag, Bundle args) {
         mStack.push(fragment, tag, args);
         mStack.commit();
     }

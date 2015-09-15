@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.frodo.android.app.core.UIView;
+import com.frodo.android.app.framework.controller.AbstractModel;
 import com.frodo.android.app.framework.controller.IModel;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 
@@ -16,7 +17,7 @@ public class RedirectFragment extends AbstractBaseFragment {
 
     @Override
     public UIView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {
-        return new UIView(null,inflater,container, R.layout.layout_redirect) {
+        return new UIView(null, inflater, container, R.layout.layout_redirect) {
             @Override
             public void initView() {
                 TextView tv = (TextView) getRootView().findViewById(R.id.imei);
@@ -31,6 +32,11 @@ public class RedirectFragment extends AbstractBaseFragment {
 
     @Override
     public IModel createModel() {
-        return null;
+        return new AbstractModel(getMainController()) {
+            @Override
+            public void initBusiness() {
+                // do nothing
+            }
+        };
     }
 }

@@ -23,7 +23,7 @@ public class UploadFileToServerTask extends AndroidFetchNetworkDataTask<UploadFi
 
     @Override
     public FileUploadedResponse doBackgroundCall() throws Exception {
-        return getService().upload(new TypedFile("text",file));
+        return getService().upload(new TypedFile("text", file));
     }
 
     @Override
@@ -36,5 +36,6 @@ public class UploadFileToServerTask extends AndroidFetchNetworkDataTask<UploadFi
         FileUploadedResponse upload(@Part("fileContent") TypedFile file);
     }
 
-    public class FileUploadedResponse{}
+    public class FileUploadedResponse {
+    }
 }

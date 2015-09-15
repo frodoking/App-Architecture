@@ -1,11 +1,11 @@
 package com.frodo.android.app.simple;
 
+import android.text.TextUtils;
+
 import com.frodo.android.app.framework.controller.AbstractModel;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.cloud.amdb.services.ConfigurationService;
-
-import android.text.TextUtils;
 
 import java.util.List;
 

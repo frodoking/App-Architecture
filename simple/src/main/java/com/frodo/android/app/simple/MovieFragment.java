@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 
 import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.entities.amdb.Movie;
-import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
+import com.frodo.android.app.ui.fragment.StatedFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ import rx.schedulers.Schedulers;
  * a simple for movie
  * Created by frodo on 2015/4/2.
  */
-public class MovieFragment extends AbstractBaseFragment<MovieView, MovieModel> {
+public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
     private static final String[] DEFAULT = {"rxjava, movie"};
 
     @Override
@@ -36,11 +38,33 @@ public class MovieFragment extends AbstractBaseFragment<MovieView, MovieModel> {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void onFirstTimeLaunched() {
         final Configuration serverConfig = (Configuration) getMainController().getConfig().serverConfig();
         getUIView().setServerConfig(serverConfig);
         loadMoviesWithRxjava();
+    }
+
+    @Override
+    protected void onSaveState(Bundle outState) {
+        List<Movie> movies = getModel().getMovies();
+        outState.putString("moviesJson", new Gson().toJson(movies));
+    }
+
+    @Override
+    protected void onRestoreState(Bundle savedInstanceState) {
+        final Configuration serverConfig = (Configuration) getMainController().getConfig().serverConfig();
+        getUIView().setServerConfig(serverConfig);
+        if (savedInstanceState != null) {
+            String moviesJson = savedInstanceState.getString("moviesJson");
+            List<Movie> movies = new Gson().fromJson(moviesJson, new TypeToken<List<Movie>>() {
+            }.getType());
+            getUIView().showMovieList(movies);
+        }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 
     /**

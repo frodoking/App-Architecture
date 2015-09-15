@@ -1,14 +1,14 @@
 package com.frodo.android.app.simple;
 
-import java.io.File;
-import java.util.List;
-
 import com.frodo.android.app.core.toolbox.HashUtils;
 import com.frodo.android.app.framework.cache.AbstractCache;
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.filesystem.FileSystem;
 import com.frodo.android.app.simple.entities.amdb.Movie;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Created by frodo on 2015/7/23.

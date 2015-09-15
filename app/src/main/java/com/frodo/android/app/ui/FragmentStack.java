@@ -17,8 +17,7 @@ import android.support.v4.app.FragmentTransaction;
  * Created by frodo on 2015/1/27.
  */
 public class FragmentStack {
-
-    private static final String STATE_STACK = "net.simonvt.util.FragmentStack.stack";
+    public static final String STATE_STACK = "FragmentStack";
     private LinkedList<Fragment> stack = new LinkedList<Fragment>();
     private Set<String> topLevelTags = new HashSet<String>();
     private Activity activity;
@@ -30,7 +29,7 @@ public class FragmentStack {
         @Override
         public void run() {
             if (fragmentTransaction != null) {
-                fragmentTransaction.commit();
+                fragmentTransaction.commitAllowingStateLoss();
                 fragmentManager.executePendingTransactions();
                 fragmentTransaction = null;
 
@@ -79,7 +78,7 @@ public class FragmentStack {
             removeFragment(fragmentManager.findFragmentByTag(tag));
         }
 
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
         fragmentTransaction = null;
     }
 
@@ -302,7 +301,7 @@ public class FragmentStack {
     public boolean executePendingTransactions() {
         if (fragmentTransaction != null && !fragmentTransaction.isEmpty()) {
             handler.removeCallbacks(execPendingTransactions);
-            fragmentTransaction.commit();
+            fragmentTransaction.commitAllowingStateLoss();
             fragmentTransaction = null;
             boolean result = fragmentManager.executePendingTransactions();
             if (result) {

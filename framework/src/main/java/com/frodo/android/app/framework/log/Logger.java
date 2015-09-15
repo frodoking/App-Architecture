@@ -17,11 +17,11 @@ public class Logger {
         this.logCollector = logCollector;
     }
 
-    public void printLeftCycle(String methodName) {
-        logCollector.d(tag, ">> " + getClass().getSimpleName() + "*********>> " + methodName + " <<********* <<");
+    public void printLifeCycle(String methodName) {
+        logCollector.d(tag, " life cycle >> ==== > " + methodName + " < ==== <<");
     }
 
     public void printLog(String log) {
-        logCollector.i("tag_" + tag, " >> -----------> " + log + " <------------ <<");
+        logCollector.i(tag, " >> ---- > " + log + " < ---- <<");
     }
 }

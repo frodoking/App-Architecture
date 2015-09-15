@@ -10,7 +10,7 @@ import rx.Subscriber;
 /**
  * Created by frodo on 2015/8/13. use rxjava Observable & Subscriber
  */
-public class FetchTmdbConfigurationWithRxjavaTask extends AndroidFetchNetworkDataTask<ConfigurationService,Configuration> {
+public class FetchTmdbConfigurationWithRxjavaTask extends AndroidFetchNetworkDataTask<ConfigurationService, Configuration> {
 
     protected FetchTmdbConfigurationWithRxjavaTask(ConfigurationService service, Subscriber<Configuration> subscriber) {
         super(service, subscriber);

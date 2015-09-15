@@ -19,6 +19,8 @@ public class MovieModel extends AbstractModel {
     private MovieCache movieCache;
     private boolean enableCached;
 
+    private List<Movie> movies;
+
     public MovieModel(MainController controller) {
         super(controller);
         moviesService = getMainController().getNetworkInteractor().create(MoviesService.class);
@@ -32,7 +34,12 @@ public class MovieModel extends AbstractModel {
         getMainController().getBackgroundExecutor().execute(fetchMoviesWithRxjavaTask);
     }
 
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
     public void setMovies(List<Movie> movies) {
+        this.movies = movies;
         if (enableCached) {
             movieCache.put(fetchMoviesWithRxjavaTask.key(), movies);
         }

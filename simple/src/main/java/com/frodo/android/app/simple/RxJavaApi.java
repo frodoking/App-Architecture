@@ -1,11 +1,11 @@
 package com.frodo.android.app.simple;
 
-import java.util.List;
-
 import android.util.Log;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.http.GET;
