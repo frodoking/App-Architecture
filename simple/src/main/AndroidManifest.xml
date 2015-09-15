@@ -45,9 +45,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-                android:name="com.frodo.android.app.ui.activity.FragmentContainerActivity"
-                android:screenOrientation="portrait" />
     </application>
 
 </manifest>
