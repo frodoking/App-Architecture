@@ -31,6 +31,9 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 3. 所有页面都是Fragment实现，包括启动页面。主要利用support.v4包的FragmentManager来管理整个Fragment堆栈实现页面切换功能
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
 
+## 框架图
+![架构图](http://frodoking.github.io/img/GradleAndroid-App-Framework.png)
+
 ## 注
 
 由于整个工程项目开发是一个很耗时的迭代过程，所以有考虑不全面的地方希望引用同学继续补充(贡献分支[branche_contributors](https://github.com/frodoking/GradleAndroid-App-Framework/tree/branche_contributors))。在补充过程中尽量通知到作者本人。希望有兴趣的同学加入进来，把这个工程完善得更好。
