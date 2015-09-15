@@ -26,9 +26,9 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 
 依赖于Framework Library。实现基于Android平台下的一系列接口
 
-1. 主要接管Activity和Fragment中的架构，采用了MVP的方式来解放UI
-2. Activity启动采用schema的方式，同时用Activity做Fragment的宿主容器，详细见FragmentContainerActivity2
-3. 也实现了FragmentManager加入栈的方式来启动新页面，详细见FragmentContainerActivity
+1. 主要接管Activity和Fragment中的架构，采用了MVVM的方式来解放UI(最近受到IOS的MVC架构所启发，Android的View概念被弱化，Activity和Fragment被强化导致很多同学认为这两者就是UI上的事情。其实不是这样，Fragment应该类似于IOS中的UIViewController才对。因此本框架通过UIView来强化Android的UI概念。用Fragment来做为UIViewController。)
+2. App全局只有一个入口启动MainActivity同时也是唯一的一个Activity。MainActivity继承了FragmentContainerActivity，因此他是Fragment容器
+3. 所有页面都是Fragment实现，包括启动页面。主要利用support.v4包的FragmentManager来管理整个Fragment堆栈实现页面切换功能
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
 
 ## 注
