@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 
+import com.frodo.android.app.framework.exception.HttpException;
 import com.frodo.android.app.framework.net.NetworkCallTask;
 import com.frodo.android.app.framework.task.AbstractBackgroundExecutor;
 import com.frodo.android.app.framework.task.BackgroundCallTask;
@@ -150,7 +151,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
                 if (mResult != null) {
                     mNetworkCallTask.onSuccess(mResult);
                 } else if (mRetrofitError != null) {
-                    mNetworkCallTask.onError(mRetrofitError);
+                    mNetworkCallTask.onError(new HttpException(mRetrofitError));
                 }
                 mNetworkCallTask.onFinished();
             }

@@ -1,6 +1,7 @@
 package com.frodo.android.app.simple;
 
 import com.frodo.android.app.core.task.AndroidFetchNetworkDataTask;
+import com.frodo.android.app.framework.exception.HttpException;
 import com.frodo.android.app.simple.cloud.amdb.entities.Configuration;
 import com.frodo.android.app.simple.cloud.amdb.services.ConfigurationService;
 
@@ -17,7 +18,7 @@ public class FetchTmdbConfigurationWithRxjavaTask extends AndroidFetchNetworkDat
     }
 
     @Override
-    public final Configuration doBackgroundCall() throws Exception {
+    public final Configuration doBackgroundCall() throws HttpException {
         return getService().configuration();
     }
 

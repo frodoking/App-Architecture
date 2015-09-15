@@ -1,6 +1,7 @@
 package com.frodo.android.app.simple;
 
 import com.frodo.android.app.core.task.AndroidFetchAndMapperNetworkDataTask;
+import com.frodo.android.app.framework.exception.HttpException;
 import com.frodo.android.app.simple.cloud.amdb.entities.MovieResultsPage;
 import com.frodo.android.app.simple.cloud.amdb.services.MoviesService;
 import com.frodo.android.app.simple.entities.amdb.Movie;
@@ -22,7 +23,7 @@ public class FetchMoviesWithRxjavaTask extends AndroidFetchAndMapperNetworkDataT
     }
 
     @Override
-    public final MovieResultsPage doBackgroundCall() throws Exception {
+    public final MovieResultsPage doBackgroundCall() throws HttpException {
         requestParams = "page=1&lang=zh";
         return getService().popular(1, "zh");
     }

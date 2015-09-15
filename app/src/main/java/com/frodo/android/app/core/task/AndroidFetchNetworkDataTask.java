@@ -1,5 +1,6 @@
 package com.frodo.android.app.core.task;
 
+import com.frodo.android.app.framework.exception.HttpException;
 import com.frodo.android.app.framework.net.NetworkCallTask;
 
 import rx.Subscriber;
@@ -22,7 +23,7 @@ public abstract class AndroidFetchNetworkDataTask<S, R> extends NetworkCallTask<
     }
 
     @Override
-    public void onError(Exception re) {
+    public void onError(HttpException re) {
         subscriber.onError(re);
     }
 

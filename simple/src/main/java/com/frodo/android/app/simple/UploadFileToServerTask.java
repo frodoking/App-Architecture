@@ -1,6 +1,7 @@
 package com.frodo.android.app.simple;
 
 import com.frodo.android.app.core.task.AndroidFetchNetworkDataTask;
+import com.frodo.android.app.framework.exception.HttpException;
 
 import java.io.File;
 
@@ -22,7 +23,7 @@ public class UploadFileToServerTask extends AndroidFetchNetworkDataTask<UploadFi
     }
 
     @Override
-    public FileUploadedResponse doBackgroundCall() throws Exception {
+    public FileUploadedResponse doBackgroundCall() throws HttpException {
         return getService().upload(new TypedFile("text", file));
     }
 
