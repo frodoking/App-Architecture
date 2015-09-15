@@ -43,6 +43,11 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 1. 依赖让代码指向混乱同时也给开发者造成结构的不清晰
 2. 事件总线思想很容易造成滥用的现象，就像广播一样，没有目的的注册和广播很容易导致内存泄露发生
 
+## Simple工程
+1. simplecloudentity是服务器定义的基础数据结构
+2. simpleentity是本地App需要的数据结构。这样定义的目的是为了App数据结构的组织不完全依赖Server
+3. Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)工程
+
 ## 第三方依赖
 1. 基础库guava
 2. 网络库okhttp、retrofit
