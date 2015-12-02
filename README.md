@@ -3,7 +3,7 @@ GradleAndroid-App-Framework
 
 ## 简介
 
-GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套架构的解决方案。主要目的是整合流行开发模式结合其他开源模块形成的一整套Android快速开发解决方案。
+GradleAndroid-App-Framework是一个关于Android App一整套架构的解决方案的开源项目。主要目的是整合流行开发模式结合其他开源模块形成的一整套Android快速开发解决方案。
 项目主要包括两大部分
 
 ## Framework层
