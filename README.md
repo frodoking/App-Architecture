@@ -33,7 +33,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 3. 所有页面都是Fragment实现，包括启动页面。主要利用support.v4包的FragmentManager来管理整个Fragment堆栈实现页面切换功能
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
 
-## 框架图
+## 架构图
 ![架构图](http://frodoking.github.io/img/App-Architecture.png)
 
 ## Simple工程
