@@ -1,9 +1,10 @@
-GradleAndroid-App-Framework
+App-Architecture
 ===========================
 
 ## 简介
 
-GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套架构的解决方案。主要目的是整合流行开发模式结合其他开源模块形成的一整套Android快速开发解决方案。
+App-Architecture是一个关于移动应用一整套架构的解决方案开源项目。主要目的是整合流行开发模式结合自己本人的工作经验形成的一整套App快速开发解决方案。本套解决方案的app工程和simple工程主要基于Android实现。framework工程实现了主要架构，主要目的是抛开平台相关性。
+
 项目主要包括两大部分
 
 ## Framework层
@@ -32,7 +33,7 @@ GradleAndroid-App-Framework是一个免费的开源关于Android  App一整套�
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
 
 ## 框架图
-![架构图](http://frodoking.github.io/img/GradleAndroid-App-Framework.png)
+![架构图](http://frodoking.github.io/img/App-Architecture.png)
 
 ## 注
 

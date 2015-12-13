@@ -12,7 +12,7 @@ import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.core.toolbox.SDCardUtils;
 import com.frodo.android.app.core.toolbox.StrictModeWrapper;
 import com.frodo.android.app.framework.config.Configuration;
-import com.frodo.android.app.framework.context.Context;
+import com.frodo.android.app.framework.context.AppContext;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.framework.controller.ModelFactory;
 import com.frodo.android.app.framework.log.LogCollector;
@@ -31,7 +31,7 @@ import static android.os.Build.VERSION_CODES.GINGERBREAD;
 /**
  * Created by frodo on 2014/12/19. Base Application
  */
-public abstract class AppApplication extends Application implements Context {
+public abstract class AppApplication extends Application implements AppContext {
     private MainController controller;
 
     @Override
@@ -47,7 +47,7 @@ public abstract class AppApplication extends Application implements Context {
         final AndroidExecutor executor = new AndroidExecutor("app-default",numberCores * 2 + 1);
         controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(executor));
 
-        controller.setContext(this);
+        controller.setAppContext(this);
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());

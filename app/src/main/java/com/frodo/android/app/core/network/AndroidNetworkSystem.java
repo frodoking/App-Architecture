@@ -1,10 +1,10 @@
 package com.frodo.android.app.core.network;
 
-import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import android.content.Context;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 
 import com.frodo.android.app.framework.controller.AbstractChildSystem;
 import com.frodo.android.app.framework.controller.IController;
@@ -15,11 +15,11 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import android.content.Context;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.telephony.TelephonyManager;
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -39,7 +39,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
     public AndroidNetworkSystem(IController controller) {
         super(controller);
-        this.context = (Context) controller.getContext();
+        this.context = (Context) controller.getAppContext();
     }
 
     @Override

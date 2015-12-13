@@ -20,8 +20,8 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
 
     public DefaultFileSystem(IController controller) {
         super(controller);
-        this.rootDir = controller.getContext().getRootDirName();
-        this.filePath = controller.getContext().getFilesDirName();
+        this.rootDir = controller.getAppContext().getRootDirName();
+        this.filePath = controller.getAppContext().getFilesDirName();
 
         File file = new File(filePath);
         if (!file.exists()) {

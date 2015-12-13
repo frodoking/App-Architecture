@@ -1,6 +1,5 @@
 package com.frodo.android.app.ui.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.frodo.android.app.core.AndroidUIViewController;
 import com.frodo.android.app.core.UIView;
-import com.frodo.android.app.framework.controller.AbstractModel;
+import com.frodo.android.app.framework.controller.AbstractModel.SimpleModel;
 import com.frodo.android.app.framework.controller.IModel;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.framework.log.Logger;
@@ -32,13 +31,8 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
 
     public abstract V createUIView(Context context, LayoutInflater inflater, ViewGroup container);
 
-    protected  M createModel() {
-        return (M) new AbstractModel(getMainController()) {
-            @Override
-            public void initBusiness() {
-                // do nothing
-            }
-        };
+    protected M createModel() {
+        return (M) new SimpleModel(controller);
     }
 
     @Override
@@ -52,9 +46,9 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        controller = ((AbstractBaseActivity) activity).getMainController();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        controller = ((AbstractBaseActivity) getActivity()).getMainController();
         Logger.tag(tag()).printLifeCycle("onAttach");
     }
 

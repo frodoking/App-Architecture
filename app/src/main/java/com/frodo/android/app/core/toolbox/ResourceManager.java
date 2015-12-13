@@ -1,10 +1,5 @@
 package com.frodo.android.app.core.toolbox;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.http.util.EncodingUtils;
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -13,6 +8,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 统一资源管理
@@ -101,7 +99,7 @@ public class ResourceManager {
             //读取数据
             in.read(buffer);
             //依test.txt的编码类型选择合适的编码，如果不调整会乱码
-            res = EncodingUtils.getString(buffer, "UTF-8");
+            res = new String(buffer, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -126,7 +124,7 @@ public class ResourceManager {
             byte[] buffer = new byte[length];
 
             in.read(buffer);
-            res = EncodingUtils.getString(buffer, "UTF-8");
+            res = new String(buffer, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -1,7 +1,6 @@
 package com.frodo.android.app.core.cache;
 
-import java.io.File;
-import java.lang.reflect.Type;
+import android.content.Context;
 
 import com.frodo.android.app.framework.cache.Cache;
 import com.frodo.android.app.framework.cache.CacheSystem;
@@ -11,7 +10,8 @@ import com.frodo.android.app.framework.filesystem.FileSystem;
 import com.frodo.android.app.framework.orm.Database;
 import com.google.gson.Gson;
 
-import android.content.Context;
+import java.io.File;
+import java.lang.reflect.Type;
 
 /**
  * 缓存实现 (sharepreference, db, disk)
@@ -28,7 +28,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
 
     public AndroidCacheSystem(IController controller, String cacheDir) {
         super(controller);
-        this.context = (Context) controller.getContext();
+        this.context = (Context) controller.getAppContext();
         this.cacheDir = cacheDir;
 
         this.sharedPreferences = new AndroidCacheSharedPreferences(context);

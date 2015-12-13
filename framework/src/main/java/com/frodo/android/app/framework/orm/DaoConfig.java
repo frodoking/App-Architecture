@@ -1,24 +1,24 @@
 package com.frodo.android.app.framework.orm;
 
-import com.frodo.android.app.framework.context.Context;
+import com.frodo.android.app.framework.context.AppContext;
 import com.frodo.android.app.framework.toolbox.TextUtils;
 
 /**
  * Created by frodo on 2015/9/6.
  */
 public final class DaoConfig {
-    private Context context;
+    private AppContext context;
     private String dbName = "framework.db"; // default db name
     private int dbVersion = 1;
     private DbUpgradeListener dbUpgradeListener;
 
     private String dbDir;
 
-    public DaoConfig(Context context) {
+    public DaoConfig(AppContext context) {
         this.context = context;
     }
 
-    public Context getContext() {
+    public AppContext getContext() {
         return context;
     }
 
