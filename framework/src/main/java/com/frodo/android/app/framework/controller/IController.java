@@ -2,7 +2,7 @@ package com.frodo.android.app.framework.controller;
 
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.config.Configuration;
-import com.frodo.android.app.framework.context.Context;
+import com.frodo.android.app.framework.context.AppContext;
 import com.frodo.android.app.framework.filesystem.FileSystem;
 import com.frodo.android.app.framework.log.LogCollector;
 import com.frodo.android.app.framework.net.NetworkInteractor;
@@ -31,9 +31,9 @@ public interface IController {
 
     Configuration getConfig();
 
-    Context getContext();
+    AppContext getAppContext();
 
-    void setContext(Context context);
+    void setAppContext(AppContext context);
 
     NetworkInteractor getNetworkInteractor();
 

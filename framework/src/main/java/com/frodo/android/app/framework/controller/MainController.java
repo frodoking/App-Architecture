@@ -2,7 +2,7 @@ package com.frodo.android.app.framework.controller;
 
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.config.Configuration;
-import com.frodo.android.app.framework.context.Context;
+import com.frodo.android.app.framework.context.AppContext;
 import com.frodo.android.app.framework.filesystem.FileSystem;
 import com.frodo.android.app.framework.log.LogCollector;
 import com.frodo.android.app.framework.net.NetworkInteractor;
@@ -20,7 +20,7 @@ public final class MainController implements IController {
     private BackgroundExecutor backgroundExecutor;
     private CacheSystem cacheSystem;
     private Configuration configuration;
-    private Context context;
+    private AppContext appContext;
     private NetworkInteractor networkInteractor;
     private FileSystem fileSystem;
     private Database database;
@@ -61,13 +61,13 @@ public final class MainController implements IController {
     }
 
     @Override
-    public Context getContext() {
-        return this.context;
+    public AppContext getAppContext() {
+        return this.appContext;
     }
 
     @Override
-    public void setContext(Context context) {
-        this.context = Preconditions.checkNotNull(context, "Context cannot be null");
+    public void setAppContext(AppContext appContext) {
+        this.appContext = Preconditions.checkNotNull(appContext, "AppContext cannot be null");
     }
 
     @Override

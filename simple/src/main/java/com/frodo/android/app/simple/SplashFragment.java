@@ -7,8 +7,6 @@ import android.widget.ImageView;
 
 import com.frodo.android.app.core.UIView;
 import com.frodo.android.app.core.toolbox.FragmentScheduler;
-import com.frodo.android.app.framework.controller.AbstractModel;
-import com.frodo.android.app.framework.controller.IModel;
 import com.frodo.android.app.ui.activity.FragmentContainerActivity;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 import com.squareup.picasso.Picasso;
@@ -38,16 +36,6 @@ public class SplashFragment extends AbstractBaseFragment {
                         FragmentScheduler.nextFragment(((FragmentContainerActivity) getActivity()), MovieFragment.class, null, true);
                     }
                 }, 5000);
-            }
-        };
-    }
-
-    @Override
-    public IModel createModel() {
-        return new AbstractModel(getMainController()) {
-            @Override
-            public void initBusiness() {
-                // do nothing
             }
         };
     }

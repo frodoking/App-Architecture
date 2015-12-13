@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.frodo.android.app.core.UIView;
-import com.frodo.android.app.framework.controller.AbstractModel;
-import com.frodo.android.app.framework.controller.IModel;
 import com.frodo.android.app.ui.fragment.AbstractBaseFragment;
 
 /**
@@ -26,16 +24,6 @@ public class RedirectFragment extends AbstractBaseFragment {
 
             @Override
             public void registerListener() {
-            }
-        };
-    }
-
-    @Override
-    public IModel createModel() {
-        return new AbstractModel(getMainController()) {
-            @Override
-            public void initBusiness() {
-                // do nothing
             }
         };
     }
