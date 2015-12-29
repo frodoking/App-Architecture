@@ -22,7 +22,7 @@ public class ConfigurationModel extends AbstractModel {
     public ConfigurationModel(MainController controller) {
         super(controller);
         ConfigurationService configurationService =
-                controller.getNetworkInteractor().create(ConfigurationService.class);
+                controller.getNetworkTransport().create(ConfigurationService.class);
 
         fetchTmdbConfigurationWithRxjavaTask = new FetchTmdbConfigurationWithRxjavaTask(configurationService, new Subscriber<Configuration>() {
             @Override

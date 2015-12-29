@@ -1,6 +1,6 @@
 package com.frodo.android.app.simple;
 
-import com.frodo.android.app.AppApplication;
+import com.frodo.android.app.MicroApplication;
 import com.frodo.android.app.core.config.AndroidConfig;
 import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.network.AndroidNetworkSystem;
@@ -8,8 +8,10 @@ import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.config.Environment;
 import com.frodo.android.app.framework.controller.IController;
+import com.frodo.android.app.framework.exception.AbstractExceptionHandler.SimpleExceptionHandler;
+import com.frodo.android.app.framework.exception.ExceptionHandler;
 import com.frodo.android.app.framework.log.LogCollector;
-import com.frodo.android.app.framework.net.NetworkInteractor;
+import com.frodo.android.app.framework.net.NetworkTransport;
 import com.frodo.android.app.framework.scene.DefaultScene;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.theme.Theme;
@@ -28,7 +30,7 @@ import retrofit.client.OkClient;
 /**
  * Created by frodo on 2015/4/2. for example
  */
-public class SimpleApplication extends AppApplication {
+public class SimpleApplication extends MicroApplication {
 
     private ConfigurationModel configurationModel;
 
@@ -44,7 +46,7 @@ public class SimpleApplication extends AppApplication {
             @Override
             public void uploadLeakBlocking(File file, String leakInfo) {
                 final UploadFileToServerTask.FileWebService service =
-                        getMainController().getNetworkInteractor().create(UploadFileToServerTask.FileWebService.class);
+                        getMainController().getNetworkTransport().create(UploadFileToServerTask.FileWebService.class);
                 final UploadFileToServerTask task = new UploadFileToServerTask(service, file, null);
                 getMainController().getBackgroundExecutor().execute(task);
             }
@@ -74,8 +76,13 @@ public class SimpleApplication extends AppApplication {
     }
 
     @Override
-    public NetworkInteractor loadNetworkInteractor() {
+    public NetworkTransport loadNetworkTransport() {
         return new SimpleAndroidNetworkSystem(getMainController(), null, null);
+    }
+
+    @Override
+    public ExceptionHandler loadExceptionHandler() {
+        return new SimpleExceptionHandler(getMainController()) ;
     }
 
     @Override

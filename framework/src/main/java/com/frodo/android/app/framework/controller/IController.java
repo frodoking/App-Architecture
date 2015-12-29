@@ -1,11 +1,13 @@
 package com.frodo.android.app.framework.controller;
 
+import com.frodo.android.app.framework.broadcast.LocalBroadcastManager;
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.config.Configuration;
-import com.frodo.android.app.framework.context.AppContext;
+import com.frodo.android.app.framework.context.MicroContext;
+import com.frodo.android.app.framework.exception.ExceptionHandler;
 import com.frodo.android.app.framework.filesystem.FileSystem;
 import com.frodo.android.app.framework.log.LogCollector;
-import com.frodo.android.app.framework.net.NetworkInteractor;
+import com.frodo.android.app.framework.net.NetworkTransport;
 import com.frodo.android.app.framework.orm.Database;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.task.BackgroundExecutor;
@@ -31,13 +33,17 @@ public interface IController {
 
     Configuration getConfig();
 
-    AppContext getAppContext();
+    MicroContext getMicroContext();
 
-    void setAppContext(AppContext context);
+    void setMicroContext(MicroContext context);
 
-    NetworkInteractor getNetworkInteractor();
+    LocalBroadcastManager getLocalBroadcastManager();
 
-    void setNetworkInteractor(NetworkInteractor networkInteractor);
+    void setLocalBroadcastManager(LocalBroadcastManager localBroadcastManager);
+
+    NetworkTransport getNetworkTransport();
+
+    void setNetworkTransport(NetworkTransport networkTransport);
 
     FileSystem getFileSystem();
 
@@ -64,4 +70,8 @@ public interface IController {
     LogCollector getLogCollector();
 
     void setLogCollector(LogCollector logCollector);
+
+    ExceptionHandler getExceptionHandler();
+
+    void setExceptionHandler(ExceptionHandler exceptionHandler);
 }

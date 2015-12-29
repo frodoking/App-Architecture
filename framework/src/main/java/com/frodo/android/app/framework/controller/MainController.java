@@ -1,11 +1,13 @@
 package com.frodo.android.app.framework.controller;
 
+import com.frodo.android.app.framework.broadcast.LocalBroadcastManager;
 import com.frodo.android.app.framework.cache.CacheSystem;
 import com.frodo.android.app.framework.config.Configuration;
-import com.frodo.android.app.framework.context.AppContext;
+import com.frodo.android.app.framework.context.MicroContext;
+import com.frodo.android.app.framework.exception.ExceptionHandler;
 import com.frodo.android.app.framework.filesystem.FileSystem;
 import com.frodo.android.app.framework.log.LogCollector;
-import com.frodo.android.app.framework.net.NetworkInteractor;
+import com.frodo.android.app.framework.net.NetworkTransport;
 import com.frodo.android.app.framework.orm.Database;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.task.BackgroundExecutor;
@@ -20,13 +22,15 @@ public final class MainController implements IController {
     private BackgroundExecutor backgroundExecutor;
     private CacheSystem cacheSystem;
     private Configuration configuration;
-    private AppContext appContext;
-    private NetworkInteractor networkInteractor;
+    private MicroContext microContext;
+    private LocalBroadcastManager localBroadcastManager;
+    private NetworkTransport networkTransport;
     private FileSystem fileSystem;
     private Database database;
     private Theme theme;
     private Scene scene;
     private LogCollector logCollector;
+    private ExceptionHandler exceptionHandler;
     private PluginManager pluginManager;
     private ModelFactory modelFactory;
 
@@ -61,23 +65,33 @@ public final class MainController implements IController {
     }
 
     @Override
-    public AppContext getAppContext() {
-        return this.appContext;
+    public MicroContext getMicroContext() {
+        return this.microContext;
     }
 
     @Override
-    public void setAppContext(AppContext appContext) {
-        this.appContext = Preconditions.checkNotNull(appContext, "AppContext cannot be null");
+    public void setMicroContext(MicroContext microContext) {
+        this.microContext = Preconditions.checkNotNull(microContext, "setMicroContext cannot be null");
     }
 
     @Override
-    public NetworkInteractor getNetworkInteractor() {
-        return this.networkInteractor;
+    public LocalBroadcastManager getLocalBroadcastManager() {
+        return localBroadcastManager;
     }
 
     @Override
-    public void setNetworkInteractor(NetworkInteractor networkInteractor) {
-        this.networkInteractor = Preconditions.checkNotNull(networkInteractor, "NetworkInteractor cannot be null");
+    public void setLocalBroadcastManager(LocalBroadcastManager localBroadcastManager) {
+        this.localBroadcastManager = Preconditions.checkNotNull(localBroadcastManager, "LocalBroadcastManager cannot be null");
+    }
+
+    @Override
+    public NetworkTransport getNetworkTransport() {
+        return this.networkTransport;
+    }
+
+    @Override
+    public void setNetworkTransport(NetworkTransport networkTransport) {
+        this.networkTransport = Preconditions.checkNotNull(networkTransport, "NetworkTransport cannot be null");
     }
 
     @Override
@@ -143,5 +157,15 @@ public final class MainController implements IController {
     @Override
     public void setLogCollector(LogCollector logCollector) {
         this.logCollector = Preconditions.checkNotNull(logCollector, "LogCollector cannot be null");
+    }
+
+    @Override
+    public ExceptionHandler getExceptionHandler() {
+        return exceptionHandler;
+    }
+
+    @Override
+    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
+        this.exceptionHandler = Preconditions.checkNotNull(exceptionHandler, "ExceptionHandler cannot be null");
     }
 }

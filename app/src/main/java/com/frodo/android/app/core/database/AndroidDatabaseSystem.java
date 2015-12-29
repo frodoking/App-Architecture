@@ -88,25 +88,25 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public static AndroidDatabaseSystem create(IController controller) {
-        DaoConfig config = new DaoConfig(controller.getAppContext());
+        DaoConfig config = new DaoConfig(controller.getMicroContext());
         return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbName) {
-        DaoConfig config = new DaoConfig(controller.getAppContext());
+        DaoConfig config = new DaoConfig(controller.getMicroContext());
         config.setDbName(dbName);
         return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbDir, String dbName) {
-        DaoConfig config = new DaoConfig(controller.getAppContext());
+        DaoConfig config = new DaoConfig(controller.getMicroContext());
         config.setDbDir(dbDir);
         config.setDbName(dbName);
         return getInstance(controller, config);
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbName, int dbVersion, DbUpgradeListener dbUpgradeListener) {
-        DaoConfig config = new DaoConfig(controller.getAppContext());
+        DaoConfig config = new DaoConfig(controller.getMicroContext());
         config.setDbName(dbName);
         config.setDbVersion(dbVersion);
         config.setDbUpgradeListener(dbUpgradeListener);
@@ -114,7 +114,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public static AndroidDatabaseSystem create(IController controller, String dbDir, String dbName, int dbVersion, DbUpgradeListener dbUpgradeListener) {
-        DaoConfig config = new DaoConfig(controller.getAppContext());
+        DaoConfig config = new DaoConfig(controller.getMicroContext());
         config.setDbDir(dbDir);
         config.setDbName(dbName);
         config.setDbVersion(dbVersion);

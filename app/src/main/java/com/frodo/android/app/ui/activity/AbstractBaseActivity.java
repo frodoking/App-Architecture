@@ -7,7 +7,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-import com.frodo.android.app.AppApplication;
+import com.frodo.android.app.MicroApplication;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.framework.log.Logger;
 
@@ -20,7 +20,7 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        controller = ((AppApplication) getApplication()).getMainController();
+        controller = ((MicroApplication) getApplication()).getMainController();
         Logger.tag(tag()).printLifeCycle("onCreate");
         init();
     }

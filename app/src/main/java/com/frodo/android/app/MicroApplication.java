@@ -11,13 +11,15 @@ import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.core.toolbox.SDCardUtils;
 import com.frodo.android.app.core.toolbox.StrictModeWrapper;
+import com.frodo.android.app.framework.broadcast.GlobalLocalBroadcastManager;
 import com.frodo.android.app.framework.config.Configuration;
-import com.frodo.android.app.framework.context.AppContext;
+import com.frodo.android.app.framework.context.MicroContext;
 import com.frodo.android.app.framework.controller.MainController;
 import com.frodo.android.app.framework.controller.ModelFactory;
+import com.frodo.android.app.framework.exception.ExceptionHandler;
 import com.frodo.android.app.framework.log.LogCollector;
 import com.frodo.android.app.framework.log.Logger;
-import com.frodo.android.app.framework.net.NetworkInteractor;
+import com.frodo.android.app.framework.net.NetworkTransport;
 import com.frodo.android.app.framework.scene.Scene;
 import com.frodo.android.app.framework.theme.Theme;
 import com.squareup.picasso.OkHttpDownloader;
@@ -31,7 +33,7 @@ import static android.os.Build.VERSION_CODES.GINGERBREAD;
 /**
  * Created by frodo on 2014/12/19. Base Application
  */
-public abstract class AppApplication extends Application implements AppContext {
+public abstract class MicroApplication extends Application implements MicroContext {
     private MainController controller;
 
     @Override
@@ -47,20 +49,22 @@ public abstract class AppApplication extends Application implements AppContext {
         final AndroidExecutor executor = new AndroidExecutor("app-default",numberCores * 2 + 1);
         controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(executor));
 
-        controller.setAppContext(this);
+        controller.setMicroContext(this);
         controller.setConfiguration(loadConfiguration());
         controller.setScene(loadScene());
         controller.setTheme(loadTheme());
         controller.setFileSystem(new AndroidFileSystem(controller));
+        controller.setLocalBroadcastManager(new GlobalLocalBroadcastManager());
 
         AndroidDatabaseSystem databaseSystem = AndroidDatabaseSystem.create(controller);
         databaseSystem.configAllowTransaction(true);
         controller.setDatabase(databaseSystem);
-        controller.setNetworkInteractor(loadNetworkInteractor());
+        controller.setNetworkTransport(loadNetworkTransport());
         controller.setModelFactory(new ModelFactory());
         final LogCollector logCollector = loadLogCollector();
         Logger.instance = new Logger(logCollector);
         controller.setLogCollector(logCollector);
+        controller.setExceptionHandler(loadExceptionHandler());
 
         enableCache(true);
 
@@ -83,7 +87,9 @@ public abstract class AppApplication extends Application implements AppContext {
 
     public abstract Theme loadTheme();
 
-    public abstract NetworkInteractor loadNetworkInteractor();
+    public abstract NetworkTransport loadNetworkTransport();
+
+    public abstract ExceptionHandler loadExceptionHandler();
 
     public final void enableCache(boolean enable) {
         if (enable) {

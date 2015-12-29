@@ -8,7 +8,7 @@ import android.telephony.TelephonyManager;
 
 import com.frodo.android.app.framework.controller.AbstractChildSystem;
 import com.frodo.android.app.framework.controller.IController;
-import com.frodo.android.app.framework.net.NetworkInteractor;
+import com.frodo.android.app.framework.net.NetworkTransport;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -29,7 +29,7 @@ import retrofit.converter.GsonConverter;
  * 网络请求系统（采用retrofit+otto）
  * Created by frodo on 2015/6/20.
  */
-public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkInteractor {
+public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkTransport {
     public static final int DEFAULT_READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
     public static final int DEFAULT_WRITE_TIMEOUT_MILLIS = 20 * 1000; // 20s
     public static final int DEFAULT_CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
@@ -39,7 +39,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
     public AndroidNetworkSystem(IController controller) {
         super(controller);
-        this.context = (Context) controller.getAppContext();
+        this.context = (Context) controller.getMicroContext();
     }
 
     @Override

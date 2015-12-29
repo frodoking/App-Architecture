@@ -23,7 +23,7 @@ public class MovieModel extends AbstractModel {
 
     public MovieModel(MainController controller) {
         super(controller);
-        moviesService = getMainController().getNetworkInteractor().create(MoviesService.class);
+        moviesService = getMainController().getNetworkTransport().create(MoviesService.class);
         if (enableCached) {
             movieCache = new MovieCache(getMainController().getCacheSystem(), Cache.Type.DISK);
         }
