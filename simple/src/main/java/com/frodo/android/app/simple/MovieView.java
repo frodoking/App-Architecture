@@ -78,7 +78,7 @@ public class MovieView extends UIView {
 
                 Movie movie = (Movie) getItem(position);
                 final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig.images, movie.imageUrl);
-                Logger.tag("MovieView").printLog("Picasso loading image : " + imageUrl);
+                Logger.tag("MovieView").log("Picasso loading image : " + imageUrl);
                 Picasso.with(getPresenter().getAndroidContext()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])
                         .into(holder.imageView);
                 holder.textView.setText(movie.name);

@@ -2,13 +2,13 @@ package com.frodo.android.app.simple;
 
 import com.frodo.android.app.MicroApplication;
 import com.frodo.android.app.core.config.AndroidConfig;
+import com.frodo.android.app.core.exception.AndroidCrashHandler;
 import com.frodo.android.app.core.log.AndroidLogCollectorSystem;
 import com.frodo.android.app.core.network.AndroidNetworkSystem;
 import com.frodo.android.app.core.toolbox.ResourceManager;
 import com.frodo.android.app.framework.config.Configuration;
 import com.frodo.android.app.framework.config.Environment;
 import com.frodo.android.app.framework.controller.IController;
-import com.frodo.android.app.framework.exception.AbstractExceptionHandler.SimpleExceptionHandler;
 import com.frodo.android.app.framework.exception.ExceptionHandler;
 import com.frodo.android.app.framework.log.LogCollector;
 import com.frodo.android.app.framework.net.NetworkTransport;
@@ -82,7 +82,7 @@ public class SimpleApplication extends MicroApplication {
 
     @Override
     public ExceptionHandler loadExceptionHandler() {
-        return new SimpleExceptionHandler(getMainController()) ;
+        return new AndroidCrashHandler(getMainController()) ;
     }
 
     @Override

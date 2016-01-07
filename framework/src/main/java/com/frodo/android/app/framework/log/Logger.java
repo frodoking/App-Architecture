@@ -21,7 +21,11 @@ public class Logger {
         logCollector.d(tag, " life cycle >> ==== > " + methodName + " < ==== <<");
     }
 
-    public void printLog(String log) {
+    public void log(String log) {
         logCollector.i(tag, " >> ---- > " + log + " < ---- <<");
+    }
+
+    public void errorLog(String log) {
+        logCollector.e(tag, " >> ---- > " + log + " < ---- <<");
     }
 }
