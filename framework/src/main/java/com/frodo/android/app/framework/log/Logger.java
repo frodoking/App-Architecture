@@ -38,42 +38,46 @@ public class Logger {
     }
 
     public void v(String message) {
-        logCollector.v(tag, "@" + user + "@ " + message);
+        logCollector.v(tag, wrapUser(message));
     }
 
     public void v(String message, Throwable t) {
-        logCollector.v(tag, "@" + user + "@ " + message, t);
+        logCollector.v(tag, wrapUser(message), t);
     }
 
     public void d(String message) {
-        logCollector.d(tag, "@" + user + "@ " + message);
+        logCollector.d(tag, wrapUser(message));
     }
 
     public void d(String message, Throwable t) {
-        logCollector.d(tag, "@" + user + "@ " + message, t);
+        logCollector.d(tag, wrapUser(message), t);
     }
 
     public void i(String message) {
-        logCollector.i(tag, "@" + user + "@ " + message);
+        logCollector.i(tag, wrapUser(message));
     }
 
     public void i(String message, Throwable t) {
-        logCollector.i(tag, "@" + user + "@ " + message, t);
+        logCollector.i(tag, wrapUser(message), t);
     }
 
     public void w(String message) {
-        logCollector.w(tag, "@" + user + "@ " + message);
+        logCollector.w(tag, wrapUser(message));
     }
 
     public void w(String message, Throwable t) {
-        logCollector.w(tag, "@" + user + "@ " + message, t);
+        logCollector.w(tag, wrapUser(message), t);
     }
 
     public void e(String message) {
-        logCollector.e(tag, "@" + user + "@ " + message);
+        logCollector.e(tag, wrapUser(message));
     }
 
     public void e(String message, Throwable t) {
-        logCollector.e(tag, "@" + user + "@ " + message, t);
+        logCollector.e(tag, wrapUser(message), t);
+    }
+
+    private String wrapUser(String message) {
+        return "@" + user + "@ " + message;
     }
 }
