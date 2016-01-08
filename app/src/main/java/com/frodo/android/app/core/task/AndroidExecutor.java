@@ -1,6 +1,6 @@
 package com.frodo.android.app.core.task;
 
-import android.util.Log;
+import com.frodo.android.app.framework.log.Logger;
 
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -69,14 +69,12 @@ public class AndroidExecutor extends ThreadPoolExecutor {
          */
         IGNORE,
         /**
-         * Logs the uncaught throwables using {@link #TAG} and {@link Log}.
+         * Logs the uncaught throwables using {@link #TAG} and {@link Logger}.
          */
         LOG {
             @Override
             protected void handle(Throwable t) {
-                if (t != null && Log.isLoggable(TAG, Log.ERROR)) {
-                    Log.e(TAG, "Request threw uncaught throwable", t);
-                }
+                Logger.fLog().tag(TAG).e("Request threw uncaught throwable", t);
             }
         },
         /**

@@ -11,13 +11,35 @@ import java.io.File;
 public interface LogCollector extends ChildSystem {
 
     // Log levels
+    /**
+     * Priority constant for the println method; use Log.v.
+     */
     int VERBOSE = 2;
+
+    /**
+     * Priority constant for the println method; use Log.d.
+     */
     int DEBUG = 3;
+
+    /**
+     * Priority constant for the println method; use Log.i.
+     */
     int INFO = 4;
+
+    /**
+     * Priority constant for the println method; use Log.w.
+     */
     int WARN = 5;
+
+    /**
+     * Priority constant for the println method; use Log.e.
+     */
     int ERROR = 6;
+
+    /**
+     * Priority constant for the println method.
+     */
     int ASSERT = 7;
-    int NONE = 8;
 
     /**
      * 是否开启本地日志存储并上传功能

@@ -62,7 +62,7 @@ public abstract class MicroApplication extends Application implements MicroConte
         controller.setNetworkTransport(loadNetworkTransport());
         controller.setModelFactory(new ModelFactory());
         final LogCollector logCollector = loadLogCollector();
-        Logger.instance = new Logger(logCollector);
+        Logger.LOGCOLLECTOR = logCollector;
         controller.setLogCollector(logCollector);
         controller.setExceptionHandler(loadExceptionHandler());
 

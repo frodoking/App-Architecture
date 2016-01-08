@@ -20,6 +20,7 @@ import com.frodo.android.app.ui.activity.AbstractBaseActivity;
  * Created by frodo on 2015/1/12. base Fragment, contain UIView and Model
  */
 public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> extends Fragment implements AndroidUIViewController<V,M> {
+    private static final String LIFECYCLE = "LifeCycle_F";
     private MainController controller;
     private V uiView;
     private M model;
@@ -49,13 +50,13 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onAttach(Context context) {
         super.onAttach(context);
         controller = ((AbstractBaseActivity) getActivity()).getMainController();
-        Logger.tag(tag()).printLifeCycle("onAttach");
+        Logger.fLog().tag(LIFECYCLE).i("onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.tag(tag()).printLifeCycle("onCreate");
+        Logger.fLog().tag(LIFECYCLE).i("onCreate");
         model = createModel();
     }
 
@@ -64,7 +65,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Logger.tag(tag()).printLifeCycle("onCreateView");
+        Logger.fLog().tag(LIFECYCLE).i("onCreateView");
         this.uiView = createUIView(getActivity(), inflater, container);
         return uiView.getRootView();
     }
@@ -72,7 +73,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Logger.tag(tag()).printLifeCycle("onViewCreated");
+        Logger.fLog().tag(LIFECYCLE).i("onViewCreated");
         getUIView().initView();
         getUIView().registerListener();
     }
@@ -80,69 +81,69 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Logger.tag(tag()).printLifeCycle("onActivityCreated");
+        Logger.fLog().tag(LIFECYCLE).i("onActivityCreated");
         getModel().initBusiness();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.tag(tag()).printLifeCycle("onActivityResult");
+        Logger.fLog().tag(LIFECYCLE).i("onActivityResult");
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Logger.tag(tag()).printLifeCycle("onViewStateRestored");
+        Logger.fLog().tag(LIFECYCLE).i("onViewStateRestored");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Logger.tag(tag()).printLifeCycle("onStart");
+        Logger.fLog().tag(LIFECYCLE).i("onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Logger.tag(tag()).printLifeCycle("onResume");
+        Logger.fLog().tag(LIFECYCLE).i("onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Logger.tag(tag()).printLifeCycle("onPause");
+        Logger.fLog().tag(LIFECYCLE).i("onPause");
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Logger.tag(tag()).printLifeCycle("onSaveInstanceState");
+        Logger.fLog().tag(LIFECYCLE).i("onSaveInstanceState");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Logger.tag(tag()).printLifeCycle("onStop");
+        Logger.fLog().tag(LIFECYCLE).i("onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Logger.tag(tag()).printLifeCycle("onDestroyView");
+        Logger.fLog().tag(LIFECYCLE).i("onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Logger.tag(tag()).printLifeCycle("onDestroy");
+        Logger.fLog().tag(LIFECYCLE).i("onDestroy");
         getMainController().getLogCollector().watchLeak(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Logger.tag(tag()).printLifeCycle("onDetach");
+        Logger.fLog().tag(LIFECYCLE).i("onDetach");
     }
 
     public boolean onBackPressed() {

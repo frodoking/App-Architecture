@@ -1,8 +1,6 @@
 package com.frodo.android.app.core.log;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import android.util.Log;
 
 import com.frodo.android.app.core.toolbox.AndroidLeakcanary;
 import com.frodo.android.app.framework.controller.AbstractChildSystem;
@@ -10,7 +8,9 @@ import com.frodo.android.app.framework.controller.IController;
 import com.frodo.android.app.framework.log.LogCollector;
 import com.squareup.leakcanary.RefWatcher;
 
-import android.util.Log;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by frodo on 2015/6/20.
@@ -93,11 +93,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
 
     // Inspired by https://github.com/JakeWharton/timber/blob/master/timber/src/main/java/timber/log/Timber.java
     private void log(String tag, int logLevel, String message, Throwable t) {
-        checkWriteLog(tag, message);
 
-        if (logLevel < minimumLogLevel) {
-            return;
-        }
         if (message == null || message.length() == 0) {
             if (t != null) {
                 message = Log.getStackTraceString(t);
@@ -108,6 +104,16 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
             message += "\n" + Log.getStackTraceString(t);
         }
 
+        if (getFunctionName() != null) {
+            message = getFunctionName() + " - " + message;
+        }
+
+        checkWriteLog(tag, message);
+
+        if (logLevel < minimumLogLevel) {
+            return;
+        }
+
         if (message.length() < 4000) {
             Log.println(logLevel, tag, message);
         } else {
@@ -115,9 +121,9 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
         }
     }
 
-//     Inspired by:
-//     http://stackoverflow.com/questions/8888654/android-set-max-length-of-logcat-messages
-//      https://github.com/jakubkrolewski/timber/blob/feature/logging_long_messages/timber/src/main/java/timber/log/Timber.java
+    //     Inspired by:
+    //     http://stackoverflow.com/questions/8888654/android-set-max-length-of-logcat-messages
+    //     https://github.com/jakubkrolewski/timber/blob/feature/logging_long_messages/timber/src/main/java/timber/log/Timber.java
     private void logMessageIgnoringLimit(int logLevel, String tag, String message) {
         while (message.length() != 0) {
             int nextNewLineIndex = message.indexOf('\n');
@@ -158,5 +164,32 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
     private File logFile() {
         String currentLogFile = logDir + getToday();
         return getController().getFileSystem().createFile(currentLogFile);
+    }
+
+    /**
+     * Get The Current Function Name
+     *
+     * @return
+     */
+    private String getFunctionName() {
+        StackTraceElement[] sts = Thread.currentThread().getStackTrace();
+        if (sts == null) {
+            return null;
+        }
+        for (StackTraceElement st : sts) {
+            if (st.isNativeMethod()) {
+                continue;
+            }
+            if (st.getClassName().equals(Thread.class.getName())) {
+                continue;
+            }
+            if (st.getClassName().equals(this.getClass().getName())) {
+                continue;
+            }
+            return "[ " + Thread.currentThread().getName() + ": "
+                    + st.getFileName() + ":" + st.getLineNumber() + " "
+                    + st.getMethodName() + " ]";
+        }
+        return null;
     }
 }

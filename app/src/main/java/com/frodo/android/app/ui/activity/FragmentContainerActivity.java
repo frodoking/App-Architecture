@@ -22,7 +22,7 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
                 new FragmentStack.Callback() {
                     @Override
                     public void onStackChanged(int stackSize, Fragment topFragment) {
-                        Logger.tag(FragmentStack.STATE_STACK).log("onStackChanged stackSize:" + stackSize + ", topFragment: " + topFragment.getTag());
+                        Logger.fLog().tag(FragmentStack.STATE_STACK).d("onStackChanged stackSize:" + stackSize + ", topFragment: " + topFragment.getTag());
                     }
                 });
         mStack.setDefaultAnimation(R.anim.slide_in_left,

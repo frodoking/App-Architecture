@@ -44,7 +44,7 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
         // 如果SD卡不存在或无法使用，则无法把异常信息写入SD卡
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             if (getController().getConfig().isDebug()) {
-                Logger.tag(getClass().getSimpleName()).log("sdcard unmounted,skip dump exception");
+                Logger.fLog().tag(getClass().getSimpleName()).d("sdcard unmounted,skip dump exception");
                 return;
             }
         }
@@ -72,7 +72,7 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
 
             pw.close();
         } catch (Exception e) {
-            Logger.tag(getClass().getSimpleName()).errorLog("dump crash info failed");
+            Logger.fLog().tag(getClass().getSimpleName()).e("dump crash info failed", e);
         }
     }
 
