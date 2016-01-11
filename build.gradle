@@ -1,11 +1,13 @@
 apply from: 'dependencyDefinitions.gradle'
 apply from: 'variants.gradle'
 
+// apply from: 'maven_push.gradle'
+
 buildscript {
     repositories {
         jcenter()
     }
-    def ANDROID_GRADLE_VERSION = '1.3.0'
+    def ANDROID_GRADLE_VERSION = '1.5.0'
     dependencies {
         classpath "com.android.tools.build:gradle:${ANDROID_GRADLE_VERSION}"
     }

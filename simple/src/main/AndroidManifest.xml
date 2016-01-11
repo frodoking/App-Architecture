@@ -32,11 +32,11 @@
             android:allowBackup="true"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
-            android:name=".SimpleApplication"
+            android:name="com.frodo.app.android.simple.SimpleApplication"
             android:theme="@style/AppTheme">
 
         <activity
-                android:name=".MainActivity"
+                android:name="com.frodo.app.android.simple.MainActivity"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
