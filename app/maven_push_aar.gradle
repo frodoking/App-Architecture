@@ -1,0 +1,7 @@
+ext.bintrayName = 'app-architecture-android'
+ext.libraryName = 'AppArchitectureAndroid'
+ext.artifact = 'app-architecture-android'
+ext.libraryDescription = 'A app architecture on android'
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

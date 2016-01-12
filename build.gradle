@@ -1,8 +1,3 @@
-apply from: 'dependencyDefinitions.gradle'
-apply from: 'variants.gradle'
-
-// apply from: 'maven_push.gradle'
-
 buildscript {
     repositories {
         jcenter()
@@ -10,8 +5,16 @@ buildscript {
     def ANDROID_GRADLE_VERSION = '1.5.0'
     dependencies {
         classpath "com.android.tools.build:gradle:${ANDROID_GRADLE_VERSION}"
+        classpath "com.github.dcendents:android-maven-plugin:1.2"
     }
 }
+
+plugins {
+    id "com.jfrog.bintray" version "1.5"
+}
+
+apply from: 'dependencyDefinitions.gradle'
+apply from: 'variants.gradle'
 
 // See http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html.
 if (JavaVersion.current().isJava8Compatible()) {

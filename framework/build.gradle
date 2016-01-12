@@ -3,3 +3,5 @@ apply plugin: 'java'
 dependencies {
     compile libraries.guava
 }
+
+apply from: 'maven_push_jar.gradle'
