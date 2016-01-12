@@ -11,7 +11,7 @@ import com.frodo.app.framework.orm.table.DbModel;
 import java.util.List;
 
 /**
- * 数据库操作
+ * Database Operater
  * Created by frodo on 2015/6/20.
  */
 public interface Database extends ChildSystem {

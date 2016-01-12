@@ -60,9 +60,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
         model = createModel();
     }
 
-    /**
-     * 初始化界面相关
-     */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Logger.fLog().tag(LIFECYCLE).i("onCreateView");

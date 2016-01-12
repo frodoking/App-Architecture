@@ -5,15 +5,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
- * 打开或关闭软键盘
+ * keyboard utils
  * Created by frodo on 2015/7/15.
  */
 public class KeyBoardUtils {
     /**
-     * 打卡软键盘
+     * open keyboard
      *
-     * @param mEditText 输入框
-     * @param mContext  上下文
+     * @param mEditText EditText
+     * @param mContext  Context
      */
     public static void openKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -22,10 +22,10 @@ public class KeyBoardUtils {
     }
 
     /**
-     * 关闭软键盘
+     * close keyboard
      *
-     * @param mEditText 输入框
-     * @param mContext  上下文
+     * @param mEditText EditText
+     * @param mContext  Context
      */
     public static void closeKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);

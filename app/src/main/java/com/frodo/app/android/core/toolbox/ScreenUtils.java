@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 /**
- * 获得屏幕相关的辅助类
+ * Get Android Screen info
  * Created by frodo on 2015/7/15.
  */
 public class ScreenUtils {
@@ -20,7 +20,7 @@ public class ScreenUtils {
     }
 
     /**
-     * 获得屏幕高度
+     * get screen width
      *
      * @param context
      *
@@ -34,7 +34,7 @@ public class ScreenUtils {
     }
 
     /**
-     * 获得屏幕宽度
+     * get screen height
      *
      * @param context
      *
@@ -48,7 +48,7 @@ public class ScreenUtils {
     }
 
     /**
-     * 获得状态栏的高度
+     * get status height
      *
      * @param context
      *
@@ -68,7 +68,7 @@ public class ScreenUtils {
     }
 
     /**
-     * 横竖屏判断
+     * is portrait
      *
      * @return
      */
@@ -77,7 +77,7 @@ public class ScreenUtils {
     }
 
     /**
-     * 获取当前屏幕截图，包含状态栏
+     * get snap shot
      *
      * @param activity
      *
@@ -98,7 +98,7 @@ public class ScreenUtils {
     }
 
     /**
-     * 获取当前屏幕截图，不包含状态栏
+     * get snap shot without status bar
      *
      * @param activity
      *

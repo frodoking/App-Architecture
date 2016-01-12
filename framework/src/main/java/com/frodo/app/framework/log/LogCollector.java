@@ -5,7 +5,9 @@ import com.frodo.app.framework.controller.ChildSystem;
 import java.io.File;
 
 /**
- * 监控日志主要是用户行为监控，质量监控（包括crash,速度，流量，电量），安全监控以及诊断日志。
+ *  Monitoring logs mainly user behavior monitoring,
+ *  quality control (including crash, speed, flow, power),
+ *  security monitoring, and diagnostic logging.
  * Created by frodo on 2015/6/20.
  */
 public interface LogCollector extends ChildSystem {
@@ -42,7 +44,7 @@ public interface LogCollector extends ChildSystem {
     int ASSERT = 7;
 
     /**
-     * 是否开启本地日志存储并上传功能
+     * whether to turn on/off collect log to server
      *
      * @param enable
      */

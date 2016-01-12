@@ -15,7 +15,7 @@ import com.frodo.app.framework.theme.Theme;
 import com.google.common.base.Preconditions;
 
 /**
- * 整个app的核心
+ * Whole Project's Core
  * Created by frodo on 2015/4/1.
  */
 public final class MainController implements com.frodo.app.framework.controller.IController {

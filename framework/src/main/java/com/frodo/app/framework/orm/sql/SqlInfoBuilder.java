@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
- * Build "insert", "replace",，"update", "delete" and "create" sql.
+ * Build "insert", "replace", "update", "delete" and "create" sql.
  */
 public class SqlInfoBuilder {
 

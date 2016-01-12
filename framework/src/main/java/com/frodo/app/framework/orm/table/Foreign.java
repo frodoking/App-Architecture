@@ -83,7 +83,6 @@ public class Foreign extends com.frodo.app.framework.orm.table.Column {
                         com.frodo.app.framework.orm.table.Column column = TableUtils.getColumnOrId(foreignEntityType, foreignColumnName);
                         columnValue = column.getColumnValue(foreignEntities.get(0));
 
-                        // 仅自动关联外键
                         com.frodo.app.framework.orm.table.Table table = this.getTable();
                         if (table != null && column instanceof com.frodo.app.framework.orm.table.Id) {
                             for (Object foreignObj : foreignEntities) {

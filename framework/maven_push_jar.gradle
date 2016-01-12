@@ -1,66 +1,63 @@
 apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: 'com.jfrog.bintray'
 
-ext.bintrayName = 'app-architecture-framework'
-ext.libraryName = 'AppArchitectureFramework'
-ext.artifact = 'app-architecture-framework'
-ext.libraryDescription = 'A app architecture'
-ext.releaseRepositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+ext {
+    bintrayName = 'app-architecture-framework'
+    libraryName = 'AppArchitectureFramework'
+    artifact = 'app-architecture-framework'
+    libraryDescription = 'A app architecture framework library'
+}
+group = publishedGroupId
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                groupId publishedGroupId
+                artifactId artifact
+                version libraryVersion
 
-            pom.groupId = publishedGroupId
-            pom.artifactId = artifact
-            pom.version = libraryVersion
+                // Add your description here
+                name libraryName
+                packaging 'jar'
+                description libraryDescription
+                url siteUrl
 
-            //指定项目部署到的中央库地址，UserName和Password就是Part 1中注册的账号。
-            repository(url: releaseRepositoryUrl) {
-                authentication(userName: 'xxx', password: 'xxx')
-            }
-            //构造项目的Pom文件，参见Part 2中Pom文件的规范，不要遗漏必填项
-            pom.project {
-                    name libraryName
-                    packaging 'jar'
-                    description libraryDescription
+                // Set your license
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
                     url siteUrl
 
-                    // Set your license
-                    licenses {
-                        license {
-                            name licenseName
-                            url licenseUrl
-                        }
-                    }
-                    developers {
-                        developer {
-                            id developerId
-                            name developerName
-                            email developerEmail
-                        }
-                    }
-                    scm {
-                        connection gitUrl
-                        developerConnection gitUrl
-                        url siteUrl
-
-                    }
+                }
             }
         }
     }
 }
 
-//参见Part 2， 为项目生成**.jar/**-javadoc.jar/**-sources.jar
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from 'build/docs/javadoc'
-}
+version = libraryVersion
 
 task sourcesJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
     classifier = 'sources'
-    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 artifacts {
@@ -69,7 +66,32 @@ artifacts {
     archives sourcesJar
 }
 
-signing {
-    sign configurations.archives
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty("bintray.gpg.password")
+                //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
 }
 

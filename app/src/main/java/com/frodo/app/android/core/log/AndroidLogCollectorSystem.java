@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by frodo on 2015/6/20.
+ * Created by frodo on 2015/6/20. log collector on Android
  */
 public class AndroidLogCollectorSystem extends AbstractChildSystem implements LogCollector {
     private static final int LOG_ENTRY_MAX_LENGTH = 4000;
@@ -156,7 +156,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
 
     public String getCurrentTime() {
         Calendar c = Calendar.getInstance();
-        String pattern = "yyyy年MM月dd日 HH时mm分ss秒SSS毫秒";
+        String pattern = "yyyy/MM/dd HH:mm:ss:SSS";
         SimpleDateFormat f = new SimpleDateFormat(pattern);
         return f.format(c.getTime());
     }
@@ -168,8 +168,6 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
 
     /**
      * Get The Current Function Name
-     *
-     * @return
      */
     private String getFunctionName() {
         StackTraceElement[] sts = Thread.currentThread().getStackTrace();

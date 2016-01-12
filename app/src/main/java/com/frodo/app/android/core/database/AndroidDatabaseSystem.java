@@ -32,8 +32,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * DB 数据库借用了开源库xUtils。具体代码位置https://github.com/wyouflf/xUtils
- * 把Android本身的上下文分离出来，抽离过程见framework层次
+ * DB learn from Open Source xUtils。source site: https://github.com/wyouflf/xUtils
  * Created by frodo on 2015/6/20.
  */
 public final class AndroidDatabaseSystem extends AbstractChildSystem implements Database {

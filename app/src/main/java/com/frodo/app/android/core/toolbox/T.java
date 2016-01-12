@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * Toast统一管理类
+ * Toast Manager on Android
  * Created by frodo on 2015/7/15.
  */
 public class T {
@@ -16,7 +16,7 @@ public class T {
     }
 
     /**
-     * 短时间显示Toast
+     * Toast.LENGTH_SHORT
      *
      * @param context
      * @param message
@@ -28,7 +28,7 @@ public class T {
     }
 
     /**
-     * 短时间显示Toast
+     * Toast.LENGTH_SHORT
      *
      * @param context
      * @param message
@@ -40,7 +40,7 @@ public class T {
     }
 
     /**
-     * 长时间显示Toast
+     * Toast.LENGTH_LONG
      *
      * @param context
      * @param message
@@ -52,7 +52,7 @@ public class T {
     }
 
     /**
-     * 长时间显示Toast
+     * Toast.LENGTH_LONG
      *
      * @param context
      * @param message
@@ -64,7 +64,7 @@ public class T {
     }
 
     /**
-     * 自定义显示Toast时间
+     * custom duration to show
      *
      * @param context
      * @param message
@@ -77,7 +77,7 @@ public class T {
     }
 
     /**
-     * 自定义显示Toast时间
+     * custom duration to show
      *
      * @param context
      * @param message

@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 统一资源管理
+ * Global Resource Manager
  *
  * @author frodoking
- * @date 2014年11月11日 下午5:11:51
+ * @date 2014/11/11 17:11:51
  */
 public class ResourceManager {
 
@@ -89,16 +89,12 @@ public class ResourceManager {
         String res = "";
         InputStream in = null;
         try {
-            //得到资源中的Raw数据流
             in = getResources().openRawResource(rawResourceId);
 
-            //得到数据的大小
             int length = in.available();
             byte[] buffer = new byte[length];
 
-            //读取数据
             in.read(buffer);
-            //依test.txt的编码类型选择合适的编码，如果不调整会乱码
             res = new String(buffer, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,7 +114,6 @@ public class ResourceManager {
         String res = "";
         InputStream in = null;
         try {
-            //得到资源中的asset数据流
             in = getResources().getAssets().open(fileName);
             int length = in.available();
             byte[] buffer = new byte[length];

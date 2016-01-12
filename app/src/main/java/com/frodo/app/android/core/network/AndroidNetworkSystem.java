@@ -20,13 +20,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
- * 网络请求系统（采用retrofit+otto）
+ * Network Request
  * Created by frodo on 2015/6/20.
  */
 public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkTransport {
@@ -163,7 +164,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
                     throws JsonParseException {
                 try {
-                    return new SimpleDateFormat("yyy-MM-dd").parse(json.getAsString());
+                    return new SimpleDateFormat("yyy-MM-dd", Locale.CHINA).parse(json.getAsString());
                 } catch (ParseException var5) {
                     return null;
                 }

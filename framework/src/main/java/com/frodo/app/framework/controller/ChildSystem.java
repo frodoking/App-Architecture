@@ -1,7 +1,7 @@
 package com.frodo.app.framework.controller;
 
 /**
- * 子系统接口
+ * SubSystem interface
  * Created by frodo on 2015/6/20.
  */
 public interface ChildSystem {
