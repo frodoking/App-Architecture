@@ -17,8 +17,8 @@ uploadArchives {
             pom.version = libraryVersion
 
             //指定项目部署到的中央库地址，UserName和Password就是Part 1中注册的账号。
-            repository(url: '${releaseRepositoryUrl}') {
-                authentication(userName: 'xxxx', password: 'xxxx')
+            repository(url: releaseRepositoryUrl) {
+                authentication(userName: 'xxx', password: 'xxx')
             }
             //构造项目的Pom文件，参见Part 2中Pom文件的规范，不要遗漏必填项
             pom.project {
@@ -72,3 +72,4 @@ artifacts {
 signing {
     sign configurations.archives
 }
+

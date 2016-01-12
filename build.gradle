@@ -2,15 +2,14 @@ buildscript {
     repositories {
         jcenter()
     }
-    def ANDROID_GRADLE_VERSION = '1.5.0'
     dependencies {
-        classpath "com.android.tools.build:gradle:${ANDROID_GRADLE_VERSION}"
-        classpath "com.github.dcendents:android-maven-plugin:1.2"
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
     }
 }
 
 plugins {
-    id "com.jfrog.bintray" version "1.5"
+    id "com.jfrog.bintray" version "1.4"
 }
 
 apply from: 'dependencyDefinitions.gradle'
@@ -36,9 +35,6 @@ subprojects {
 subprojects { project ->
     repositories {
         jcenter()
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
-        }
     }
 
     apply plugin: 'checkstyle'
