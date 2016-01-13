@@ -4,4 +4,4 @@ dependencies {
     compile libraries.guava
 }
 
-apply from: 'maven_push_jar.gradle'
+apply from: "${rootDir.absolutePath}/scripts/maven_push_jar.gradle"

@@ -20,7 +20,7 @@ public class WhereBuilder {
     /**
      * create new instance
      *
-     * @return
+     * @return WhereBuilder
      */
     public static WhereBuilder b() {
         return new WhereBuilder();
@@ -32,7 +32,7 @@ public class WhereBuilder {
      * @param columnName
      * @param op         operator: "=","<","LIKE","IN","BETWEEN"...
      * @param value
-     * @return
+     * @return WhereBuilder
      */
     public static WhereBuilder b(String columnName, String op, Object value) {
         WhereBuilder result = new WhereBuilder();
@@ -46,7 +46,7 @@ public class WhereBuilder {
      * @param columnName
      * @param op         operator: "=","<","LIKE","IN","BETWEEN"...
      * @param value
-     * @return
+     * @return WhereBuilder
      */
     public WhereBuilder and(String columnName, String op, Object value) {
         appendCondition(whereItems.size() == 0 ? null : "AND", columnName, op, value);
@@ -59,7 +59,7 @@ public class WhereBuilder {
      * @param columnName
      * @param op         operator: "=","<","LIKE","IN","BETWEEN"...
      * @param value
-     * @return
+     * @return WhereBuilder
      */
     public WhereBuilder or(String columnName, String op, Object value) {
         appendCondition(whereItems.size() == 0 ? null : "OR", columnName, op, value);

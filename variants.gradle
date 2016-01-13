@@ -37,7 +37,7 @@ ext {
     libraryName = 'AppArchitecture'
     artifact = 'app-architecture'
 
-    libraryDescription = 'A app architecture'
+    libraryDescription = 'a app architecture'
 
     siteUrl = 'https://github.com/frodoking/App-Architecture'
     gitUrl = 'https://github.com/frodoking/App-Architecture.git'

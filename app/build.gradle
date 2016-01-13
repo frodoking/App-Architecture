@@ -36,6 +36,6 @@ dependencies {
     releaseCompile libraries.leakcanary_android_no_op
 }
 
-apply from: 'maven_push_aar.gradle'
+apply from: "${rootDir.absolutePath}/scripts/maven_push_aar.gradle"
 
 

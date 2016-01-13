@@ -65,7 +65,7 @@ public class DbModel {
 
     /**
      * @param columnName
-     * @return
+     * @return boolean
      */
     public boolean isEmpty(String columnName) {
         return TextUtils.isEmpty(dataMap.get(columnName));
