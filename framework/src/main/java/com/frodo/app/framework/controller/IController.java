@@ -15,7 +15,7 @@ import com.frodo.app.framework.theme.Theme;
 
 /**
  * controller接口
- *
+ * <p>
  * Fixed by frodo on 2015/6/20.
  */
 public interface IController {

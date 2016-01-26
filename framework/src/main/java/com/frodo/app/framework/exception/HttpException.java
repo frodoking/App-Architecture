@@ -3,7 +3,7 @@ package com.frodo.app.framework.exception;
 /**
  * Created by frodo on 2015/4/2.
  */
-public class HttpException extends com.frodo.app.framework.exception.BaseException {
+public class HttpException extends BaseException {
     private static final long serialVersionUID = 1L;
 
     private int exceptionCode;

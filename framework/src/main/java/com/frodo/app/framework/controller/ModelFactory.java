@@ -8,17 +8,17 @@ import java.util.concurrent.ConcurrentMap;
  * Created by frodo on 2015/6/15.
  */
 public final class ModelFactory {
-    private ConcurrentMap<String, com.frodo.app.framework.controller.IModel> modelCache;
+    private ConcurrentMap<String, IModel> modelCache;
 
     public ModelFactory() {
         modelCache = new ConcurrentHashMap<>();
     }
 
-    public void registerMode(com.frodo.app.framework.controller.IModel model) {
+    public void registerMode(IModel model) {
         modelCache.putIfAbsent(model.name(), model);
     }
 
-    public com.frodo.app.framework.controller.IModel getModelBy(String modelName) {
+    public IModel getModelBy(String modelName) {
         return modelCache.get(modelName);
     }
 

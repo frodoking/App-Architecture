@@ -3,7 +3,7 @@ package com.frodo.app.framework.broadcast;
 /**
  * Created by frodo on 2015/12/29.
  */
-public final class GlobalLocalBroadcastManager implements LocalBroadcastManager{
+public final class GlobalLocalBroadcastManager implements LocalBroadcastManager {
     @Override
     public void send(Object key) {
 

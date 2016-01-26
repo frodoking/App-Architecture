@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * Created by frodo on 2015/7/6.
  */
-public abstract class AbstractBackgroundExecutor implements com.frodo.app.framework.task.BackgroundExecutor {
+public abstract class AbstractBackgroundExecutor implements BackgroundExecutor {
 
     private final ExecutorService mExecutorService;
 

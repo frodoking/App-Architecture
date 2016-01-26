@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface Configuration extends ChildSystem {
 
-    List<com.frodo.app.framework.config.Environment> readEnvironments();
+    List<Environment> readEnvironments();
 
-    void addEnvironment(com.frodo.app.framework.config.Environment environment);
+    void addEnvironment(Environment environment);
 
-    com.frodo.app.framework.config.Environment getCurrentEnvironment();
+    Environment getCurrentEnvironment();
 
-    void setCurrentEnvironment(com.frodo.app.framework.config.Environment environment);
+    void setCurrentEnvironment(Environment environment);
 
     Object serverConfig();
 

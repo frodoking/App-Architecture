@@ -5,9 +5,9 @@ import com.frodo.app.framework.controller.ChildSystem;
 import java.io.File;
 
 /**
- *  Monitoring logs mainly user behavior monitoring,
- *  quality control (including crash, speed, flow, power),
- *  security monitoring, and diagnostic logging.
+ * Monitoring logs mainly user behavior monitoring,
+ * quality control (including crash, speed, flow, power),
+ * security monitoring, and diagnostic logging.
  * Created by frodo on 2015/6/20.
  */
 public interface LogCollector extends ChildSystem {

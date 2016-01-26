@@ -6,7 +6,7 @@ import com.frodo.app.framework.controller.MainController;
 /**
  * Created by frodo on 2015/12/29.
  */
-public abstract class AbstractExceptionHandler implements com.frodo.app.framework.exception.ExceptionHandler {
+public abstract class AbstractExceptionHandler implements ExceptionHandler {
     private MainController mainController;
     private Thread.UncaughtExceptionHandler mDefaultCrashHandler;
 

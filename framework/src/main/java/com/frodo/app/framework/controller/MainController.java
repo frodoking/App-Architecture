@@ -18,7 +18,7 @@ import com.google.common.base.Preconditions;
  * Whole Project's Core
  * Created by frodo on 2015/4/1.
  */
-public final class MainController implements com.frodo.app.framework.controller.IController {
+public final class MainController implements IController {
     private BackgroundExecutor backgroundExecutor;
     private CacheSystem cacheSystem;
     private Configuration configuration;
@@ -31,8 +31,8 @@ public final class MainController implements com.frodo.app.framework.controller.
     private Scene scene;
     private LogCollector logCollector;
     private ExceptionHandler exceptionHandler;
-    private com.frodo.app.framework.controller.PluginManager pluginManager;
-    private com.frodo.app.framework.controller.ModelFactory modelFactory;
+    private PluginManager pluginManager;
+    private ModelFactory modelFactory;
 
     @Override
     public BackgroundExecutor getBackgroundExecutor() {
@@ -135,7 +135,7 @@ public final class MainController implements com.frodo.app.framework.controller.
     }
 
     @Override
-    public com.frodo.app.framework.controller.ModelFactory getModelFactory() {
+    public ModelFactory getModelFactory() {
         return this.modelFactory;
     }
 
@@ -145,7 +145,7 @@ public final class MainController implements com.frodo.app.framework.controller.
     }
 
     @Override
-    public com.frodo.app.framework.controller.PluginManager getPluginManager() {
+    public PluginManager getPluginManager() {
         return pluginManager == null ? pluginManager = new PluginManager() : pluginManager;
     }
 

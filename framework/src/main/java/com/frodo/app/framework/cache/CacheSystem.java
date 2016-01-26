@@ -15,9 +15,9 @@ public interface CacheSystem extends ChildSystem {
     /**
      * By Type
      */
-    boolean existCacheByType(String key, com.frodo.app.framework.cache.Cache.Type type);
+    boolean existCacheByType(String key, Cache.Type type);
 
-    <T> T findCacheByType(String key, Type classType, com.frodo.app.framework.cache.Cache.Type type);
+    <T> T findCacheByType(String key, Type classType, Cache.Type type);
 
     <K, V> boolean put(K key, V value, Cache.Type type);
 

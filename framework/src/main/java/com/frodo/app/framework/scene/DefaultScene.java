@@ -4,7 +4,7 @@ package com.frodo.app.framework.scene;
  * 默认场景
  * Created by frodo on 2015/6/15.
  */
-public class DefaultScene implements com.frodo.app.framework.scene.Scene {
+public class DefaultScene implements Scene {
     @Override
     public int onSwitch() {
         return 0;

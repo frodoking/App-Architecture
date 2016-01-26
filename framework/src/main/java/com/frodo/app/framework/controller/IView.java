@@ -6,6 +6,8 @@ package com.frodo.app.framework.controller;
  */
 public interface IView {
     UIViewController getPresenter();
+
     boolean isOnShown();
+
     void show(boolean show);
 }

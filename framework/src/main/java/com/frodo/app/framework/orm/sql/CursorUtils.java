@@ -70,6 +70,7 @@ public class CursorUtils {
         private static final String FOREIGN_LAZY_LOADER_CLASS_NAME = ForeignLazyLoader.class.getName();
         private static final String FINDER_LAZY_LOADER_CLASS_NAME = FinderLazyLoader.class.getName();
         private static long seq = 0;
+
         private FindCacheSequence() {
         }
 
