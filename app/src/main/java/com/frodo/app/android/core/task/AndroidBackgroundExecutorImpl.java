@@ -1,7 +1,5 @@
 package com.frodo.app.android.core.task;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Process;
 
 import com.frodo.app.framework.exception.HttpException;
@@ -15,8 +13,6 @@ import java.util.concurrent.ExecutorService;
  * Created by frodo on 2015/7/6.
  */
 public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
-
-    private static final Handler sHandler = new Handler(Looper.getMainLooper());
 
     public AndroidBackgroundExecutorImpl(ExecutorService executorService) {
         super(executorService);
@@ -41,23 +37,12 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
         @Override
         public final void run() {
-            if (mBackgroundCallTask.isCancelled()) {
-                return;
-            }
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
             if (mBackgroundCallTask.isCancelled()) {
                 return;
             }
-            sHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mBackgroundCallTask.isCancelled()) {
-                        return;
-                    }
-                    mBackgroundCallTask.preExecute();
-                }
-            });
+            mBackgroundCallTask.preExecute();
 
             if (mBackgroundCallTask.isCancelled()) {
                 return;
@@ -67,23 +52,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             if (mBackgroundCallTask.isCancelled()) {
                 return;
             }
-            sHandler.post(new ResultCallback(result));
-        }
-
-        private class ResultCallback implements Runnable {
-            private final R mResult;
-
-            private ResultCallback(R result) {
-                mResult = result;
-            }
-
-            @Override
-            public void run() {
-                if (mBackgroundCallTask.isCancelled()) {
-                    return;
-                }
-                mBackgroundCallTask.postExecute(mResult);
-            }
+            mBackgroundCallTask.postExecute(result);
         }
     }
 
@@ -97,20 +66,11 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
         @Override
         public final void run() {
+            android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
             if (mNetworkCallTask.isCancelled()) {
                 return;
             }
-            android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-
-            sHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mNetworkCallTask.isCancelled()) {
-                        return;
-                    }
-                    mNetworkCallTask.onPreCall();
-                }
-            });
+            mNetworkCallTask.onPreCall();
 
             R result = null;
             HttpException httpException = null;
@@ -127,30 +87,13 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             if (mNetworkCallTask.isCancelled()) {
                 return;
             }
-            sHandler.post(new ResultCallback(result, httpException));
-        }
 
-        private class ResultCallback implements Runnable {
-            private final R mResult;
-            private final HttpException mHttpException;
-
-            private ResultCallback(R result, HttpException httpException) {
-                mResult = result;
-                mHttpException = httpException;
+            if (result != null) {
+                mNetworkCallTask.onSuccess(result);
+            } else if (httpException != null) {
+                mNetworkCallTask.onError(httpException);
             }
-
-            @Override
-            public void run() {
-                if (mNetworkCallTask.isCancelled()) {
-                    return;
-                }
-                if (mResult != null) {
-                    mNetworkCallTask.onSuccess(mResult);
-                } else if (mHttpException != null) {
-                    mNetworkCallTask.onError(mHttpException);
-                }
-                mNetworkCallTask.onFinished();
-            }
+            mNetworkCallTask.onFinished();
         }
     }
 }

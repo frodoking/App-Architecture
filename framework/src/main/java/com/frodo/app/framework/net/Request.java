@@ -5,6 +5,7 @@ import com.frodo.app.framework.net.mime.TypedOutput;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public final class Request {
     private StringBuilder queryParams;
 
     public Request(String method, String relativeUrl) {
-        this(method,relativeUrl,null,null,null);
+        this(method, relativeUrl, null, null, null);
     }
 
     public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, TypedOutput body) {
@@ -42,12 +43,10 @@ public final class Request {
         }
 
         if (params == null) {
-            this.params = Collections.emptyMap();
+            this.params = new HashMap<>();
         } else {
             this.params = params;
         }
-
-        queryParams = new StringBuilder().append('?');
 
         this.body = body;
     }
@@ -69,13 +68,6 @@ public final class Request {
             url.append(queryParams);
         }
         return url.toString();
-    }
-
-    /**
-     * Returns an map of params, never {@code null}.
-     */
-    public Map<String, Object> getParams() {
-        return params;
     }
 
     /**
@@ -109,7 +101,14 @@ public final class Request {
                 this.queryParams = queryParams = new StringBuilder();
             }
 
-            queryParams.append(queryParams.length() > 0 ? '&' : '?');
+            if (queryParams.length() > 0) {
+                if (queryParams.charAt(queryParams.length() - 1) != '?') {
+                    queryParams.append('&');
+                }
+            } else {
+                queryParams.append('?');
+            }
+
 
             if (encodeName) {
                 name = URLEncoder.encode(name, "UTF-8");

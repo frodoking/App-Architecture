@@ -8,5 +8,5 @@ import com.frodo.app.framework.net.NetworkCallTask;
 public interface BackgroundExecutor {
     <R> void execute(NetworkCallTask<R> runnable);
 
-    <R> void execute(com.frodo.app.framework.task.BackgroundCallTask<R> runnable);
+    <R> void execute(BackgroundCallTask<R> runnable);
 }

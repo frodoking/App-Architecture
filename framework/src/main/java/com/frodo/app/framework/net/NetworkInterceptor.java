@@ -5,11 +5,11 @@ import com.frodo.app.framework.entity.BeanNode;
 import com.frodo.app.framework.exception.HttpException;
 
 /**
- * Created by frodo on 2016/3/2.
+ * Created by frodo on 2016/3/2.network intercept.
  */
-public class NetworkInterceptor {
+public interface NetworkInterceptor<R, V> extends Interceptor<R, V> {
 
-    public static class RequestInterceptor implements Interceptor<Request, Void> {
+    class RequestInterceptor implements NetworkInterceptor<Request, Void> {
 
         @Override
         public Void intercept(Request request) {
@@ -17,15 +17,15 @@ public class NetworkInterceptor {
         }
     }
 
-    public static class ResponseSuccessInterceptor implements Interceptor<String, BeanNode> {
+    class ResponseSuccessInterceptor implements NetworkInterceptor<BeanNode, Void> {
 
         @Override
-        public BeanNode intercept(String s) {
+        public Void intercept(BeanNode beanNode) {
             return null;
         }
     }
 
-    public static class ResponseErrorInterceptor implements Interceptor<HttpException, String> {
+    class ResponseErrorInterceptor implements NetworkInterceptor<HttpException, String> {
 
 
         @Override

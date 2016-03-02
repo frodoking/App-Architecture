@@ -5,15 +5,19 @@ import java.io.InputStream;
 
 /**
  * Binary data with an associated mime type.
- *
+ * <p/>
  * Created by frodo on 2016/3/2.
  */
 public interface TypedInput {
 
-    /** Returns the mime type. */
+    /**
+     * Returns the mime type.
+     */
     String mimeType();
 
-    /** Length in bytes. Returns {@code -1} if length is unknown. */
+    /**
+     * Length in bytes. Returns {@code -1} if length is unknown.
+     */
     long length() throws IOException;
 
     /**

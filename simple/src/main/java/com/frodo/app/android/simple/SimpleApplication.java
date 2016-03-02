@@ -115,9 +115,9 @@ public class SimpleApplication extends MicroApplication {
                 public Void intercept(Request request) {
                     Environment env = getMainController().getConfig().getCurrentEnvironment();
                     if (env.getName().contains("tmdb")) {
-                        request.getParams().put("api_key", env.getApiKey());
+                        request.addQueryParam("api_key", env.getApiKey());
                     } else if (env.getName().contains("trakt")) {
-                        request.getParams().put("apikey", env.getApiKey());
+                        request.addQueryParam("apikey", env.getApiKey());
                     }
                     if (userAccount != null && userPasswordSha1 != null) {
                         String source = userAccount + ":" + userPasswordSha1;

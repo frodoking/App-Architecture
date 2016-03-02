@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * An HTTP response.
- * <p>
+ * <p/>
  * When used directly as a data type for an interface method, the response body is buffered to a
  * {@code byte[]}.
  * Created by xuwei19 on 2016/3/2.

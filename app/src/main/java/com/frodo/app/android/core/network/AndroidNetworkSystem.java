@@ -8,10 +8,10 @@ import android.telephony.TelephonyManager;
 
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
-import com.frodo.app.framework.controller.Interceptor;
 import com.frodo.app.framework.exception.HttpException;
 import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.Header;
+import com.frodo.app.framework.net.NetworkInterceptor;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
@@ -46,7 +46,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     private Context context;
     private String apiUrl;
     private OkHttpClient client;
-    private List<Interceptor> interceptorList = new ArrayList<>();
+    private List<NetworkInterceptor> interceptorList = new ArrayList<>();
 
     private static OkHttpClient generateDefaultOkHttp() {
         OkHttpClient client = new OkHttpClient();
@@ -139,8 +139,13 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     }
 
     @Override
-    public void addInterceptor(Interceptor interceptor) {
+    public List<NetworkInterceptor> interceptorList() {
+        return interceptorList;
+    }
 
+    @Override
+    public void addInterceptor(NetworkInterceptor interceptor) {
+        interceptorList.add(interceptor);
     }
 
     private ConnectivityManager getConnectivityManager() {
@@ -157,7 +162,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
                 .url(apiUrl + request.getUrl())
                 .method(request.getMethod(), createRequestBody(request.getBody()));
 
-        Logger.fLog().i(String.format("RequestURL: [ %s ]", apiUrl + request.getUrl()));
+        Logger.fLog().tag("RequestURL").i(String.format("[ %s ]", apiUrl + request.getUrl()));
 
         List<Header> headers = request.getHeaders();
         for (int i = 0, size = headers.size(); i < size; i++) {

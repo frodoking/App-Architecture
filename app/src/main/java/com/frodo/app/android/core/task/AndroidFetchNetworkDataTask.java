@@ -32,6 +32,7 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<BeanNode> {
 
     @Override
     public void onPreCall() {
+        super.onPreCall();
         subscriber.onStart();
     }
 
@@ -50,10 +51,13 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<BeanNode> {
 
     @Override
     public void onSuccess(BeanNode result) {
+        super.onSuccess(result);
+        subscriber.onNext(result);
     }
 
     @Override
     public void onError(HttpException re) {
+        super.onError(re);
         subscriber.onError(re);
     }
 
