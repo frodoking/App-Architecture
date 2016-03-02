@@ -2,12 +2,11 @@ package com.frodo.app.android.simple;
 
 import android.text.TextUtils;
 
+import com.frodo.app.android.core.task.AndroidFetchNetworkDataTask;
 import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.MainController;
-import com.frodo.app.android.simple.cloud.amdb.entities.Configuration;
-import com.frodo.app.android.simple.cloud.amdb.services.ConfigurationService;
-
-import java.util.List;
+import com.frodo.app.framework.entity.BeanNode;
+import com.frodo.app.framework.net.Request;
 
 import rx.Subscriber;
 
@@ -16,20 +15,13 @@ import rx.Subscriber;
  */
 public class ConfigurationModel extends AbstractModel {
 
-    private FetchTmdbConfigurationWithRxjavaTask fetchTmdbConfigurationWithRxjavaTask;
-    private Configuration tmdbConfiguration;
+    private AndroidFetchNetworkDataTask fetchNetworkDataTask;
+    private BeanNode beanNode;
 
     public ConfigurationModel(MainController controller) {
         super(controller);
-        ConfigurationService configurationService =
-                controller.getNetworkTransport().create(ConfigurationService.class);
-
-        fetchTmdbConfigurationWithRxjavaTask = new FetchTmdbConfigurationWithRxjavaTask(configurationService, new Subscriber<Configuration>() {
-            @Override
-            public void onNext(Configuration tmdbConfiguration) {
-                setTmdbConfiguration(tmdbConfiguration);
-            }
-
+        Request request = new Request("GET", Path.configuration);
+        fetchNetworkDataTask = new AndroidFetchNetworkDataTask(controller.getNetworkTransport(), request, new Subscriber<BeanNode>() {
             @Override
             public void onCompleted() {
             }
@@ -37,28 +29,28 @@ public class ConfigurationModel extends AbstractModel {
             @Override
             public void onError(Throwable e) {
             }
+
+            @Override
+            public void onNext(BeanNode beanNode) {
+            }
         });
     }
 
     public boolean isValid() {
-        return tmdbConfiguration != null
-                && !TextUtils.isEmpty(tmdbConfiguration.images.base_url)
-                && isListEmpty(tmdbConfiguration.images.backdrop_sizes)
-                && isListEmpty(tmdbConfiguration.images.poster_sizes)
-                && isListEmpty(tmdbConfiguration.images.profile_sizes);
+        return beanNode != null
+                && !TextUtils.isEmpty(beanNode.findBeanNodeByName("images").findBeanNodeByName("base_url").value.toString())
+                && !TextUtils.isEmpty(beanNode.findBeanNodeByName("images").findBeanNodeByName("backdrop_sizes").value.toString())
+                && !TextUtils.isEmpty(beanNode.findBeanNodeByName("images").findBeanNodeByName("poster_sizes").value.toString())
+                && !TextUtils.isEmpty(beanNode.findBeanNodeByName("images").findBeanNodeByName("profile_sizes").value.toString());
     }
 
-    private boolean isListEmpty(List<?> list) {
-        return list == null || list.isEmpty();
-    }
-
-    public void setTmdbConfiguration(Configuration tmdbConfiguration) {
-        this.tmdbConfiguration = tmdbConfiguration;
-        getMainController().getConfig().setServerConfig(tmdbConfiguration);
+    public void setTmdbConfiguration( BeanNode beanNode) {
+        this.beanNode = beanNode;
+        getMainController().getConfig().setServerConfig(beanNode);
     }
 
     @Override
     public void initBusiness() {
-        getMainController().getBackgroundExecutor().execute(/*fetchTmdbConfigurationTask*/fetchTmdbConfigurationWithRxjavaTask);
+        getMainController().getBackgroundExecutor().execute(fetchNetworkDataTask);
     }
 }

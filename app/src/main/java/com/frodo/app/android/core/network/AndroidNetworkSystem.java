@@ -8,23 +8,31 @@ import android.telephony.TelephonyManager;
 
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
+import com.frodo.app.framework.controller.Interceptor;
+import com.frodo.app.framework.exception.HttpException;
+import com.frodo.app.framework.log.Logger;
+import com.frodo.app.framework.net.Header;
 import com.frodo.app.framework.net.NetworkTransport;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.frodo.app.framework.net.Request;
+import com.frodo.app.framework.net.Response;
+import com.frodo.app.framework.net.mime.TypedInput;
+import com.frodo.app.framework.net.mime.TypedOutput;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.ResponseBody;
 
-import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import okio.BufferedSink;
 
 /**
  * Network Request
@@ -36,11 +44,35 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     public static final int DEFAULT_CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
 
     private Context context;
-    private RestAdapter restAdapter;
+    private String apiUrl;
+    private OkHttpClient client;
+    private List<Interceptor> interceptorList = new ArrayList<>();
+
+    private static OkHttpClient generateDefaultOkHttp() {
+        OkHttpClient client = new OkHttpClient();
+        client.setConnectTimeout(DEFAULT_CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        client.setReadTimeout(DEFAULT_READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        client.setWriteTimeout(DEFAULT_WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+
+        return client;
+    }
 
     public AndroidNetworkSystem(IController controller) {
         super(controller);
         this.context = (Context) controller.getMicroContext();
+        client = generateDefaultOkHttp();
+
+        if (getController().getCacheSystem() != null) {
+            OkHttpClient client = new OkHttpClient();
+
+            File cacheDir = new File(getController().getCacheSystem().getCacheDir(), UUID.randomUUID().toString());
+            Cache cache = new Cache(cacheDir, 1024);
+            client.setCache(cache);
+
+            client.setConnectTimeout(DEFAULT_CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            client.setReadTimeout(DEFAULT_READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+            client.setWriteTimeout(DEFAULT_WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        }
     }
 
     @Override
@@ -88,8 +120,27 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     }
 
     @Override
-    public <T> T create(Class<T> service) {
-        return getRestAdapter().create(service);
+    public String getAPIUrl() {
+        return apiUrl;
+    }
+
+    @Override
+    public void setAPIUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    @Override
+    public Response execute(Request request) throws HttpException {
+        try {
+            return parseResponse(client.newCall(createRequest(apiUrl, request)).execute());
+        } catch (IOException e) {
+            throw new HttpException(e);
+        }
+    }
+
+    @Override
+    public void addInterceptor(Interceptor interceptor) {
+
     }
 
     private ConnectivityManager getConnectivityManager() {
@@ -100,76 +151,82 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
         return getConnectivityManager().getActiveNetworkInfo();
     }
 
-    /**
-     * 可以重写
-     * RestAdapter.Builder b = super.newRestAdapterBuilder();
-     * <p>
-     * if (mCacheLocation != null) {
-     * OkHttpClient client = new OkHttpClient();
-     * File cacheDir = new File(mCacheLocation, UUID.randomUUID().toString());
-     * Cache cache = new Cache(cacheDir, 1024);
-     * client.setCache(cache);
-     * <p>
-     * client.setConnectTimeout(Constants.CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-     * client.setReadTimeout(Constants.READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-     * <p>
-     * b.setClient(new OkClient(client));
-     * }
-     * <p>
-     * return b;
-     */
-    public RestAdapter.Builder newRestAdapterBuilder() {
-        return new RestAdapter.Builder();
-    }
 
-    private RestAdapter getRestAdapter() {
-        if (this.restAdapter == null) {
-            RestAdapter.Builder builder = this.newRestAdapterBuilder();
-            builder.setEndpoint(getController().getConfig().getCurrentEnvironment().getUrl());
-            builder.setConverter(new GsonConverter(getGsonBuilder().create()));
-            builder.setRequestInterceptor(getRequestInterceptor());
-            builder.setLogLevel(getController().getConfig().isDebug() ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
-            if (getController().getConfig().isDebug()) {
-                builder.setLogLevel(RestAdapter.LogLevel.FULL);
-            }
+    static com.squareup.okhttp.Request createRequest(String apiUrl, Request request) {
+        com.squareup.okhttp.Request.Builder builder = new com.squareup.okhttp.Request.Builder()
+                .url(apiUrl + request.getUrl())
+                .method(request.getMethod(), createRequestBody(request.getBody()));
 
-            this.restAdapter = builder.build();
+        Logger.fLog().i(String.format("RequestURL: [ %s ]", apiUrl + request.getUrl()));
+
+        List<Header> headers = request.getHeaders();
+        for (int i = 0, size = headers.size(); i < size; i++) {
+            Header header = headers.get(i);
+            String value = header.getValue();
+            if (value == null) value = "";
+            builder.addHeader(header.getName(), value);
         }
 
-        return this.restAdapter;
+        return builder.build();
     }
 
-    public RequestInterceptor getRequestInterceptor() {
-        return new RequestInterceptor() {
+    static Response parseResponse(com.squareup.okhttp.Response response) throws IOException {
+        return new Response(response.request().urlString(), response.code(), response.message(),
+                createHeaders(response.headers()), createResponseBody(response.body()));
+    }
+
+    private static RequestBody createRequestBody(final TypedOutput body) {
+        if (body == null) {
+            return null;
+        }
+        final MediaType mediaType = MediaType.parse(body.mimeType());
+        return new RequestBody() {
             @Override
-            public void intercept(RequestFacade request) {
-                // do nothing
+            public MediaType contentType() {
+                return mediaType;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                body.writeTo(sink.outputStream());
+            }
+
+            @Override
+            public long contentLength() {
+                return body.length();
             }
         };
     }
 
-    public GsonBuilder getGsonBuilder() {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Integer.class, new JsonDeserializer() {
-            public Integer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
-                    JsonParseException {
-                try {
-                    return json.getAsInt();
-                } catch (NumberFormatException var5) {
-                    return null;
-                }
+    private static TypedInput createResponseBody(final ResponseBody body) throws IOException {
+        if (body.contentLength() == 0) {
+            return null;
+        }
+        return new TypedInput() {
+            @Override
+            public String mimeType() {
+                MediaType mediaType = body.contentType();
+                return mediaType == null ? null : mediaType.toString();
             }
-        });
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer() {
-            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                    throws JsonParseException {
-                try {
-                    return new SimpleDateFormat("yyy-MM-dd", Locale.CHINA).parse(json.getAsString());
-                } catch (ParseException var5) {
-                    return null;
-                }
+
+            @Override
+            public long length() throws IOException {
+                return body.contentLength();
             }
-        });
-        return builder;
+
+            @Override
+            public InputStream in() throws IOException {
+                return body.byteStream();
+            }
+        };
+    }
+
+    private static List<Header> createHeaders(Headers headers) {
+        int size = headers.size();
+        List<Header> headerList = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            headerList.add(new Header(headers.name(i), headers.value(i)));
+        }
+        return headerList;
     }
 }

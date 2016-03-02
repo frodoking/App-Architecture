@@ -11,8 +11,6 @@ import com.frodo.app.framework.task.BackgroundCallTask;
 
 import java.util.concurrent.ExecutorService;
 
-import retrofit.RetrofitError;
-
 /**
  * Created by frodo on 2015/7/6.
  */
@@ -115,32 +113,30 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             });
 
             R result = null;
-            RetrofitError retrofitError = null;
+            HttpException httpException = null;
 
             try {
                 if (mNetworkCallTask.isCancelled()) {
                     return;
                 }
                 result = mNetworkCallTask.doBackgroundCall();
-            } catch (RetrofitError re) {
-                retrofitError = re;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (HttpException re) {
+                httpException = re;
             }
 
             if (mNetworkCallTask.isCancelled()) {
                 return;
             }
-            sHandler.post(new ResultCallback(result, retrofitError));
+            sHandler.post(new ResultCallback(result, httpException));
         }
 
         private class ResultCallback implements Runnable {
             private final R mResult;
-            private final RetrofitError mRetrofitError;
+            private final HttpException mHttpException;
 
-            private ResultCallback(R result, RetrofitError retrofitError) {
+            private ResultCallback(R result, HttpException httpException) {
                 mResult = result;
-                mRetrofitError = retrofitError;
+                mHttpException = httpException;
             }
 
             @Override
@@ -150,8 +146,8 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
                 }
                 if (mResult != null) {
                     mNetworkCallTask.onSuccess(mResult);
-                } else if (mRetrofitError != null) {
-                    mNetworkCallTask.onError(new HttpException(mRetrofitError));
+                } else if (mHttpException != null) {
+                    mNetworkCallTask.onError(mHttpException);
                 }
                 mNetworkCallTask.onFinished();
             }

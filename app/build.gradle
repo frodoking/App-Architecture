@@ -18,10 +18,16 @@ dependencies {
 
     //net
     compile(
-            libraries.retrofit,
             libraries.okhttp,
             libraries.okhttp_urlconnection,
     )
+
+    // jackson
+    compile(
+            libraries.jackson_core,
+            libraries.jackson_databind,
+    )
+
     // img
     compile libraries.picasso
 

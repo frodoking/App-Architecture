@@ -1,4 +1,4 @@
-package com.frodo.app.android.simple.cloud.trakt.utils;
+package com.frodo.app.android.simple;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -15,9 +15,8 @@ import com.frodo.app.android.core.AndroidUIViewController;
 import com.frodo.app.android.core.UIView;
 import com.frodo.app.android.core.toolbox.FragmentScheduler;
 import com.frodo.app.android.core.toolbox.ScreenUtils;
+import com.frodo.app.framework.entity.BeanNode;
 import com.frodo.app.framework.log.Logger;
-import com.frodo.app.android.simple.cloud.amdb.entities.Configuration;
-import com.frodo.app.android.entities.amdb.Movie;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 import com.squareup.picasso.Picasso;
 
@@ -28,17 +27,17 @@ import java.util.List;
  * Created by frodo on 2015/9/14.
  */
 public class MovieView extends UIView {
-    private List<Movie> movies = new ArrayList<>();
     private BaseAdapter movieAdapter;
     private GridView gridView;
     private int[] imageSize;
-    private Configuration serverConfig;
+    private BeanNode serverConfig;
+    private List<BeanNode> movies = new ArrayList<>();
 
     public MovieView(AndroidUIViewController presenter, LayoutInflater inflater, ViewGroup container, int layoutResId) {
         super(presenter, inflater, container, layoutResId);
     }
 
-    public void setServerConfig(Configuration serverConfig) {
+    public void setServerConfig(BeanNode serverConfig) {
         this.serverConfig = serverConfig;
     }
 
@@ -77,8 +76,8 @@ public class MovieView extends UIView {
                     holder = (ViewHolder) convertView.getTag();
                 }
 
-                Movie movie = (Movie) getItem(position);
-                final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig.images, movie.imageUrl);
+                BeanNode movie = (BeanNode) getItem(position);
+                final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig, movie);
                 Logger.fLog().tag("MovieView").i("Picasso loading image : " + imageUrl);
                 Picasso.with(getPresenter().getAndroidContext()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])
                         .into(holder.imageView);
@@ -113,7 +112,7 @@ public class MovieView extends UIView {
         return new int[]{itemWidth, itemHeight};
     }
 
-    public void showMovieList(List<Movie> movies) {
+    public void showMovieList(List<BeanNode> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         movieAdapter.notifyDataSetChanged();

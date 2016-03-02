@@ -1,4 +1,4 @@
 include ':framework'
 include ':app'
-include ':simple', ':simplecloudentity', ':simpleentity'
+include ':simple'
 include ':test'

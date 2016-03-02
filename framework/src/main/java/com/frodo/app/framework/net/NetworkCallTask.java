@@ -8,6 +8,14 @@ import com.frodo.app.framework.task.CallTask;
  */
 public abstract class NetworkCallTask<R> extends CallTask {
 
+    protected NetworkTransport networkTransport;
+    protected Request request;
+
+    protected NetworkCallTask(NetworkTransport networkTransport, Request request) {
+        this.networkTransport = networkTransport;
+        this.request = request;
+    }
+
     public void onPreCall() {
     }
 

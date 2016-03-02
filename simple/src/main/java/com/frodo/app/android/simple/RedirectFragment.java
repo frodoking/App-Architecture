@@ -20,7 +20,7 @@ public class RedirectFragment extends AbstractBaseFragment {
             @Override
             public void initView() {
                 TextView tv = (TextView) getRootView().findViewById(R.id.imei);
-                RxJavaApi.test(tv);
+                tv.setText("this is Redirect Page (Only for test.)");
             }
 
             @Override

@@ -1,7 +1,7 @@
 ext.versions = [
         guava        : '19.0',
-        retrofit     : '1.9.0',
         okhttp       : '2.3.0',
+        jackson      : '2.7.2',
         picasso      : '2.5.2',
         glide        : '3.6.1',
         rxjava       : '1.1.0',
@@ -23,9 +23,11 @@ ext.libraries = [
         guava                                : "com.google.guava:guava:${versions.guava}",
 
         // net
-        retrofit                             : "com.squareup.retrofit:retrofit:${versions.retrofit}",
         okhttp                               : "com.squareup.okhttp:okhttp:${versions.okhttp}",
         okhttp_urlconnection                 : "com.squareup.okhttp:okhttp-urlconnection:${versions.okhttp}",
+
+        jackson_core                         : "com.fasterxml.jackson.core:jackson-core:${versions.jackson}",
+        jackson_databind                     : "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
 
         // img
         picasso                              : "com.squareup.picasso:picasso:${versions.picasso}",
@@ -49,8 +51,7 @@ ext.libraries = [
         cardview_v7                          : "com.android.support:cardview-v7:${versions.support}",
         design                               : "com.android.support:design:${versions.support}",
         recyclerview_v7                      : "com.android.support:recyclerview-v7:${versions.support}",
-        support_annotations                      : "com.android.support:support-annotations:${versions.support}",
-
+        support_annotations                  : "com.android.support:support-annotations:${versions.support}",
 
         // Dependencies for local unit tests
         junit                                : "junit:junit:${versions.junit}",

@@ -44,5 +44,5 @@ public interface CacheSystem extends ChildSystem {
      */
     boolean existCacheInDisk(String fileName);
 
-    <T> T findCacheFromDisk(String fileName, Type classType);
+    <T> T findCacheFromDisk(String fileName, Class clazz);
 }

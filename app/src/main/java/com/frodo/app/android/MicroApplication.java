@@ -123,7 +123,7 @@ public abstract class MicroApplication extends Application implements MicroConte
 
     private void enabledStrictMode() {
         if (SDK_INT >= GINGERBREAD) {
-            StrictModeWrapper.init(this);
+            StrictModeWrapper.enable(controller.getConfig().isDebug());
         }
     }
 }
