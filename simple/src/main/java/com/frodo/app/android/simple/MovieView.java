@@ -10,15 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.AndroidUIViewController;
 import com.frodo.app.android.core.UIView;
 import com.frodo.app.android.core.toolbox.FragmentScheduler;
 import com.frodo.app.android.core.toolbox.ScreenUtils;
-import com.frodo.app.framework.entity.BeanNode;
-import com.frodo.app.framework.log.Logger;
+import com.frodo.app.android.simple.entity.Movie;
+import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
-import com.squareup.picasso.Picasso;
+import com.frodo.app.framework.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +32,14 @@ public class MovieView extends UIView {
     private BaseAdapter movieAdapter;
     private GridView gridView;
     private int[] imageSize;
-    private BeanNode serverConfig;
-    private List<BeanNode> movies = new ArrayList<>();
+    private ServerConfiguration serverConfig;
+    private List<Movie> movies = new ArrayList<>();
 
     public MovieView(AndroidUIViewController presenter, LayoutInflater inflater, ViewGroup container, int layoutResId) {
         super(presenter, inflater, container, layoutResId);
     }
 
-    public void setServerConfig(BeanNode serverConfig) {
+    public void setServerConfig(ServerConfiguration serverConfig) {
         this.serverConfig = serverConfig;
     }
 
@@ -54,7 +56,7 @@ public class MovieView extends UIView {
             }
 
             @Override
-            public Object getItem(int position) {
+            public Movie getItem(int position) {
                 return movies.get(position);
             }
 
@@ -76,12 +78,16 @@ public class MovieView extends UIView {
                     holder = (ViewHolder) convertView.getTag();
                 }
 
-                BeanNode movie = (BeanNode) getItem(position);
+                Movie movie =  getItem(position);
                 final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig, movie);
-                Logger.fLog().tag("MovieView").i("Picasso loading image : " + imageUrl);
-                Picasso.with(getPresenter().getAndroidContext()).load(imageUrl).centerCrop().resize(imageSize[0], imageSize[1])
+                Logger.fLog().tag("MovieView").i("Glide loading image : " + imageUrl);
+                Glide.with(getPresenter().getAndroidContext())
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .centerCrop()
+                        .override(imageSize[0], imageSize[1])
                         .into(holder.imageView);
-                holder.textView.setText(movie.name);
+                holder.textView.setText(movie.title);
 
                 return convertView;
             }
@@ -112,7 +118,7 @@ public class MovieView extends UIView {
         return new int[]{itemWidth, itemHeight};
     }
 
-    public void showMovieList(List<BeanNode> movies) {
+    public void showMovieList(List<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         movieAdapter.notifyDataSetChanged();

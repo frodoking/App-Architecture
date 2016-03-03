@@ -29,7 +29,7 @@ dependencies {
     )
 
     // img
-    compile libraries.picasso
+    compile libraries.glide
 
     // event bus
     // compile libraries.otto

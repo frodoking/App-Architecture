@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.toolbox.JsonConverter;
+import com.frodo.app.android.simple.entity.Movie;
+import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.android.ui.fragment.StatedFragment;
-import com.frodo.app.framework.entity.BeanNode;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.List;
 
@@ -21,7 +20,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -43,14 +41,14 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
 
     @Override
     protected void onFirstTimeLaunched() {
-        final BeanNode serverConfigBeanNode = (BeanNode) getMainController().getConfig().serverConfig();
-        getUIView().setServerConfig(serverConfigBeanNode);
+        final ServerConfiguration serverConfiguration = (ServerConfiguration) getMainController().getConfig().serverConfig();
+        getUIView().setServerConfig(serverConfiguration);
         loadMoviesWithRxjava();
     }
 
     @Override
     protected void onSaveState(Bundle outState) {
-        List<BeanNode> movies = getModel().getMovies();
+        List<Movie> movies = getModel().getMovies();
         try {
             outState.putString("moviesJson", new ObjectMapper().writeValueAsString(movies));
         } catch (JsonProcessingException e) {
@@ -60,16 +58,12 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
 
     @Override
     protected void onRestoreState(Bundle savedInstanceState) {
-        final BeanNode serverConfigNode = (BeanNode) getMainController().getConfig().serverConfig();
-        getUIView().setServerConfig(serverConfigNode);
+        final ServerConfiguration serverConfiguration = (ServerConfiguration) getMainController().getConfig().serverConfig();
+        getUIView().setServerConfig(serverConfiguration);
         if (savedInstanceState != null) {
             String moviesJson = savedInstanceState.getString("moviesJson");
-            List<BeanNode> movies = null;
-            try {
-                movies = JsonConverter.convert(new JSONArray(moviesJson));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            List<Movie> movies = JsonConverter.convert(moviesJson, new TypeReference<List<Movie>>() {
+            });
             getUIView().showMovieList(movies);
         }
     }
@@ -84,32 +78,27 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
      */
     public void loadMoviesWithRxjava() {
         getModel().setEnableCached(true);
-        Observable.from(DEFAULT)
-                .flatMap(new Func1<String, Observable<BeanNode>>() {
+
+        Observable.create(new Observable.OnSubscribe<List<Movie>>() {
+            @Override
+            public void call(Subscriber<? super List<Movie>> subscriber) {
+                getModel().loadMoviesWithRxjava(subscriber);
+            }
+        }).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+                new Action1<List<Movie>>() {
                     @Override
-                    public Observable<BeanNode> call(String s) {
-                        return Observable.create(new Observable.OnSubscribe<BeanNode>() {
-                            @Override
-                            public void call(Subscriber<? super BeanNode> subscriber) {
-                                getModel().loadMoviesWithRxjava((Subscriber<BeanNode>) subscriber);
-                            }
-                        });
+                    public void call(List<Movie> result) {
+                        getUIView().showMovieList(result);
+                        getModel().setMovies(result);
                     }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<BeanNode>() {
-                    @Override
-                    public void call(BeanNode result) {
-                        List<BeanNode> movies = result.findBeanNodeByName("data").getChildArray();
-                        getUIView().showMovieList(movies);
-                        getModel().setMovies(movies);
-                    }
-                }, new Action1<Throwable>() {
+                },
+                new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         if (getModel().isEnableCached()) {
-                            List<BeanNode> movies = getModel().getMoviesFromCache();
+                            List<Movie> movies = getModel().getMoviesFromCache();
                             if (movies != null) {
                                 getUIView().showMovieList(movies);
                                 return;
@@ -117,6 +106,7 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
                         }
                         getUIView().showError(throwable.getMessage());
                     }
-                });
+                }
+        );
     }
 }

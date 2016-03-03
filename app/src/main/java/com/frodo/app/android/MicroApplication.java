@@ -22,8 +22,6 @@ import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.scene.Scene;
 import com.frodo.app.framework.theme.Theme;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -103,10 +101,10 @@ public abstract class MicroApplication extends Application implements MicroConte
     public abstract void loadServerConfiguration();
 
     private void loadImageCache() {
-        final String imageCacheDir = getMainController().getFileSystem().getFilePath() + File.separator + "image";
+       /* final String imageCacheDir = getMainController().getFileSystem().getFilePath() + File.separator + "image";
         Picasso picasso = new Picasso.Builder(this).downloader(
                 new OkHttpDownloader(new File(imageCacheDir))).build();
-        Picasso.setSingletonInstance(picasso);
+        Picasso.setSingletonInstance(picasso);*/
     }
 
 

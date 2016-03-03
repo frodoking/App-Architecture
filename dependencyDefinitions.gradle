@@ -3,7 +3,7 @@ ext.versions = [
         okhttp       : '2.3.0',
         jackson      : '2.7.2',
         picasso      : '2.5.2',
-        glide        : '3.6.1',
+        glide        : '3.7.0',
         rxjava       : '1.1.0',
         rxandroid    : '1.1.0',
         leakcanary   : '1.3.1',

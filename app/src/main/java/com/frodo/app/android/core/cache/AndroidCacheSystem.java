@@ -3,6 +3,7 @@ package com.frodo.app.android.core.cache;
 import android.content.Context;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frodo.app.framework.cache.Cache;
 import com.frodo.app.framework.cache.CacheSystem;
@@ -10,6 +11,7 @@ import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.filesystem.FileSystem;
 import com.frodo.app.framework.orm.Database;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -60,7 +62,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     @Override
     public <K, V> boolean put(K key, V value, Cache.Type type) {
         if (type.equals(Cache.Type.DISK)) {
-             File file = fileSystem.createFile(key.toString());
+            File file = fileSystem.createFile(key.toString());
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonString = null;
             try {
@@ -89,7 +91,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     }
 
     @Override
-    public <T> T findCacheFromInternal(String key,  Type classType) {
+    public <T> T findCacheFromInternal(String key, Type classType) {
         return null;
     }
 
@@ -99,7 +101,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     }
 
     @Override
-    public <T> T findCacheFromDatabase(String sql,  Type classType) {
+    public <T> T findCacheFromDatabase(String sql, Type classType) {
         return null;
     }
 
@@ -109,9 +111,11 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     }
 
     @Override
-    public <T> T findCacheFromDisk(String fileName, Class clazz) {
+    public <T> T findCacheFromDisk(String fileName, Object clazz) {
         try {
-            return (T) new ObjectMapper().readValue(new File(fileName), clazz);
+            if (clazz instanceof TypeReference) {
+                return (T) new ObjectMapper().readValue(new File(fileName), (TypeReference) clazz);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

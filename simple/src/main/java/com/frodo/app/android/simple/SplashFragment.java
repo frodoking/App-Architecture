@@ -5,12 +5,13 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.UIView;
 import com.frodo.app.android.core.toolbox.FragmentScheduler;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 import com.frodo.app.android.ui.fragment.AbstractBaseFragment;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by frodo on 2015/9/15.
@@ -24,8 +25,10 @@ public class SplashFragment extends AbstractBaseFragment {
             @Override
             public void initView() {
                 ad = (ImageView) getRootView().findViewById(R.id.ad);
-                Picasso.with(getAndroidContext())
+                Glide.with(getPresenter().getAndroidContext())
                         .load("http://b.hiphotos.baidu.com/image/pic/item/d009b3de9c82d15815bba0ce830a19d8bc3e4290.jpg")
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .centerCrop()
                         .into(ad);
             }
 

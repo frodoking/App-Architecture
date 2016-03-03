@@ -1,15 +1,10 @@
 package com.frodo.app.android.core.task;
 
-import com.frodo.app.android.core.toolbox.JsonConverter;
-import com.frodo.app.framework.entity.BeanNode;
 import com.frodo.app.framework.exception.HttpException;
 import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,11 +16,11 @@ import rx.Subscriber;
 /**
  * Created by frodo on 2016/3/1. base bean from server
  */
-public class AndroidFetchNetworkDataTask extends NetworkCallTask<BeanNode> {
+public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
 
-    private Subscriber<BeanNode> subscriber;
+    private Subscriber<String> subscriber;
 
-    public AndroidFetchNetworkDataTask(NetworkTransport networkTransport, Request request, Subscriber<BeanNode> subscriber) {
+    public AndroidFetchNetworkDataTask(NetworkTransport networkTransport, Request request, Subscriber<String> subscriber) {
         super(networkTransport, request);
         this.subscriber = subscriber;
     }
@@ -37,20 +32,19 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<BeanNode> {
     }
 
     @Override
-    public BeanNode doBackgroundCall() throws HttpException {
+    public String doBackgroundCall() throws HttpException {
         Response response = networkTransport.execute(request);
         try {
             InputStream is = response.getBody().in();
-            JSONObject jsonObject = new JSONObject(convertStreamToString(is));
-            return JsonConverter.convert(jsonObject);
-        } catch (JSONException | IOException e) {
+            return convertStreamToString(is);
+        } catch (IOException e) {
             e.printStackTrace();
             throw new HttpException(e);
         }
     }
 
     @Override
-    public void onSuccess(BeanNode result) {
+    public void onSuccess(String result) {
         super.onSuccess(result);
         subscriber.onNext(result);
     }
@@ -71,7 +65,7 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<BeanNode> {
         return getClass().getCanonicalName();
     }
 
-    public final Subscriber<BeanNode> getSubscriber() {
+    public final Subscriber<String> getSubscriber() {
         return subscriber;
     }
 
