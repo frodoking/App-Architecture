@@ -18,7 +18,6 @@ public class DensityUtils {
      *
      * @param context
      * @param dpVal
-     *
      * @return
      */
     public static int dp2px(Context context, float dpVal) {
@@ -31,7 +30,6 @@ public class DensityUtils {
      *
      * @param context
      * @param spVal
-     *
      * @return
      */
     public static int sp2px(Context context, float spVal) {
@@ -44,7 +42,6 @@ public class DensityUtils {
      *
      * @param context
      * @param pxVal
-     *
      * @return
      */
     public static float px2dp(Context context, float pxVal) {
@@ -57,7 +54,6 @@ public class DensityUtils {
      *
      * @param context
      * @param pxVal
-     *
      * @return
      */
     public static float px2sp(Context context, float pxVal) {

@@ -6,6 +6,7 @@ import android.database.Cursor;
  * Created by frodo on 2015/9/6.
  */
 import java.io.Closeable;
+
 public class IOUtils {
 
     private IOUtils() {

@@ -6,7 +6,7 @@ import com.frodo.app.framework.orm.Cursor;
  * Created by frodo on 2015/9/6.
  */
 public class AndroidCursor implements Cursor {
-   private android.database.Cursor cursor;
+    private android.database.Cursor cursor;
 
     public AndroidCursor(android.database.Cursor cursor) {
         this.cursor = cursor;

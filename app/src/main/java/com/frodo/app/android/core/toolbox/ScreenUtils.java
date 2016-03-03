@@ -23,7 +23,6 @@ public class ScreenUtils {
      * get screen width
      *
      * @param context
-     *
      * @return
      */
     public static int getScreenWidth(Context context) {
@@ -37,7 +36,6 @@ public class ScreenUtils {
      * get screen height
      *
      * @param context
-     *
      * @return
      */
     public static int getScreenHeight(Context context) {
@@ -51,7 +49,6 @@ public class ScreenUtils {
      * get status height
      *
      * @param context
-     *
      * @return
      */
     public static int getStatusHeight(Context context) {
@@ -80,7 +77,6 @@ public class ScreenUtils {
      * get snap shot
      *
      * @param activity
-     *
      * @return
      */
     public static Bitmap snapShotWithStatusBar(Activity activity) {
@@ -101,7 +97,6 @@ public class ScreenUtils {
      * get snap shot without status bar
      *
      * @param activity
-     *
      * @return
      */
     public static Bitmap snapShotWithoutStatusBar(Activity activity) {

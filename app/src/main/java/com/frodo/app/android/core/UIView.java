@@ -13,7 +13,8 @@ public abstract class UIView implements IView {
     private AndroidUIViewController presenter;
     private View rootView;
     private boolean isShown;
-    public UIView(AndroidUIViewController presenter, LayoutInflater inflater, ViewGroup container, int layoutResId){
+
+    public UIView(AndroidUIViewController presenter, LayoutInflater inflater, ViewGroup container, int layoutResId) {
         this.presenter = presenter;
         rootView = inflater.inflate(layoutResId, container, false);
     }
@@ -28,6 +29,7 @@ public abstract class UIView implements IView {
     }
 
     public abstract void initView();
+
     public abstract void registerListener();
 
     @Override

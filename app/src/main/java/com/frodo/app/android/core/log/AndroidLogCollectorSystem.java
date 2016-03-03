@@ -171,23 +171,17 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
      */
     private String getFunctionName() {
         StackTraceElement[] sts = Thread.currentThread().getStackTrace();
-        if (sts == null) {
-            return null;
+        if (sts != null) {
+            for (int i = 0; i < sts.length; i++) {
+                if (sts[i].getFileName().contains("Logger") && (i + 1 < sts.length)) {
+                    StackTraceElement st = sts[i + 1];
+                    return "[ " + Thread.currentThread().getName() + ": "
+                            + st.getFileName() + ":" + st.getLineNumber() + " "
+                            + st.getMethodName() + " ]";
+                }
+            }
         }
-        for (StackTraceElement st : sts) {
-            if (st.isNativeMethod()) {
-                continue;
-            }
-            if (st.getClassName().equals(Thread.class.getName())) {
-                continue;
-            }
-            if (st.getClassName().equals(this.getClass().getName())) {
-                continue;
-            }
-            return "[ " + Thread.currentThread().getName() + ": "
-                    + st.getFileName() + ":" + st.getLineNumber() + " "
-                    + st.getMethodName() + " ]";
-        }
+
         return null;
     }
 }

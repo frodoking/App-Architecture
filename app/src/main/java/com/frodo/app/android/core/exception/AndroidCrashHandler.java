@@ -92,7 +92,7 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
         pw.print("CPU ABI: ");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             pw.println(Build.SUPPORTED_ABIS);
-        }else {
+        } else {
             pw.println(Build.CPU_ABI);
         }
     }

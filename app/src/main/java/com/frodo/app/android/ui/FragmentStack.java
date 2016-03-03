@@ -1,9 +1,5 @@
 package com.frodo.app.android.ui;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * A class that manages a stack of {@link Fragment}s in a single container.
@@ -194,7 +194,6 @@ public class FragmentStack {
      * stack.
      *
      * @param commit Whether the transaction should be committed.
-     *
      * @return Whether a transaction has been enqueued.
      */
     public boolean pop(boolean commit) {

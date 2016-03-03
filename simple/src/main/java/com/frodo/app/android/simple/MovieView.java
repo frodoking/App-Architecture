@@ -78,15 +78,18 @@ public class MovieView extends UIView {
                     holder = (ViewHolder) convertView.getTag();
                 }
 
-                Movie movie =  getItem(position);
+                Movie movie = getItem(position);
                 final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig, movie);
                 Logger.fLog().tag("MovieView").i("Glide loading image : " + imageUrl);
-                Glide.with(getPresenter().getAndroidContext())
-                        .load(imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .centerCrop()
-                        .override(imageSize[0], imageSize[1])
-                        .into(holder.imageView);
+                if (imageUrl != null) {
+                    Glide.with(getPresenter().getAndroidContext())
+                            .load(imageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .centerCrop()
+                            .override(imageSize[0], imageSize[1])
+                            .into(holder.imageView);
+                }
+
                 holder.textView.setText(movie.title);
 
                 return convertView;

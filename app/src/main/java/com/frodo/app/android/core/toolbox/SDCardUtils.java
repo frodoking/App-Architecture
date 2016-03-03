@@ -36,7 +36,7 @@ public class SDCardUtils {
     }
 
     /**
-     *get sdcard all size
+     * get sdcard all size
      *
      * @return long
      */

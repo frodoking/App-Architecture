@@ -8,6 +8,7 @@ import com.frodo.app.android.simple.entity.ServerConfiguration;
  */
 public class ImagesConverter {
     public static String getAbsoluteUrl(ServerConfiguration configuration, Movie movie) {
+        if (configuration == null || configuration.images == null || movie == null) return null;
         return configuration.images.baseUrl + configuration.images.posterSizes[2] + movie.posterPath;
     }
 }

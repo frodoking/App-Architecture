@@ -15,27 +15,27 @@ import com.frodo.app.framework.log.Logger;
  * Created by frodo on 2014/12/26. print whole life cycle
  */
 public abstract class AbstractBaseActivity extends FragmentActivity {
-    private static final String LIFECYCLE = "LifeCycle_A";
+    private static final String LIFECYCLE = "_LifeCycle_A";
     private MainController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         controller = ((MicroApplication) getApplication()).getMainController();
-        Logger.fLog().tag(LIFECYCLE).i("onCreate");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onCreate");
         init();
     }
 
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-        Logger.fLog().tag(LIFECYCLE).i("onAttachFragment");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onAttachFragment");
     }
 
     @Override
     public void onContentChanged() {
         super.onContentChanged();
-        Logger.fLog().tag(LIFECYCLE).i("onContentChanged");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onContentChanged");
     }
 
     /**
@@ -44,85 +44,85 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Logger.fLog().tag(LIFECYCLE).i("onRestart");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onRestart");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Logger.fLog().tag(LIFECYCLE).i("onStart");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onStart");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Logger.fLog().tag(LIFECYCLE).i("onRestoreInstanceState");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onRestoreInstanceState");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Logger.fLog().tag(LIFECYCLE).i("onSaveInstanceState");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onSaveInstanceState");
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        Logger.fLog().tag(LIFECYCLE).i("onPostCreate");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onPostCreate");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.fLog().tag(LIFECYCLE).i("onResume");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onResume");
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Logger.fLog().tag(LIFECYCLE).i("onPostResume");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onPostResume");
     }
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Logger.fLog().tag(LIFECYCLE).i("onAttachedToWindow");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onAttachedToWindow");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Logger.fLog().tag(LIFECYCLE).i("onCreateOptionsMenu");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onCreateOptionsMenu");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        Logger.fLog().tag(LIFECYCLE).i("onPrepareOptionsMenu");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onPrepareOptionsMenu");
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Logger.fLog().tag(LIFECYCLE).i("onPause");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onPause");
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        Logger.fLog().tag(LIFECYCLE).i("onSaveInstanceState");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onSaveInstanceState");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Logger.fLog().tag(LIFECYCLE).i("onStop");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.fLog().tag(LIFECYCLE).i("onDestroy");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onDestroy");
     }
 
     public void init() {
@@ -143,13 +143,13 @@ public abstract class AbstractBaseActivity extends FragmentActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Logger.fLog().tag(LIFECYCLE).i("onNewIntent");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onNewIntent");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.fLog().tag(LIFECYCLE).i("onActivityResult");
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onActivityResult");
     }
 
     public MainController getMainController() {

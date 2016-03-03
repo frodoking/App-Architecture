@@ -44,7 +44,7 @@ public abstract class MicroApplication extends Application implements MicroConte
 
     public void init() {
         final int numberCores = Runtime.getRuntime().availableProcessors();
-        final AndroidExecutor executor = new AndroidExecutor("app-default",numberCores * 2 + 1);
+        final AndroidExecutor executor = new AndroidExecutor("app-default", numberCores * 2 + 1);
         controller.setBackgroundExecutor(new AndroidBackgroundExecutorImpl(executor));
 
         controller.setMicroContext(this);
@@ -106,7 +106,6 @@ public abstract class MicroApplication extends Application implements MicroConte
                 new OkHttpDownloader(new File(imageCacheDir))).build();
         Picasso.setSingletonInstance(picasso);*/
     }
-
 
 
     @Override
