@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:tools="http://schemas.android.com/tools"
-          tools:overrideLibrary="com.android.app.framework"
-          package="com.android.app">
+    tools:overrideLibrary="com.android.app.framework"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.app">
 
-    <application/>
+    <application>
+        <meta-data
+            android:name="com.frodo.app.android.core.network.integration.okhttp.OkHttpModule"
+            android:value="HttpModule" />
+    </application>
 
 </manifest>

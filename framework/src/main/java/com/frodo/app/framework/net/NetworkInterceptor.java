@@ -1,7 +1,6 @@
 package com.frodo.app.framework.net;
 
 import com.frodo.app.framework.controller.Interceptor;
-import com.frodo.app.framework.entity.BeanNode;
 import com.frodo.app.framework.exception.HttpException;
 
 /**
@@ -17,10 +16,10 @@ public interface NetworkInterceptor<R, V> extends Interceptor<R, V> {
         }
     }
 
-    class ResponseSuccessInterceptor implements NetworkInterceptor<BeanNode, Void> {
+    class ResponseSuccessInterceptor implements NetworkInterceptor<String, Void> {
 
         @Override
-        public Void intercept(BeanNode beanNode) {
+        public Void intercept(String result) {
             return null;
         }
     }

@@ -1,6 +1,5 @@
 package com.frodo.app.framework.net;
 
-import com.frodo.app.framework.entity.BeanNode;
 import com.frodo.app.framework.exception.HttpException;
 import com.frodo.app.framework.task.CallTask;
 
@@ -33,7 +32,7 @@ public abstract class NetworkCallTask<R> extends CallTask {
         if (!networkTransport.interceptorList().isEmpty()) {
             for (NetworkInterceptor interceptor : networkTransport.interceptorList()) {
                 if (interceptor instanceof NetworkInterceptor.ResponseSuccessInterceptor) {
-                    ((NetworkInterceptor.ResponseSuccessInterceptor) interceptor).intercept((BeanNode) result);
+                    ((NetworkInterceptor.ResponseSuccessInterceptor) interceptor).intercept((String) result);
                 }
             }
         }

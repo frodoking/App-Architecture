@@ -23,6 +23,10 @@ public interface NetworkTransport extends ChildSystem {
 
     void setAPIUrl(String apiUrl);
 
+    HttpModule getHttpModule();
+
+    void resetHttpModule(HttpModule httpModule);
+
     Response execute(Request request) throws HttpException;
 
     List<NetworkInterceptor> interceptorList();
