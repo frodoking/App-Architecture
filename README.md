@@ -52,8 +52,8 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 
 ## 第三方依赖
 1. 基础库guava
-2. 网络库okhttp、retrofit
-3. 图片库picasso（后期考虑glide）
+2. 网络库okhttp
+3. 图片库glide
 4. 事件传递机制的Rxjava
 5. 内存泄露检测库leakcanary
 
