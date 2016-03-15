@@ -37,9 +37,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 ![架构图](http://frodoking.github.io/img/App-Architecture.png)
 
 ## Simple工程
-1. simplecloudentity是服务器定义的基础数据结构
-2. simpleentity是本地App需要的数据结构。这样定义的目的是为了App数据结构的组织不完全依赖Server
-3. Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)工程
+Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)工程
 
 ## 注
 
