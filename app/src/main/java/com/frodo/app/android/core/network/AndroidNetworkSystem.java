@@ -65,7 +65,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
     @Override
     public boolean isGpsEnabled() {
-        LocationManager lm = ((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         List<String> accessibleProviders = lm.getProviders(true);
         return accessibleProviders != null && accessibleProviders.size() > 0;
     }
@@ -73,8 +73,8 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     @Override
     public boolean isWifiEnabled() {
         TelephonyManager mgrTel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return ((getNetworkInfo() != null && getNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
-                .getNetworkType() == TelephonyManager.NETWORK_TYPE_UMTS);
+        return (getNetworkInfo() != null && getNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
+                .getNetworkType() == TelephonyManager.NETWORK_TYPE_UMTS;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class DensityUtils {
      */
     public static float px2dp(Context context, float pxVal) {
         final float scale = context.getResources().getDisplayMetrics().density;
-        return (pxVal / scale);
+        return pxVal / scale;
     }
 
     /**
@@ -57,6 +57,6 @@ public class DensityUtils {
      * @return
      */
     public static float px2sp(Context context, float pxVal) {
-        return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
+        return pxVal / context.getResources().getDisplayMetrics().scaledDensity;
     }
 }
