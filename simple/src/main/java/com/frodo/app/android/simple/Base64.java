@@ -32,7 +32,8 @@ public class Base64 {
     private static final int MAX_LINE_LENGTH = 76;
     private static final byte EQUALS_SIGN = 61;
     private static final byte NEW_LINE = 10;
-    private static final String PREFERRED_ENCODING = "US-ASCII";
+    private static final String US_ASCII = "US-ASCII";
+    private static final String PREFERRED_ENCODING = US_ASCII;
     private static final byte WHITE_SPACE_ENC = -5;
     private static final byte EQUALS_SIGN_ENC = -1;
     private static final byte[] _STANDARD_ALPHABET = new byte[]{(byte) 65, (byte) 66, (byte) 67, (byte) 68, (byte) 69, (byte) 70, (byte) 71, (byte) 72, (byte) 73, (byte) 74, (byte) 75, (byte) 76, (byte) 77, (byte) 78, (byte) 79, (byte) 80, (byte) 81, (byte) 82, (byte) 83, (byte) 84, (byte) 85, (byte) 86, (byte) 87, (byte) 88, (byte) 89, (byte) 90, (byte) 97, (byte) 98, (byte) 99, (byte) 100, (byte) 101, (byte) 102, (byte) 103, (byte) 104, (byte) 105, (byte) 106, (byte) 107, (byte) 108, (byte) 109, (byte) 110, (byte) 111, (byte) 112, (byte) 113, (byte) 114, (byte) 115, (byte) 116, (byte) 117, (byte) 118, (byte) 119, (byte) 120, (byte) 121, (byte) 122, (byte) 48, (byte) 49, (byte) 50, (byte) 51, (byte) 52, (byte) 53, (byte) 54, (byte) 55, (byte) 56, (byte) 57, (byte) 43, (byte) 47};
@@ -168,7 +169,7 @@ public class Base64 {
             }
 
             try {
-                return new String(baos.toByteArray(), "US-ASCII");
+                return new String(baos.toByteArray(), US_ASCII);
             } catch (UnsupportedEncodingException var24) {
                 return new String(baos.toByteArray());
             }
@@ -211,7 +212,7 @@ public class Base64 {
         byte[] encoded = encodeBytesToBytes(source, off, len, options);
 
         try {
-            return new String(encoded, "US-ASCII");
+            return new String(encoded, US_ASCII);
         } catch (UnsupportedEncodingException var6) {
             return new String(encoded);
         }
@@ -406,7 +407,7 @@ public class Base64 {
         } else {
             byte[] bytes;
             try {
-                bytes = s.getBytes("US-ASCII");
+                bytes = s.getBytes(US_ASCII);
             } catch (UnsupportedEncodingException var28) {
                 bytes = s.getBytes();
             }
@@ -536,7 +537,7 @@ public class Base64 {
 
         try {
             bos = new Base64.OutputStream(new FileOutputStream(filename), 0);
-            bos.write(dataToDecode.getBytes("US-ASCII"));
+            bos.write(dataToDecode.getBytes(US_ASCII));
         } catch (IOException var11) {
             throw var11;
         } finally {
@@ -600,7 +601,7 @@ public class Base64 {
                 ;
             }
 
-            encodedData = new String(buffer, 0, length, "US-ASCII");
+            encodedData = new String(buffer, 0, length, US_ASCII);
             return encodedData;
         } catch (IOException var14) {
             throw var14;
@@ -620,7 +621,7 @@ public class Base64 {
 
         try {
             out = new BufferedOutputStream(new FileOutputStream(outfile));
-            out.write(encoded.getBytes("US-ASCII"));
+            out.write(encoded.getBytes(US_ASCII));
         } catch (IOException var12) {
             throw var12;
         } finally {
