@@ -22,6 +22,10 @@ import java.util.List;
  */
 public class SqlInfoBuilder {
 
+    private static final String THIS_ENTITY = "this entity[";
+    private static final String ID_VALUE_IS_NULL = "]'s id value is null";
+    private static final String WHERE = " WHERE ";
+
     private SqlInfoBuilder() {
     }
 
@@ -104,10 +108,10 @@ public class SqlInfoBuilder {
         Object idValue = id.getColumnValue(entity);
 
         if (idValue == null) {
-            throw new DbException("this entity[" + entity.getClass() + "]'s id value is null");
+            throw new DbException(THIS_ENTITY + entity.getClass() + ID_VALUE_IS_NULL);
         }
         StringBuilder sb = new StringBuilder(buildDeleteSqlByTableName(table.tableName));
-        sb.append(" WHERE ").append(com.frodo.app.framework.orm.sql.WhereBuilder.b(id.getColumnName(), "=", idValue));
+        sb.append(WHERE).append(com.frodo.app.framework.orm.sql.WhereBuilder.b(id.getColumnName(), "=", idValue));
 
         result.setSql(sb.toString());
 
@@ -121,10 +125,10 @@ public class SqlInfoBuilder {
         Id id = table.id;
 
         if (null == idValue) {
-            throw new DbException("this entity[" + entityType + "]'s id value is null");
+            throw new DbException(THIS_ENTITY + entityType + ID_VALUE_IS_NULL);
         }
         StringBuilder sb = new StringBuilder(buildDeleteSqlByTableName(table.tableName));
-        sb.append(" WHERE ").append(com.frodo.app.framework.orm.sql.WhereBuilder.b(id.getColumnName(), "=", idValue));
+        sb.append(WHERE).append(com.frodo.app.framework.orm.sql.WhereBuilder.b(id.getColumnName(), "=", idValue));
 
         result.setSql(sb.toString());
 
@@ -136,7 +140,7 @@ public class SqlInfoBuilder {
         StringBuilder sb = new StringBuilder(buildDeleteSqlByTableName(table.tableName));
 
         if (whereBuilder != null && whereBuilder.getWhereItemSize() > 0) {
-            sb.append(" WHERE ").append(whereBuilder.toString());
+            sb.append(WHERE).append(whereBuilder.toString());
         }
 
         return new com.frodo.app.framework.orm.sql.SqlInfo(sb.toString());
@@ -161,7 +165,7 @@ public class SqlInfoBuilder {
         Object idValue = id.getColumnValue(entity);
 
         if (null == idValue) {
-            throw new DbException("this entity[" + entity.getClass() + "]'s id value is null");
+            throw new DbException(THIS_ENTITY + entity.getClass() + ID_VALUE_IS_NULL);
         }
 
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
@@ -175,7 +179,7 @@ public class SqlInfoBuilder {
             }
         }
         sqlBuffer.deleteCharAt(sqlBuffer.length() - 1);
-        sqlBuffer.append(" WHERE ").append(com.frodo.app.framework.orm.sql.WhereBuilder.b(id.getColumnName(), "=", idValue));
+        sqlBuffer.append(WHERE).append(com.frodo.app.framework.orm.sql.WhereBuilder.b(id.getColumnName(), "=", idValue));
 
         result.setSql(sqlBuffer.toString());
         return result;
@@ -207,7 +211,7 @@ public class SqlInfoBuilder {
         }
         sqlBuffer.deleteCharAt(sqlBuffer.length() - 1);
         if (whereBuilder != null && whereBuilder.getWhereItemSize() > 0) {
-            sqlBuffer.append(" WHERE ").append(whereBuilder.toString());
+            sqlBuffer.append(WHERE).append(whereBuilder.toString());
         }
 
         result.setSql(sqlBuffer.toString());

@@ -43,6 +43,8 @@ public class ColumnUtils {
         DB_PRIMITIVE_TYPES.add(byte[].class.getName());
     }
 
+    private static final String NOT_EXIST = " not exist";
+
     private ColumnUtils() {
     }
 
@@ -61,7 +63,7 @@ public class ColumnUtils {
             try {
                 getMethod = entityType.getDeclaredMethod(methodName);
             } catch (NoSuchMethodException e) {
-                throw new DbException(methodName + " not exist");
+                throw new DbException(methodName + NOT_EXIST);
             }
         }
 
@@ -82,7 +84,7 @@ public class ColumnUtils {
             try {
                 setMethod = entityType.getDeclaredMethod(methodName, field.getType());
             } catch (NoSuchMethodException e) {
-                throw new DbException(methodName + " not exist");
+                throw new DbException(methodName + NOT_EXIST);
             }
         }
 
@@ -215,7 +217,7 @@ public class ColumnUtils {
         try {
             return entityType.getDeclaredMethod(methodName);
         } catch (NoSuchMethodException e) {
-            throw new DbException(methodName + " not exist");
+            throw new DbException(methodName + NOT_EXIST);
         }
     }
 
@@ -230,7 +232,7 @@ public class ColumnUtils {
         try {
             return entityType.getDeclaredMethod(methodName, field.getType());
         } catch (NoSuchMethodException e) {
-            throw new DbException(methodName + " not exist");
+            throw new DbException(methodName + NOT_EXIST);
         }
     }
 
