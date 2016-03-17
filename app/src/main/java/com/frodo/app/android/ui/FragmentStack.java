@@ -233,7 +233,7 @@ public class FragmentStack {
     }
 
     private void dispatchOnStackChangedEvent() {
-        if (callback != null && stack.size() > 0) {
+        if (callback != null && !stack.isEmpty()) {
             callback.onStackChanged(stack.size(), stack.peekLast());
         }
     }

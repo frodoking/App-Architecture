@@ -30,7 +30,7 @@ public class SqlInfoBuilder {
     public static com.frodo.app.framework.orm.sql.SqlInfo buildInsertSqlInfo(Database db, Object entity) throws DbException {
 
         List<KeyValue> keyValueList = entity2KeyValueList(db, entity);
-        if (keyValueList.size() == 0) return null;
+        if (keyValueList.isEmpty()) return null;
 
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
         StringBuffer sqlBuffer = new StringBuffer();
@@ -62,7 +62,7 @@ public class SqlInfoBuilder {
     public static com.frodo.app.framework.orm.sql.SqlInfo buildReplaceSqlInfo(Database db, Object entity) throws DbException {
 
         List<KeyValue> keyValueList = entity2KeyValueList(db, entity);
-        if (keyValueList.size() == 0) return null;
+        if (keyValueList.isEmpty()) return null;
 
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
         StringBuffer sqlBuffer = new StringBuffer();
@@ -147,7 +147,7 @@ public class SqlInfoBuilder {
     public static com.frodo.app.framework.orm.sql.SqlInfo buildUpdateSqlInfo(Database db, Object entity, String... updateColumnNames) throws DbException {
 
         List<KeyValue> keyValueList = entity2KeyValueList(db, entity);
-        if (keyValueList.size() == 0) return null;
+        if (keyValueList.isEmpty()) return null;
 
         HashSet<String> updateColumnNameSet = null;
         if (updateColumnNames != null && updateColumnNames.length > 0) {
@@ -184,7 +184,7 @@ public class SqlInfoBuilder {
     public static com.frodo.app.framework.orm.sql.SqlInfo buildUpdateSqlInfo(Database db, Object entity, com.frodo.app.framework.orm.sql.WhereBuilder whereBuilder, String... updateColumnNames) throws DbException {
 
         List<KeyValue> keyValueList = entity2KeyValueList(db, entity);
-        if (keyValueList.size() == 0) return null;
+        if (keyValueList.isEmpty()) return null;
 
         HashSet<String> updateColumnNameSet = null;
         if (updateColumnNames != null && updateColumnNames.length > 0) {

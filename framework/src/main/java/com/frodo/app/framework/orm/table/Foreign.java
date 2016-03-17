@@ -77,7 +77,7 @@ public class Foreign extends com.frodo.app.framework.orm.table.Column {
             } else if (columnType.equals(List.class)) {
                 try {
                     List<?> foreignEntities = (List<?>) fieldValue;
-                    if (foreignEntities.size() > 0) {
+                    if (!foreignEntities.isEmpty()) {
 
                         Class<?> foreignEntityType = ColumnUtils.getForeignEntityType(this);
                         com.frodo.app.framework.orm.table.Column column = TableUtils.getColumnOrId(foreignEntityType, foreignColumnName);
