@@ -35,9 +35,9 @@ public class SqlInfoBuilder {
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
         StringBuffer sqlBuffer = new StringBuffer();
 
-        sqlBuffer.append("INSERT INTO ");
-        sqlBuffer.append(TableUtils.getTableName(entity.getClass()));
-        sqlBuffer.append(" (");
+        sqlBuffer.append("INSERT INTO ")
+                 .append(TableUtils.getTableName(entity.getClass()))
+                 .append(" (");
         for (KeyValue kv : keyValueList) {
             sqlBuffer.append(kv.key).append(",");
             result.addBindArgWithoutConverter(kv.value);
@@ -67,9 +67,9 @@ public class SqlInfoBuilder {
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
         StringBuffer sqlBuffer = new StringBuffer();
 
-        sqlBuffer.append("REPLACE INTO ");
-        sqlBuffer.append(TableUtils.getTableName(entity.getClass()));
-        sqlBuffer.append(" (");
+        sqlBuffer.append("REPLACE INTO ")
+                 .append(TableUtils.getTableName(entity.getClass()))
+                 .append(" (");
         for (KeyValue kv : keyValueList) {
             sqlBuffer.append(kv.key).append(",");
             result.addBindArgWithoutConverter(kv.value);
@@ -166,8 +166,8 @@ public class SqlInfoBuilder {
 
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
         StringBuffer sqlBuffer = new StringBuffer("UPDATE ");
-        sqlBuffer.append(table.tableName);
-        sqlBuffer.append(" SET ");
+        sqlBuffer.append(table.tableName)
+                 .append(" SET ");
         for (KeyValue kv : keyValueList) {
             if (updateColumnNameSet == null || updateColumnNameSet.contains(kv.key)) {
                 sqlBuffer.append(kv.key).append("=?,");
@@ -197,8 +197,8 @@ public class SqlInfoBuilder {
 
         com.frodo.app.framework.orm.sql.SqlInfo result = new com.frodo.app.framework.orm.sql.SqlInfo();
         StringBuffer sqlBuffer = new StringBuffer("UPDATE ");
-        sqlBuffer.append(tableName);
-        sqlBuffer.append(" SET ");
+        sqlBuffer.append(tableName)
+                 .append(" SET ");
         for (KeyValue kv : keyValueList) {
             if (updateColumnNameSet == null || updateColumnNameSet.contains(kv.key)) {
                 sqlBuffer.append(kv.key).append("=?,");
@@ -221,9 +221,9 @@ public class SqlInfoBuilder {
         Id id = table.id;
 
         StringBuffer sqlBuffer = new StringBuffer();
-        sqlBuffer.append("CREATE TABLE IF NOT EXISTS ");
-        sqlBuffer.append(table.tableName);
-        sqlBuffer.append(" ( ");
+        sqlBuffer.append("CREATE TABLE IF NOT EXISTS ")
+                 .append(table.tableName)
+                 .append(" ( ");
 
         if (id.isAutoIncrement()) {
             sqlBuffer.append("\"").append(id.getColumnName()).append("\"  ").append("INTEGER PRIMARY KEY AUTOINCREMENT,");

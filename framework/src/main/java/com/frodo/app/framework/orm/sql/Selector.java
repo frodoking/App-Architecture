@@ -122,9 +122,10 @@ public class Selector {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("SELECT ");
-        result.append("*");
-        result.append(" FROM ").append(tableName);
+        result.append("SELECT ")
+              .append("*")
+              .append(" FROM ")
+              .append(tableName);
         if (whereBuilder != null && whereBuilder.getWhereItemSize() > 0) {
             result.append(" WHERE ").append(whereBuilder.toString());
         }
