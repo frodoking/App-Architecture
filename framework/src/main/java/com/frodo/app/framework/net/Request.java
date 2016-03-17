@@ -16,7 +16,6 @@ import java.util.Map;
 public final class Request {
     private final String method;
     private String relativeUrl;
-    private final Map<String, Object> params;
     private final List<Header> headers;
     private final TypedOutput body;
 
@@ -40,12 +39,6 @@ public final class Request {
             this.headers = Collections.emptyList();
         } else {
             this.headers = headers;
-        }
-
-        if (params == null) {
-            this.params = new HashMap<>();
-        } else {
-            this.params = params;
         }
 
         this.body = body;

@@ -27,7 +27,6 @@ import rx.schedulers.Schedulers;
  * Created by frodo on 2015/4/2.
  */
 public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
-    private static final String[] DEFAULT = {"rxjava, movie"};
 
     @Override
     public MovieView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {

@@ -45,8 +45,6 @@ public class NotesPresenterTest {
     private static List<Note> NOTES = Lists.newArrayList(new Note("Title1", "Description1"),
             new Note("Title2", "Description2"));
 
-    private static List<Note> EMPTY_NOTES = new ArrayList<>(0);
-
     @Mock
     private NotesRepository mNotesRepository;
 
