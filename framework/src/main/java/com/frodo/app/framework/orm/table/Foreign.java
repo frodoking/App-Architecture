@@ -38,7 +38,7 @@ public class Foreign extends com.frodo.app.framework.orm.table.Column {
         Object fieldValue = foreignColumnConverter.getFieldValue(cursor, index);
         if (fieldValue == null) return;
 
-        Object value = null;
+        Object value;
         Class<?> columnType = columnField.getType();
         if (columnType.equals(ForeignLazyLoader.class)) {
             value = new ForeignLazyLoader(this, fieldValue);
@@ -68,7 +68,7 @@ public class Foreign extends com.frodo.app.framework.orm.table.Column {
     @Override
     public Object getColumnValue(Object entity) throws DbException {
         Object fieldValue = getFieldValue(entity);
-        Object columnValue = null;
+        Object columnValue;
 
         if (fieldValue != null) {
             Class<?> columnType = columnField.getType();
