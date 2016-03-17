@@ -346,7 +346,6 @@ public class Base64 {
     }
 
     public static byte[] decode(byte[] source) throws IOException {
-        Object decoded = null;
         byte[] decoded1 = decode(source, 0, source.length, 0);
         return decoded1;
     }
@@ -366,8 +365,6 @@ public class Base64 {
                 int outBuffPosn = 0;
                 byte[] b4 = new byte[4];
                 int b4Posn = 0;
-                boolean i = false;
-                boolean sbiDecode = false;
 
                 for (int var14 = off; var14 < off + len; ++var14) {
                     byte var13 = DECODABET[source[var14] & 255];
@@ -420,7 +417,6 @@ public class Base64 {
                     GZIPInputStream gzis = null;
                     ByteArrayOutputStream baos = null;
                     byte[] buffer = new byte[2048];
-                    boolean length = false;
 
                     try {
                         baos = new ByteArrayOutputStream();
@@ -551,12 +547,10 @@ public class Base64 {
     }
 
     public static byte[] decodeFromFile(String filename) throws IOException {
-        Object decodedData = null;
         Base64.InputStream bis = null;
 
         try {
             File e = new File(filename);
-            Object buffer = null;
             int length = 0;
             boolean numBytes = false;
             if (e.length() > 2147483647L) {
@@ -564,7 +558,6 @@ public class Base64 {
             } else {
                 byte[] buffer1 = new byte[(int) e.length()];
 
-                int numBytes1;
                 for (bis = new Base64.InputStream(new BufferedInputStream(new FileInputStream(e)), 0); (numBytes1 = bis.read(buffer1, length, 4096)) >= 0; length += numBytes1) {
                     ;
                 }
@@ -595,7 +588,6 @@ public class Base64 {
             int length = 0;
             boolean numBytes = false;
 
-            int numBytes1;
             for (bis = new Base64.InputStream(new BufferedInputStream(new FileInputStream(e)), 1); (numBytes1 = bis.read(buffer, length, 4096)) >= 0; length += numBytes1) {
                 ;
             }
@@ -809,10 +801,8 @@ public class Base64 {
                     this.numSigBytes = 4;
                 } else {
                     b = new byte[4];
-                    boolean var6 = false;
 
                     for (i = 0; i < 4; ++i) {
-                        boolean var7 = false;
 
                         do {
                             b1 = this.in.read();
