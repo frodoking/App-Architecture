@@ -221,7 +221,7 @@ public class ColumnUtils {
 
     private static Method getBooleanColumnSetMethod(Class<?> entityType, Field field) throws DbException {
         String fieldName = field.getName();
-        String methodName = null;
+        String methodName;
         if (isStartWithIs(field.getName())) {
             methodName = "set" + fieldName.substring(2, 3).toUpperCase() + fieldName.substring(3);
         } else {
