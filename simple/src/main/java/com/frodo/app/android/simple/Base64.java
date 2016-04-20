@@ -29,9 +29,6 @@ public class Base64 {
     public static final int DO_BREAK_LINES = 8;
     public static final int URL_SAFE = 16;
     public static final int ORDERED = 32;
-    private static final int MAX_LINE_LENGTH = 76;
-    private static final byte EQUALS_SIGN = 61;
-    private static final byte NEW_LINE = 10;
     private static final String PREFERRED_ENCODING = "US-ASCII";
     private static final byte WHITE_SPACE_ENC = -5;
     private static final byte EQUALS_SIGN_ENC = -1;

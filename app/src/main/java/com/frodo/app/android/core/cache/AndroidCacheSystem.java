@@ -25,18 +25,14 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     private Context context;
     private String cacheDir;
 
-    private AndroidCacheSharedPreferences sharedPreferences;
     private FileSystem fileSystem;
-    private Database database;
 
     public AndroidCacheSystem(IController controller, String cacheDir) {
         super(controller);
         this.context = (Context) controller.getMicroContext();
         this.cacheDir = cacheDir;
 
-        this.sharedPreferences = new AndroidCacheSharedPreferences(context);
         this.fileSystem = controller.getFileSystem();
-        this.database = controller.getDatabase();
     }
 
     @Override
