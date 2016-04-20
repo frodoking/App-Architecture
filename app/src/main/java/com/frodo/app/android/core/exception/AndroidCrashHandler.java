@@ -41,11 +41,9 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
     }
 
     private void dumpException(Throwable ex, String path) {
-        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            if (getController().getConfig().isDebug()) {
-                Logger.fLog().tag(getClass().getSimpleName()).d("sdcard unmounted,skip dump exception");
-                return;
-            }
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) && getController().getConfig().isDebug()) {
+            Logger.fLog().tag(getClass().getSimpleName()).d("sdcard unmounted,skip dump exception");
+            return;
         }
 
         File dir = new File(path);

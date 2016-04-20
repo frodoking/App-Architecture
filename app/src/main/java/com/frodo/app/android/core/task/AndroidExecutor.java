@@ -95,12 +95,8 @@ public class AndroidExecutor extends ThreadPoolExecutor {
             if (o == null) {
                 return -1; // high priority
             }
-            if (object != null && o.object != null) {
-                if (object.getClass().equals(o.object.getClass())) {
-                    if (object instanceof Comparable) {
-                        return ((Comparable) object).compareTo(o.object);
-                    }
-                }
+            if (object != null && o.object != null && object.getClass().equals(o.object.getClass()) && object instanceof Comparable) {
+                return ((Comparable) object).compareTo(o.object);
             }
             return 0;
         }

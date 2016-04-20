@@ -64,10 +64,8 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (isForPop()) {
-                return true;
-            }
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && isForPop()) {
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
