@@ -67,7 +67,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     public boolean isGpsEnabled() {
         LocationManager lm = ((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
         List<String> accessibleProviders = lm.getProviders(true);
-        return accessibleProviders != null && accessibleProviders.size() > 0;
+        return accessibleProviders != null && !accessibleProviders.isEmpty();
     }
 
     @Override

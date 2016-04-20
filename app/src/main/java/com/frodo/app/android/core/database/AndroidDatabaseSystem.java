@@ -153,7 +153,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void saveOrUpdateAll(List<?> entities) throws DbException {
-        if (entities == null || entities.size() == 0) return;
+        if (entities == null || entities.isEmpty()) return;
         try {
             beginTransaction();
 
@@ -182,7 +182,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void replaceAll(List<?> entities) throws DbException {
-        if (entities == null || entities.size() == 0) return;
+        if (entities == null || entities.isEmpty()) return;
         try {
             beginTransaction();
 
@@ -211,7 +211,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void saveAll(List<?> entities) throws DbException {
-        if (entities == null || entities.size() == 0) return;
+        if (entities == null || entities.isEmpty()) return;
         try {
             beginTransaction();
 
@@ -242,7 +242,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void saveBindingIdAll(List<?> entities) throws DbException {
-        if (entities == null || entities.size() == 0) return;
+        if (entities == null || entities.isEmpty()) return;
         try {
             beginTransaction();
 
@@ -299,7 +299,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void deleteAll(List<?> entities) throws DbException {
-        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass()))
+        if (entities == null || entities.isEmpty() || !tableIsExist(entities.get(0).getClass()))
             return;
         try {
             beginTransaction();
@@ -345,7 +345,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void updateAll(List<?> entities, String... updateColumnNames) throws DbException {
-        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass()))
+        if (entities == null || entities.isEmpty() || !tableIsExist(entities.get(0).getClass()))
             return;
         try {
             beginTransaction();
@@ -361,7 +361,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
     }
 
     public void updateAll(List<?> entities, WhereBuilder whereBuilder, String... updateColumnNames) throws DbException {
-        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass()))
+        if (entities == null || entities.isEmpty() || !tableIsExist(entities.get(0).getClass()))
             return;
         try {
             beginTransaction();

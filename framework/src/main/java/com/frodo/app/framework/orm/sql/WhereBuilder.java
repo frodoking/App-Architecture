@@ -49,7 +49,7 @@ public class WhereBuilder {
      * @return WhereBuilder
      */
     public WhereBuilder and(String columnName, String op, Object value) {
-        appendCondition(whereItems.size() == 0 ? null : "AND", columnName, op, value);
+        appendCondition(whereItems.isEmpty() ? null : "AND", columnName, op, value);
         return this;
     }
 
@@ -62,7 +62,7 @@ public class WhereBuilder {
      * @return WhereBuilder
      */
     public WhereBuilder or(String columnName, String op, Object value) {
-        appendCondition(whereItems.size() == 0 ? null : "OR", columnName, op, value);
+        appendCondition(whereItems.isEmpty() ? null : "OR", columnName, op, value);
         return this;
     }
 
@@ -82,7 +82,7 @@ public class WhereBuilder {
 
     @Override
     public String toString() {
-        if (whereItems.size() == 0) {
+        if (whereItems.isEmpty()) {
             return "";
         }
         StringBuilder sb = new StringBuilder();
@@ -95,7 +95,7 @@ public class WhereBuilder {
     private void appendCondition(String conj, String columnName, String op, Object value) {
         StringBuilder sqlSb = new StringBuilder();
 
-        if (whereItems.size() > 0) {
+        if (!whereItems.isEmpty()) {
             sqlSb.append(" ");
         }
 
