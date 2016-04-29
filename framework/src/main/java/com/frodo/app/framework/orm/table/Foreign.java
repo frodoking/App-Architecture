@@ -68,7 +68,7 @@ public class Foreign extends com.frodo.app.framework.orm.table.Column {
     @Override
     public Object getColumnValue(Object entity) throws DbException {
         Object fieldValue = getFieldValue(entity);
-        Object columnValue;
+        Object columnValue = null;
 
         if (fieldValue != null) {
             Class<?> columnType = columnField.getType();

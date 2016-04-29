@@ -1,4 +1,3 @@
 include ':framework'
 include ':app'
 include ':simple'
-include ':test'

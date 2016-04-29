@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import com.frodo.app.android.MicroApplication;
@@ -14,7 +15,7 @@ import com.frodo.app.framework.log.Logger;
 /**
  * Created by frodo on 2014/12/26. print whole life cycle
  */
-public abstract class AbstractBaseActivity extends FragmentActivity {
+public abstract class AbstractBaseActivity extends AppCompatActivity {
     private static final String LIFECYCLE = "_LifeCycle_A";
     private MainController controller;
 

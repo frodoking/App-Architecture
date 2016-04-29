@@ -1,56 +1,48 @@
 apply plugin: 'maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'signing'
 
-ext {
-    bintrayName = 'app-architecture-framework'
-    libraryName = 'AppArchitectureFramework'
-    artifact = 'app-architecture-framework'
-    libraryDescription = 'A app architecture framework library'
+def isReleaseBuild() {
+    return VERSION_NAME.contains("SNAPSHOT") == false
 }
-group = publishedGroupId
-version = libraryVersion
 
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                groupId publishedGroupId
-                artifactId artifact
-                version libraryVersion
+def getReleaseRepositoryUrl() {
+    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
 
-                // Add your description here
-                name libraryName
-                packaging 'jar'
-                description libraryDescription
-                url siteUrl
+def getSnapshotRepositoryUrl() {
+    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+            : "https://oss.sonatype.org/content/repositories/snapshots/"
+}
 
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
+def getRepositoryUsername() {
+    return hasProperty('MAVEN_USERNAME') ? MAVEN_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('MAVEN_PASSWORD') ? MAVEN_PASSWORD : ""
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: getReleaseRepositoryUrl()) {
+                authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
             }
+            snapshotRepository(url: getSnapshotRepositoryUrl()) {
+                authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+            }
+            configurePOM(pom)
         }
     }
 }
 
-task javadocJar(type: Jar) {
+//compile **.jar/**-javadoc.jar/**-sources.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
-    from javadoc
+    from 'build/docs/javadoc'
 }
 
 task sourcesJar(type: Jar) {
@@ -59,8 +51,54 @@ task sourcesJar(type: Jar) {
 }
 
 artifacts {
-    archives javadocJar, sourcesJar
+    archives jar
+    archives javadocJar
+    archives sourcesJar
 }
 
-// Bintray  Signing
-apply from: "${rootDir.absolutePath}/scripts/bintray_signing.gradle"
+signing {
+    required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+private configurePOM(def pom) {
+    pom.project {
+        groupId POM_GROUP_ID
+        artifactId POM_ARTIFACT_ID
+        version VERSION_NAME
+        name POM_NAME
+        packaging POM_PACKAGING
+        description POM_DESCRIPTION
+        url POM_URL
+        inceptionYear POM_INCEPTION_YEAR
+
+        scm {
+            url POM_SCM_URL
+            connection POM_SCM_CONNECTION
+            developerConnection POM_SCM_DEV_CONNECTION
+        }
+
+        licenses {
+            license {
+                name POM_LICENCE_NAME
+                url POM_LICENCE_URL
+                distribution POM_LICENCE_DIST
+                comments POM_LICENCE_COMMENTS
+            }
+        }
+
+        developers {
+            developer {
+                id POM_DEVELOPER_ID
+                name POM_DEVELOPER_NAME
+                email POM_DEVELOPER_EMAIL
+                url POM_DEVELOPER_URL
+            }
+        }
+
+        issueManagement {
+            system POM_ISSUE_MANAGEMENT_SYSTEM
+            url POM_ISSUE_MANAGEMENT_URL
+        }
+    }
+}

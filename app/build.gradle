@@ -14,7 +14,7 @@ android {
     }
 }
 dependencies {
-    compile libraries.support_v4
+    compile libraries.appcompat_v7
 
     //net
     compile(
