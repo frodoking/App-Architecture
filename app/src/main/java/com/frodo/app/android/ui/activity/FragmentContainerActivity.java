@@ -45,8 +45,16 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
         }
     }
 
+    /**
+     * if you override this method. you must to define a viewcontainer like this:
+     * <FrameLayout
+     *  android:id="@+id/container"
+     *  android:layout_width="match_parent"
+     *  android:layout_height="match_parent"/>
+     * @return LayoutId
+     */
     @Override
-    public final int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.fragment_container;
     }
 
