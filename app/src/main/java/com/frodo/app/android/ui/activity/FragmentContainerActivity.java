@@ -108,6 +108,7 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
     public final void replaceFragment(Class<? extends Fragment> fragment, Bundle args) {
         mStack.replace(fragment, fragment.getCanonicalName() + System.currentTimeMillis(), args);
+        mStack.commit();
     }
 
     private AbstractBaseFragment getTopFragment() {
