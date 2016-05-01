@@ -16,4 +16,10 @@ public class FragmentScheduler {
                                     boolean isFinishTopFragment) {
         fragmentContainer.addFragment(fragmentClass, extra, isFinishTopFragment);
     }
+
+    public static void replaceFragment(FragmentContainerActivity fragmentContainer,
+                                       Class<? extends Fragment> fragmentClass,
+                                       Bundle extra) {
+        fragmentContainer.replaceFragment(fragmentClass, extra);
+    }
 }

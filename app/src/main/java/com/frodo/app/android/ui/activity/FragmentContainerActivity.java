@@ -1,6 +1,7 @@
 package com.frodo.app.android.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
@@ -25,10 +26,6 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
                         Logger.fLog().tag(FragmentStack.STATE_STACK).d("onStackChanged stackSize:" + stackSize + ", topFragment: " + topFragment.getTag());
                     }
                 });
-        mStack.setDefaultAnimation(R.anim.slide_in_left,
-                R.anim.slide_out_right,
-                R.anim.slide_in_right,
-                R.anim.slide_out_left);
 
         super.onCreate(savedInstanceState);
 
@@ -48,9 +45,10 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
     /**
      * if you override this method. you must to define a viewcontainer like this:
      * <FrameLayout
-     *  android:id="@+id/container"
-     *  android:layout_width="match_parent"
-     *  android:layout_height="match_parent"/>
+     * android:id="@+id/container"
+     * android:layout_width="match_parent"
+     * android:layout_height="match_parent"/>
+     *
      * @return LayoutId
      */
     @Override
@@ -78,6 +76,13 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    public void setTransitionAnimationsForViewContainer(@AnimRes int enter, @AnimRes int exit,
+                                                        @AnimRes int popEnter, @AnimRes int popExit) {
+        if (mStack != null) {
+            mStack.setTransitionAnimations(enter, exit, popEnter, popExit);
+        }
+    }
+
     public final void addFragment(Class<? extends Fragment> fragment, Bundle args, boolean isFinishTopFragment) {
         addFragment(fragment, fragment.getCanonicalName() + System.currentTimeMillis(), args, isFinishTopFragment);
     }
@@ -99,6 +104,10 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
         mStack.push(fragment, tag, args);
         mStack.commit();
+    }
+
+    public final void replaceFragment(Class<? extends Fragment> fragment, Bundle args) {
+        mStack.replace(fragment, fragment.getCanonicalName() + System.currentTimeMillis(), args);
     }
 
     private AbstractBaseFragment getTopFragment() {

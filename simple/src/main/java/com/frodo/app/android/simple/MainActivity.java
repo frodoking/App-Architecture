@@ -19,6 +19,6 @@ public class MainActivity extends FragmentContainerActivity {
 
     @Override
     public void initBusiness() {
-        FragmentScheduler.nextFragment(this, SplashFragment.class, null, true);
+        FragmentScheduler.replaceFragment(this, SplashFragment.class, null);
     }
 }

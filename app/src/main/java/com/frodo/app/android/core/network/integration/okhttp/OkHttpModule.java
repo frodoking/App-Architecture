@@ -30,6 +30,7 @@ import okio.BufferedSink;
 public class OkHttpModule implements HttpModule {
 
     private static volatile OkHttpClient internalClient;
+
     private static OkHttpClient getInternalClient() {
         if (internalClient == null) {
             synchronized (OkHttpModule.class) {

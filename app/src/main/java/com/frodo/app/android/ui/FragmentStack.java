@@ -3,6 +3,7 @@ package com.frodo.app.android.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.AnimRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,7 +17,7 @@ import java.util.Set;
  * A class that manages a stack of {@link Fragment}s in a single container.
  * Created by frodo on 2015/1/27.
  */
-public class FragmentStack {
+public final class FragmentStack {
     public static final String STATE_STACK = "FragmentStack";
     private LinkedList<Fragment> stack = new LinkedList<Fragment>();
     private Set<String> topLevelTags = new HashSet<String>();
@@ -38,10 +39,6 @@ public class FragmentStack {
         }
     };
     private Handler handler;
-    private int enterAnimation;
-    private int exitAnimation;
-    private int popStackEnterAnimation;
-    private int popStackExitAnimation;
 
     private FragmentStack(FragmentActivity activity, int containerId, Callback callback) {
         this.activity = activity;
@@ -59,13 +56,18 @@ public class FragmentStack {
         return new FragmentStack(activity, containerId, callback);
     }
 
+    public void setTransitionAnimations(@AnimRes int enter, @AnimRes int exit,
+                                        @AnimRes int popEnter, @AnimRes int popExit) {
+        if (fragmentTransaction != null) {
+            fragmentTransaction.setCustomAnimations(enter, exit, popEnter, popExit);
+        }
+    }
+
     /**
      * Removes all added fragments and clears the stack.
      */
     public void destroy() {
         ensureTransaction();
-        fragmentTransaction.setCustomAnimations(enterAnimation, exitAnimation);
-
         final Fragment topFragment = stack.peekFirst();
         for (Fragment f : stack) {
             if (f != topFragment) {
@@ -131,7 +133,6 @@ public class FragmentStack {
         if (first != null && tag.equals(first.getTag())) {
             if (stack.size() > 1) {
                 ensureTransaction();
-                fragmentTransaction.setCustomAnimations(popStackEnterAnimation, popStackExitAnimation);
                 while (stack.size() > 1) {
                     removeFragment(stack.pollLast());
                 }
@@ -147,7 +148,6 @@ public class FragmentStack {
         }
 
         ensureTransaction();
-        fragmentTransaction.setCustomAnimations(enterAnimation, exitAnimation);
         clear();
         attachFragment(f, tag);
         stack.add(f);
@@ -164,7 +164,6 @@ public class FragmentStack {
      */
     public void push(Class<?> fragment, String tag, Bundle args) {
         ensureTransaction();
-        fragmentTransaction.setCustomAnimations(enterAnimation, exitAnimation);
         detachTop();
 
         Fragment f = fragmentManager.findFragmentByTag(tag);
@@ -199,7 +198,6 @@ public class FragmentStack {
     public boolean pop(boolean commit) {
         if (stack.size() > 1) {
             ensureTransaction();
-            fragmentTransaction.setCustomAnimations(popStackEnterAnimation, popStackExitAnimation);
             removeFragment(stack.pollLast());
             Fragment f = stack.peekLast();
             attachFragment(f, f.getTag());
@@ -241,6 +239,7 @@ public class FragmentStack {
     private FragmentTransaction ensureTransaction() {
         if (fragmentTransaction == null) {
             fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
         handler.removeCallbacks(execPendingTransactions);
         return fragmentTransaction;
@@ -272,13 +271,6 @@ public class FragmentStack {
             ensureTransaction();
             fragmentTransaction.remove(fragment);
         }
-    }
-
-    public void setDefaultAnimation(int enter, int exit, int popEnter, int popExit) {
-        enterAnimation = enter;
-        exitAnimation = exit;
-        popStackEnterAnimation = popEnter;
-        popStackExitAnimation = popExit;
     }
 
     /**
