@@ -117,6 +117,4 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
         }
         return null;
     }
-
-
 }

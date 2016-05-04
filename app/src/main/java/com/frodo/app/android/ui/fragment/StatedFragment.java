@@ -59,18 +59,20 @@ public abstract class StatedFragment<V extends UIView, M extends IModel> extends
             savedState = saveState();
         if (savedState != null) {
             Bundle b = getArguments();
-            b.putBundle(tag(), savedState);
+            if (b != null)
+                b.putBundle(tag(), savedState);
         }
     }
 
     private boolean restoreStateFromArguments() {
         Bundle b = getArguments();
-        savedState = b.getBundle(tag());
-        if (savedState != null) {
-            restoreState();
-            return true;
+        if (b != null) {
+            savedState = b.getBundle(tag());
+            if (savedState != null) {
+                restoreState();
+                return true;
+            }
         }
-
         return false;
     }
 

@@ -110,7 +110,7 @@ public class MovieView extends UIView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // only for test redirect function
-                FragmentScheduler.nextFragment((FragmentContainerActivity) getPresenter().getAndroidContext(), RedirectFragment.class, null, false);
+                FragmentScheduler.nextFragment((FragmentContainerActivity) getPresenter().getAndroidContext(), RedirectFragment.class, null);
             }
         });
     }
