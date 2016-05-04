@@ -40,5 +40,10 @@ public abstract class UIView implements IView {
     @Override
     public final void show(boolean show) {
         isShown = show;
+        onShowOrHide(isShown);
+    }
+
+    public void onShowOrHide(boolean isShown) {
+        // do something
     }
 }

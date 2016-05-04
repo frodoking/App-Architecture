@@ -37,7 +37,7 @@ public class SplashFragment extends AbstractBaseFragment {
                 ad.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentScheduler.nextFragment((FragmentContainerActivity) getActivity(), MovieFragment.class, null, true);
+                        FragmentScheduler.replaceFragment((FragmentContainerActivity) getActivity(), MovieFragment.class, null);
                     }
                 }, 5000);
             }

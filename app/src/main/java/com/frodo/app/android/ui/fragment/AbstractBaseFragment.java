@@ -74,6 +74,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
         Logger.fLog().tag(tag() + LIFECYCLE).i("onViewCreated");
         getUIView().initView();
         getUIView().registerListener();
+        getUIView().show(true);
     }
 
     @Override
@@ -128,6 +129,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        getUIView().show(false);
         Logger.fLog().tag(tag() + LIFECYCLE).i("onDestroyView");
     }
 
@@ -142,10 +144,6 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onDetach() {
         super.onDetach();
         Logger.fLog().tag(tag() + LIFECYCLE).i("onDetach");
-    }
-
-    public boolean onBackPressed() {
-        return false;
     }
 
     public MainController getMainController() {

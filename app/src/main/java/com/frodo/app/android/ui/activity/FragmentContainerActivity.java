@@ -6,9 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
 import com.android.app.R;
-import com.frodo.app.framework.log.Logger;
 import com.frodo.app.android.ui.FragmentStack;
-import com.frodo.app.android.ui.fragment.AbstractBaseFragment;
+import com.frodo.app.framework.log.Logger;
 
 /**
  * Created by frodo on 2015/1/27. FragmentContainer
@@ -70,8 +69,12 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && isForPop()) {
-            return true;
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (isRoot()) {
+                return super.onKeyDown(keyCode, event);
+            } else {
+                return mStack.pop(true);
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -111,20 +114,7 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
         mStack.commit();
     }
 
-    private AbstractBaseFragment getTopFragment() {
-        return (AbstractBaseFragment) mStack.peek();
-    }
-
-    private boolean isForPop() {
-        if (!isRootFragment()) {
-            getTopFragment().onBackPressed();
-            return mStack.pop(true);
-        }
-
-        return false;
-    }
-
-    private boolean isRootFragment() {
+    public boolean isRoot() {
         return mStack.size() == 1;
     }
 }

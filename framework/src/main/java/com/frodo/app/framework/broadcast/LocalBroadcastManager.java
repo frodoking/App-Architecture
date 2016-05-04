@@ -1,18 +1,23 @@
 package com.frodo.app.framework.broadcast;
 
+import com.frodo.app.framework.controller.Interceptor;
+
 /**
  * Created by frodo on 2015/12/29.  message center , to manage communicate between with subsystem
  */
 public interface LocalBroadcastManager {
-    void send(Object key);
+    void onBroadcast(String group, Object message);
 
-    void sendAll();
+    void onBroadcastAll(Object message);
 
-    Object receive(Object key);
+    void unRegister(String group, MessageInterceptor listener);
 
-    void remove(Object key);
+    void unRegisterGroup(String group);
 
-    void removeAll();
+    void unRegisterAll();
 
-    void register(Object key, Object broadcast);
+    void register(String group, MessageInterceptor listener);
+
+    interface MessageInterceptor extends Interceptor<Object, Boolean> {
+    }
 }

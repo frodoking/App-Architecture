@@ -67,11 +67,6 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
         }
     }
 
-    @Override
-    public boolean onBackPressed() {
-        return false;
-    }
-
     /**
      * Use RxJava for callback
      */
