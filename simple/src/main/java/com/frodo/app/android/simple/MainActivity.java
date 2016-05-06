@@ -7,6 +7,7 @@ import com.frodo.app.android.ui.activity.FragmentContainerActivity;
  * Created by frodo on 2015/9/15.
  */
 public class MainActivity extends FragmentContainerActivity {
+
     @Override
     public void initView() {
         // do nothing

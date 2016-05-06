@@ -1,11 +1,9 @@
 package com.frodo.app.framework.net;
 
-import com.frodo.app.framework.net.mime.TypedOutput;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +11,30 @@ import java.util.Map;
  * Encapsulates all of the information necessary to make an HTTP request.
  * Created by frodo on 2016/3/2.
  */
-public final class Request {
+public final class Request<RequestBody> {
     private final String method;
     private String relativeUrl;
     private final List<Header> headers;
-    private final TypedOutput body;
-
+    private final RequestBody body;
     private StringBuilder queryParams;
 
     public Request(String method, String relativeUrl) {
         this(method, relativeUrl, null, null, null);
     }
 
-    public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, TypedOutput body) {
+    public Request(String method, String relativeUrl, Map<String, Object> params) {
+        this(method, relativeUrl, params, null, null);
+    }
+
+    public Request(String method, String relativeUrl, List<Header> headers) {
+        this(method, relativeUrl, null, headers, null);
+    }
+
+    public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers) {
+        this(method, relativeUrl, params, headers, null);
+    }
+
+    public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, RequestBody body) {
         if (method == null) {
             throw new NullPointerException("Method must not be null.");
         }
@@ -73,7 +82,7 @@ public final class Request {
     /**
      * Returns the request body or {@code null}.
      */
-    public TypedOutput getBody() {
+    public RequestBody getBody() {
         return body;
     }
 
@@ -115,7 +124,5 @@ public final class Request {
                     "Unable to convert query parameter \"" + name + "\" value to UTF-8: " + value, e);
         }
     }
-
-
 }
 

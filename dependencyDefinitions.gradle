@@ -1,9 +1,10 @@
 ext.versions = [
         guava        : '19.0',
-        okhttp       : '2.3.0',
+        okhttp       : '3.2.0',
         jackson      : '2.7.2',
         picasso      : '2.5.2',
         glide        : '3.7.0',
+        fresco       : '0.10.0',
         rxjava       : '1.1.0',
         rxandroid    : '1.1.0',
         leakcanary   : '1.3.1',
@@ -23,8 +24,7 @@ ext.libraries = [
         guava                                : "com.google.guava:guava:${versions.guava}",
 
         // net
-        okhttp                               : "com.squareup.okhttp:okhttp:${versions.okhttp}",
-        okhttp_urlconnection                 : "com.squareup.okhttp:okhttp-urlconnection:${versions.okhttp}",
+        okhttp                               : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
 
         jackson_core                         : "com.fasterxml.jackson.core:jackson-core:${versions.jackson}",
         jackson_databind                     : "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
@@ -33,6 +33,8 @@ ext.libraries = [
         picasso                              : "com.squareup.picasso:picasso:${versions.picasso}",
         // Or glide
         glide                                : "com.github.bumptech.glide:glide:${versions.glide}",
+        // Or fresco
+        fresco                               : "com.facebook.fresco:fresco:${versions.fresco}",
 
         // event bus
         // otto                : "com.squareup:otto:${versions.otto}",

@@ -1,5 +1,6 @@
 package com.frodo.app.android.simple;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.frodo.app.android.MicroApplication;
 import com.frodo.app.android.core.config.AndroidConfig;
 import com.frodo.app.android.core.exception.AndroidCrashHandler;
@@ -11,7 +12,6 @@ import com.frodo.app.framework.config.Environment;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.exception.ExceptionHandler;
 import com.frodo.app.framework.log.LogCollector;
-import com.frodo.app.framework.net.Header;
 import com.frodo.app.framework.net.NetworkInterceptor;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
@@ -31,6 +31,7 @@ public class SimpleApplication extends MicroApplication {
     @Override
     public void init() {
         super.init();
+        Fresco.initialize(this);
         getMainController().getLogCollector().enableCollect(true);
     }
 
@@ -120,9 +121,9 @@ public class SimpleApplication extends MicroApplication {
                         request.addQueryParam("apikey", env.getApiKey());
                     }
                     if (userAccount != null && userPasswordSha1 != null) {
-                        String source = userAccount + ":" + userPasswordSha1;
-                        String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
-                        request.getHeaders().add(new Header("Authorization", authorization));
+//                        String source = userAccount + ":" + userPasswordSha1;
+//                        String authorization = "Basic " + Base64.encode(source.getBytes(), "");;
+//                        request.getHeaders().add(new Header("Authorization", authorization));
                     }
 
                     return super.intercept(request);

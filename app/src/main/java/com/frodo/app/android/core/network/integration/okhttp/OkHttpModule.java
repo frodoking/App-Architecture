@@ -7,21 +7,16 @@ import com.frodo.app.framework.net.Header;
 import com.frodo.app.framework.net.HttpModule;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
-import com.frodo.app.framework.net.mime.TypedInput;
-import com.frodo.app.framework.net.mime.TypedOutput;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okio.BufferedSink;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 /**
  * okhttp module
@@ -52,9 +47,11 @@ public class OkHttpModule implements HttpModule {
     @Override
     public void apply(MainController controller, Options options) {
         this.options = options;
-        client.setConnectTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
-        client.setReadTimeout(options.readTimeout, TimeUnit.MILLISECONDS);
-        client.setWriteTimeout(options.writeTimeout, TimeUnit.MILLISECONDS);
+        OkHttpClient.Builder builder = client.newBuilder();
+        builder.connectTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
+        builder.readTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
+        builder.writeTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
+        client = builder.build();
     }
 
     @Override
@@ -66,10 +63,10 @@ public class OkHttpModule implements HttpModule {
         }
     }
 
-    static com.squareup.okhttp.Request createRequest(String apiUrl, Request request) {
-        com.squareup.okhttp.Request.Builder builder = new com.squareup.okhttp.Request.Builder()
+    static okhttp3.Request createRequest(String apiUrl, Request<RequestBody> request) {
+        okhttp3.Request.Builder builder = new okhttp3.Request.Builder()
                 .url(apiUrl + request.getUrl())
-                .method(request.getMethod(), createRequestBody(request.getBody()));
+                .method(request.getMethod(), request.getBody());
 
         Logger.fLog().tag("RequestURL").i(String.format("[ %s ]", apiUrl + request.getUrl()));
 
@@ -84,55 +81,9 @@ public class OkHttpModule implements HttpModule {
         return builder.build();
     }
 
-    static Response parseResponse(com.squareup.okhttp.Response response) throws IOException {
-        return new Response(response.request().urlString(), response.code(), response.message(),
-                createHeaders(response.headers()), createResponseBody(response.body()));
-    }
-
-    private static RequestBody createRequestBody(final TypedOutput body) {
-        if (body == null) {
-            return null;
-        }
-        final MediaType mediaType = MediaType.parse(body.mimeType());
-        return new RequestBody() {
-            @Override
-            public MediaType contentType() {
-                return mediaType;
-            }
-
-            @Override
-            public void writeTo(BufferedSink sink) throws IOException {
-                body.writeTo(sink.outputStream());
-            }
-
-            @Override
-            public long contentLength() {
-                return body.length();
-            }
-        };
-    }
-
-    private static TypedInput createResponseBody(final ResponseBody body) throws IOException {
-        if (body.contentLength() == 0) {
-            return null;
-        }
-        return new TypedInput() {
-            @Override
-            public String mimeType() {
-                MediaType mediaType = body.contentType();
-                return mediaType == null ? null : mediaType.toString();
-            }
-
-            @Override
-            public long length() throws IOException {
-                return body.contentLength();
-            }
-
-            @Override
-            public InputStream in() throws IOException {
-                return body.byteStream();
-            }
-        };
+    static Response<ResponseBody> parseResponse(okhttp3.Response response) throws IOException {
+        return new Response<>(response.request().url().url().getPath(), response.code(), response.message(),
+                createHeaders(response.headers()), response.body());
     }
 
     private static List<Header> createHeaders(Headers headers) {

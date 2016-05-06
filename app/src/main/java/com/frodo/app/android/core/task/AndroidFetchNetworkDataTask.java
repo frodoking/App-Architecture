@@ -1,16 +1,13 @@
 package com.frodo.app.android.core.task;
 
 import com.frodo.app.framework.exception.HttpException;
+import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import okhttp3.ResponseBody;
 import rx.Subscriber;
 
 /**
@@ -35,10 +32,11 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
     public String doBackgroundCall() throws HttpException {
         Response response = networkTransport.execute(request);
         try {
-            InputStream is = response.getBody().in();
-            return convertStreamToString(is);
-        } catch (IOException e) {
-            e.printStackTrace();
+            String s = ((ResponseBody)response.getBody()).string();
+            Logger.fLog().tag(key()).i("Response String : " + s);
+            return  s;
+        } catch (Exception e) {
+            Logger.fLog().tag(key()).e("Response Exception : ", e);
             throw new HttpException(e);
         }
     }
@@ -67,20 +65,5 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
 
     public final Subscriber<String> getSubscriber() {
         return subscriber;
-    }
-
-    private static String convertStreamToString(InputStream is) throws IOException {
-        // json is UTF-8 by default
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line).append("\n");
-        }
-
-        is.close();
-
-        return sb.toString();
     }
 }

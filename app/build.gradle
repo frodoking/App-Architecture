@@ -17,10 +17,7 @@ dependencies {
     compile libraries.appcompat_v7
 
     //net
-    compile(
-            libraries.okhttp,
-            libraries.okhttp_urlconnection,
-    )
+    compile libraries.okhttp
 
     // jackson
     compile(
@@ -29,14 +26,15 @@ dependencies {
     )
 
     // img
-    compile libraries.glide
+    compile libraries.fresco
 
     // event bus
     // compile libraries.otto
     // replace with rxjava
     compile libraries.rxjava
 
-    compile "com.github.frodoking:app-architecture-framework:1.0.1-SNAPSHOT"
+    compile "com.github.frodoking:app-architecture-framework:1.1.0-SNAPSHOT"
+//    compile project(":framework")
 
     debugCompile libraries.leakcanary_android
     releaseCompile libraries.leakcanary_android_no_op

@@ -1,17 +1,17 @@
 package com.frodo.app.android.simple;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.AndroidUIViewController;
 import com.frodo.app.android.core.UIView;
@@ -71,7 +71,8 @@ public class MovieView extends UIView {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getPresenter().getAndroidContext()).inflate(R.layout.layout_movie_item, null);
                     holder = new ViewHolder();
-                    holder.imageView = (ImageView) convertView.findViewById(R.id.image);
+                    holder.imageView = (SimpleDraweeView) convertView.findViewById(R.id.image);
+                    holder.imageView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     convertView.setTag(holder);
                 } else {
@@ -80,14 +81,10 @@ public class MovieView extends UIView {
 
                 Movie movie = getItem(position);
                 final String imageUrl = ImagesConverter.getAbsoluteUrl(serverConfig, movie);
-                Logger.fLog().tag("MovieView").i("Glide loading image : " + imageUrl);
+                Logger.fLog().tag("MovieView").i("Loading image : " + imageUrl);
                 if (imageUrl != null) {
-                    Glide.with(getPresenter().getAndroidContext())
-                            .load(imageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                            .centerCrop()
-                            .override(imageSize[0], imageSize[1])
-                            .into(holder.imageView);
+                    Uri imageUri = Uri.parse(imageUrl);
+                    holder.imageView.setImageURI(imageUri);
                 }
 
                 holder.textView.setText(movie.title);
@@ -96,7 +93,7 @@ public class MovieView extends UIView {
             }
 
             class ViewHolder {
-                ImageView imageView;
+                SimpleDraweeView imageView;
                 TextView textView;
             }
         };

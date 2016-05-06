@@ -1,7 +1,5 @@
 package com.frodo.app.framework.net;
 
-import com.frodo.app.framework.net.mime.TypedInput;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,14 +11,14 @@ import java.util.List;
  * {@code byte[]}.
  * Created by xuwei19 on 2016/3/2.
  */
-public final class Response {
+public final class Response<ResponseBody> {
     private final String url;
     private final int status;
     private final String reason;
     private final List<Header> headers;
-    private final TypedInput body;
+    private final ResponseBody body;
 
-    public Response(String url, int status, String reason, List<Header> headers, TypedInput body) {
+    public Response(String url, int status, String reason, List<Header> headers, ResponseBody body) {
         if (url == null) {
             throw new IllegalArgumentException("url == null");
         }
@@ -72,7 +70,7 @@ public final class Response {
     /**
      * Response body. May be {@code null}.
      */
-    public TypedInput getBody() {
+    public ResponseBody getBody() {
         return body;
     }
 }
