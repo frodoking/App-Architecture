@@ -55,6 +55,9 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 4. 事件传递机制的Rxjava
 5. 内存泄露检测库leakcanary
 
+## 应用
+目前正在写的一个应用[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)
+
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com
 * 个人技术Blog：http://frodoking.github.io/
