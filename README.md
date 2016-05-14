@@ -56,7 +56,18 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 5. 内存泄露检测库leakcanary
 
 ## 应用
-目前正在写的一个应用[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)
+
+##### Gradle
+```
+  repositories {
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+   
+   compile "com.github.frodoking:app-architecture-android:1.1.6-SNAPSHOT"
+```
+目前该架构应用在[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)工程上
 
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com
