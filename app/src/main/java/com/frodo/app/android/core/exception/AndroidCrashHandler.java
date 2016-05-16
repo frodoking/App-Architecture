@@ -37,7 +37,7 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
     }
 
     public String getExceptionDir() {
-        return getController().getCacheSystem().getCacheDir() + File.separator + CRASH_LOG_DIR;
+        return getController().getFileSystem().getFilePath() + File.separator + CRASH_LOG_DIR;
     }
 
     private void dumpException(Throwable ex, String path) {

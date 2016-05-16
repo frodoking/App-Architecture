@@ -39,7 +39,7 @@ dependencies {
     // replace with rxjava
     compile libraries.rxjava
 
-    compile "com.github.frodoking:app-architecture-framework:1.1.0-SNAPSHOT"
+    compile "com.github.frodoking:app-architecture-framework:1.1.1-SNAPSHOT"
 //    compile project(":framework")
 
     debugCompile libraries.leakcanary_android

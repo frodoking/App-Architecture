@@ -91,22 +91,13 @@ public abstract class MicroApplication extends Application implements MicroConte
 
     public final void enableCache(boolean enable) {
         if (enable) {
-            controller.setCacheSystem(new AndroidCacheSystem(this.controller, "/"));
-            loadImageCache();
+            controller.setCacheSystem(new AndroidCacheSystem(this.controller, getFilesDirName() + "cache" + File.separator));
         } else {
             controller.setCacheSystem(null);
         }
     }
 
     public abstract void loadServerConfiguration();
-
-    private void loadImageCache() {
-       /* final String imageCacheDir = getMainController().getFileSystem().getFilePath() + File.separator + "image";
-        Picasso picasso = new Picasso.Builder(this).downloader(
-                new OkHttpDownloader(new File(imageCacheDir))).build();
-        Picasso.setSingletonInstance(picasso);*/
-    }
-
 
     @Override
     public String getRootDirName() {

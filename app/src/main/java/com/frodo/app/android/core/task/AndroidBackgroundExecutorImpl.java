@@ -28,7 +28,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         getExecutorService().execute(new BackgroundCallRunner<>(runnable));
     }
 
-    private class BackgroundCallRunner<R> implements Runnable {
+    private class BackgroundCallRunner<R> implements Runnable, Comparable {
         private final BackgroundCallTask<R> mBackgroundCallTask;
 
         BackgroundCallRunner(BackgroundCallTask<R> task) {
@@ -54,9 +54,17 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             }
             mBackgroundCallTask.postExecute(result);
         }
+
+        @Override
+        public int compareTo(Object another) {
+            if (another instanceof BackgroundCallRunner) {
+                return mBackgroundCallTask.getPriority() - ((BackgroundCallRunner) another).mBackgroundCallTask.getPriority();
+            }
+            return 0;
+        }
     }
 
-    private class NetworkCallRunner<R> implements Runnable {
+    private class NetworkCallRunner<R> implements Runnable , Comparable {
 
         private final NetworkCallTask<R> mNetworkCallTask;
 
@@ -94,6 +102,14 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
                 mNetworkCallTask.onError(httpException);
             }
             mNetworkCallTask.onFinished();
+        }
+
+        @Override
+        public int compareTo(Object another) {
+            if (another instanceof NetworkCallRunner) {
+                return mNetworkCallTask.getPriority() - ((NetworkCallRunner) another).mNetworkCallTask.getPriority();
+            }
+            return 0;
         }
     }
 }
