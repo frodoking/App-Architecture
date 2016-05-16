@@ -8,8 +8,8 @@ buildscript {
     }
 }
 
-apply from: 'dependencyDefinitions.gradle'
-apply from: 'variants.gradle'
+apply from: "${rootProject.rootDir}/scripts/dependencyDefinitions.gradle"
+apply from: "${rootProject.rootDir}/scripts/variants.gradle"
 
 // See http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html.
 if (JavaVersion.current().isJava8Compatible()) {
@@ -17,14 +17,6 @@ if (JavaVersion.current().isJava8Compatible()) {
         tasks.withType(Javadoc) {
             options.addStringOption('Xdoclint:none', '-quiet')
         }
-    }
-}
-
-subprojects {
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        sourceCompatibility = JavaVersion.VERSION_1_7
-        targetCompatibility = JavaVersion.VERSION_1_7
     }
 }
 
@@ -37,42 +29,18 @@ subprojects { project ->
         }
     }
 
-    apply plugin: 'checkstyle'
-
-    checkstyle {
-        toolVersion = "6.6"
-    }
-
-    checkstyle {
-        configFile = new File(rootDir, 'checkstyle.xml')
-        configProperties.checkStyleConfigDir = rootProject.rootDir
-    }
-
-    task checkstyle(type: Checkstyle) {
-        source 'src'
-        include '**/*.java'
-        exclude '**/gen/**'
-
-        // empty classpath
-        classpath = files()
-    }
-
-    afterEvaluate {
-        if (project.tasks.findByName('check')) {
-            check.dependsOn('checkstyle')
-        }
-    }
-
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            if (!name.contains('Test')) {
-                options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
-            }
-        }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
     }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
 

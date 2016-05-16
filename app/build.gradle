@@ -10,9 +10,15 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        abortOnError true
+        xmlReport false
+        htmlReport true
+        lintConfig file("${rootProject.rootDir}/scripts/quality/lint/lint.xml")
+        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
     }
 }
+
 dependencies {
     compile libraries.appcompat_v7
 
@@ -40,6 +46,9 @@ dependencies {
     releaseCompile libraries.leakcanary_android_no_op
 }
 
-apply from: "${rootDir.absolutePath}/scripts/maven_push_aar.gradle"
+apply from: "${rootProject.rootDir}/scripts/quality/quality.gradle"
+check.dependsOn 'checkstyle', 'findbugs', 'pmd', 'lint'
+
+apply from: "${rootProject.rootDir}/scripts/maven_push_aar.gradle"
 
 
