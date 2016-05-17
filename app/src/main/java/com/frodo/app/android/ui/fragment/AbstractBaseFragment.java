@@ -10,11 +10,16 @@ import android.view.ViewGroup;
 
 import com.frodo.app.android.core.AndroidUIViewController;
 import com.frodo.app.android.core.UIView;
+import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.AbstractModel.SimpleModel;
 import com.frodo.app.framework.controller.IModel;
 import com.frodo.app.framework.controller.MainController;
+import com.frodo.app.framework.controller.ModelFactory;
 import com.frodo.app.framework.log.Logger;
 import com.frodo.app.android.ui.activity.AbstractBaseActivity;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * Created by frodo on 2015/1/12. base Fragment, contain UIView and Model
@@ -32,8 +37,21 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
 
     public abstract V createUIView(Context context, LayoutInflater inflater, ViewGroup container);
 
+    @SuppressWarnings("unchecked")
     protected M createModel() {
-        return (M) new SimpleModel(controller);
+        Type type = getClass().getGenericSuperclass();
+        ModelFactory modelFactory = getMainController().getModelFactory();
+        if (type instanceof ParameterizedType) {
+            if (((ParameterizedType) type).getActualTypeArguments().length >= 2) {
+                Type modelType = ((ParameterizedType) type).getActualTypeArguments()[1];
+                if (modelType instanceof Class) {
+                    String key = ((Class) modelType).getSimpleName();
+                    return modelFactory.getOrCreateIfAbsent(key, (Class<M>) modelType, getMainController());
+                }
+            }
+        }
+
+        return (M) modelFactory.getOrCreateIfAbsent("default", SimpleModel.class, getMainController());
     }
 
     @Override
@@ -49,7 +67,6 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        controller = ((AbstractBaseActivity) getActivity()).getMainController();
         Logger.fLog().tag(tag() + LIFECYCLE).i("onAttach");
     }
 
@@ -57,6 +74,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.fLog().tag(tag() + LIFECYCLE).i("onCreate");
+        controller = ((AbstractBaseActivity) getActivity()).getMainController();
         model = createModel();
     }
 

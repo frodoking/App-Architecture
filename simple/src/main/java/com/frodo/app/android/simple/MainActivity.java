@@ -1,5 +1,8 @@
 package com.frodo.app.android.simple;
 
+import android.content.res.Configuration;
+import android.widget.Toast;
+
 import com.frodo.app.android.core.toolbox.FragmentScheduler;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 
@@ -21,5 +24,15 @@ public class MainActivity extends FragmentContainerActivity {
     @Override
     public void initBusiness() {
         FragmentScheduler.replaceFragment(this, SplashFragment.class, null);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
 }

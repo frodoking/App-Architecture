@@ -35,8 +35,8 @@ public class MovieView extends UIView {
     private ServerConfiguration serverConfig;
     private List<Movie> movies = new ArrayList<>();
 
-    public MovieView(AndroidUIViewController presenter, LayoutInflater inflater, ViewGroup container, int layoutResId) {
-        super(presenter, inflater, container, layoutResId);
+    public MovieView(AndroidUIViewController presenter, LayoutInflater inflater, ViewGroup container) {
+        super(presenter, inflater, container, R.layout.layout_movie_list);
     }
 
     public void setServerConfig(ServerConfiguration serverConfig) {

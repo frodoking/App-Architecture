@@ -30,12 +30,7 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
 
     @Override
     public MovieView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {
-        return new MovieView(this, inflater, container, R.layout.layout_movie_list);
-    }
-
-    @Override
-    public MovieModel createModel() {
-        return new MovieModel(getMainController());
+        return new MovieView(this, inflater, container);
     }
 
     @Override
