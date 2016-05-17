@@ -5,43 +5,43 @@ package com.frodo.app.framework.config;
  * Created by frodo on 2015/7/6.
  */
 public class Environment {
-    private int id;
-    private String name;
-    private String url;
-    private String apiKey;
-    private boolean debug;
+    private int mId;
+    private String mName;
+    private String mUrl;
+    private String mApiKey;
+    private boolean isDebug;
 
     public Environment(int id, String name, String url, String apiKey, boolean debug) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
-        this.apiKey = apiKey;
-        this.debug = debug;
+        this.mId = id;
+        this.mName = name;
+        this.mUrl = url;
+        this.mApiKey = apiKey;
+        this.isDebug = debug;
     }
 
-    public String getName() {
-        return name;
+    public String getmName() {
+        return mName;
     }
 
-    public String getUrl() {
-        return url;
+    public String getmUrl() {
+        return mUrl;
     }
 
-    public String getApiKey() {
-        return apiKey;
+    public String getmApiKey() {
+        return mApiKey;
     }
 
     public boolean isDebug() {
-        return debug;
+        return isDebug;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Environment) {
             Environment env = (Environment) obj;
-            if (env.id == this.id && env.name.equals(this.name) && env.url.equals(this.url) && env.apiKey
-                    .equals(this.apiKey)
-                    && env.debug == this.debug) {
+            if (env.mId == this.mId && env.mName.equals(this.mName) && env.mUrl.equals(this.mUrl) && env.mApiKey
+                    .equals(this.mApiKey)
+                    && env.isDebug == this.isDebug) {
                 return true;
             }
         }

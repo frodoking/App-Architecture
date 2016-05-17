@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 
 import com.frodo.app.android.core.AndroidUIViewController;
 import com.frodo.app.android.core.UIView;
-import com.frodo.app.framework.controller.AbstractModel;
+import com.frodo.app.android.ui.activity.AbstractBaseActivity;
 import com.frodo.app.framework.controller.AbstractModel.SimpleModel;
 import com.frodo.app.framework.controller.IModel;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.controller.ModelFactory;
 import com.frodo.app.framework.log.Logger;
-import com.frodo.app.android.ui.activity.AbstractBaseActivity;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

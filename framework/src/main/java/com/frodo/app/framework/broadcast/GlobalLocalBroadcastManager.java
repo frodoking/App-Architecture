@@ -10,12 +10,12 @@ import java.util.Map;
  */
 public final class GlobalLocalBroadcastManager implements LocalBroadcastManager {
 
-    private final Map<String, List<MessageInterceptor>> map = new HashMap<>();
+    private final Map<String, List<MessageInterceptor>> mMap = new HashMap<>();
 
     @Override
     public void onBroadcast(String group, Object message) {
-        if (map.containsKey(group)) {
-            for (MessageInterceptor messageInterceptor : map.get(group)) {
+        if (mMap.containsKey(group)) {
+            for (MessageInterceptor messageInterceptor : mMap.get(group)) {
                 messageInterceptor.intercept(message);
             }
         }
@@ -23,8 +23,8 @@ public final class GlobalLocalBroadcastManager implements LocalBroadcastManager 
 
     @Override
     public void onBroadcastAll(Object message) {
-        for (String group : map.keySet()) {
-            for (MessageInterceptor messageInterceptor : map.get(group)) {
+        for (String group : mMap.keySet()) {
+            for (MessageInterceptor messageInterceptor : mMap.get(group)) {
                 messageInterceptor.intercept(message);
             }
         }
@@ -32,10 +32,10 @@ public final class GlobalLocalBroadcastManager implements LocalBroadcastManager 
 
     @Override
     public void unRegister(String group, MessageInterceptor listener) {
-        if (map.containsKey(group)) {
-            for (MessageInterceptor messageInterceptor : map.get(group)) {
+        if (mMap.containsKey(group)) {
+            for (MessageInterceptor messageInterceptor : mMap.get(group)) {
                 if (messageInterceptor.equals(listener)) {
-                    map.get(group).remove(listener);
+                    mMap.get(group).remove(listener);
                 }
             }
         }
@@ -43,26 +43,26 @@ public final class GlobalLocalBroadcastManager implements LocalBroadcastManager 
 
     @Override
     public void unRegisterGroup(String group) {
-        if (map.containsKey(group)) {
-            map.remove(group);
+        if (mMap.containsKey(group)) {
+            mMap.remove(group);
         }
     }
 
     @Override
     public void unRegisterAll() {
-        map.clear();
+        mMap.clear();
     }
 
     @Override
     public void register(String group, MessageInterceptor listener) {
-        if (map.containsKey(group)) {
-            if (!map.get(group).contains(listener)) {
-                map.get(group).add(listener);
+        if (mMap.containsKey(group)) {
+            if (!mMap.get(group).contains(listener)) {
+                mMap.get(group).add(listener);
             }
         } else {
             List<MessageInterceptor> list = new ArrayList<>();
             list.add(listener);
-            map.put(group, list);
+            mMap.put(group, list);
         }
     }
 }

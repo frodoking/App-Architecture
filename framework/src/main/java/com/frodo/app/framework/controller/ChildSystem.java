@@ -5,7 +5,7 @@ package com.frodo.app.framework.controller;
  * Created by frodo on 2015/6/20.
  */
 public interface ChildSystem {
-    IController getController();
+    IController getmController();
 
     String systemName();
 }

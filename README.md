@@ -23,6 +23,9 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 9. ModelFactory    业务工厂（实现IModel功能的所有业务操作类）
 10. PluginManager   插件化系统，主要对可扩展类的考虑。在一些特殊的系统中，可能存在ChildSystem级别的系统功能。需要继承PluginChildSystem来实现
 11. LogCollector    日志收集系统，针对所有日志做处理（开关，打印，本地保持，上传server等功能）
+12. BackgroundExecutor  定制线程池
+13. LocalBroadcastManager 子系统通信机制管理
+14. ExceptionHandler 异常处理
 
 ## App层
 
@@ -32,6 +35,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 2. App全局只有一个入口启动MainActivity同时也是唯一的一个Activity。MainActivity继承了FragmentContainerActivity，因此他是Fragment容器
 3. 所有页面都是Fragment实现，包括启动页面。主要利用support.v4包的FragmentManager来管理整个Fragment堆栈实现页面切换功能
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
+5. Model设计初衷是为了处理各种业务，Model和View的关系是多对多的关系。Model不依赖View，但是View依托于View。
 
 ## 架构图
 ![架构图](http://frodoking.github.io/img/App-Architecture.png)
@@ -48,12 +52,21 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 1. 依赖让代码指向混乱同时也给开发者造成结构的不清晰
 2. 事件总线思想很容易造成滥用的现象，就像广播一样，没有目的的注册和广播很容易导致内存泄露发生
 
+#### Quality
+
+1. CheckStyle
+2. Findbugs
+3. Pmd
+4. Lint
+(目前工程代码质量未严格把关，后续打算完善这一步)
+
 ## 第三方依赖
 1. 基础库guava
 2. 网络库okhttp
-3. 图片库glide
-4. 事件传递机制的Rxjava
-5. 内存泄露检测库leakcanary
+3. 数据解码库jackson
+4. 图片库fresco
+5. 事件传递机制的Rxjava
+6. 内存泄露检测库leakcanary
 
 ## 应用
 
@@ -65,9 +78,9 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
    
-   compile "com.github.frodoking:app-architecture-android:1.1.6-SNAPSHOT"
+   compile "com.github.frodoking:app-architecture-android:1.1.8-SNAPSHOT"
 ```
-目前该架构应用在[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)工程上
+目前该架构还未达到发布release的质量要求，暂时只发布snapshot版本。主要应用在[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)工程上。
 
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com

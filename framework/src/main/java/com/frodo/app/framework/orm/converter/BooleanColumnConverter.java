@@ -10,7 +10,7 @@ import com.frodo.app.framework.toolbox.TextUtils;
  * Date: 13-11-4
  * Time: 下午10:51
  */
-public class BooleanColumnConverter implements com.frodo.app.framework.orm.converter.ColumnConverter<Boolean> {
+public class BooleanColumnConverter implements ColumnConverter<Boolean> {
     @Override
     public Boolean getFieldValue(final Cursor cursor, int index) {
         return cursor.isNull(index) ? null : cursor.getInt(index) == 1;

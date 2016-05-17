@@ -2,7 +2,9 @@ package com.frodo.app.framework.cache;
 
 /**
  * An interface representing a E Cache.
- * Created by frodo on 2015/6/20.
+ * @param <K>
+ * @param <V>
+ *     Created by frodo on 2015/6/20.
  */
 public interface Cache<K, V> {
 
@@ -18,7 +20,7 @@ public interface Cache<K, V> {
      *
      * @return Type
      */
-    Type getType();
+    Type getmType();
 
     /**
      * Get an V by K.
