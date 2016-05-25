@@ -8,12 +8,12 @@ import com.frodo.app.framework.controller.MainController;
  */
 public abstract class AbstractExceptionHandler implements ExceptionHandler {
     private MainController mainController;
-    private Thread.UncaughtExceptionHandler mDefaultCrashHandler;
+    private Thread.UncaughtExceptionHandler defaultCrashHandler;
 
     public AbstractExceptionHandler(MainController controller) {
         this.mainController = controller;
 
-        mDefaultCrashHandler = Thread.getDefaultUncaughtExceptionHandler();
+        defaultCrashHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
@@ -25,8 +25,8 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         handle(e);
-        if (mDefaultCrashHandler != null) {
-            mDefaultCrashHandler.uncaughtException(t, e);
+        if (defaultCrashHandler != null) {
+            defaultCrashHandler.uncaughtException(t, e);
         }
     }
 }

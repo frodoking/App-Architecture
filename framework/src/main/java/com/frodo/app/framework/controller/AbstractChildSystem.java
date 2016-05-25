@@ -8,14 +8,14 @@ import com.google.common.base.Preconditions;
  */
 public abstract class AbstractChildSystem implements ChildSystem {
 
-    private IController mController;
+    private IController controller;
 
     public AbstractChildSystem(IController controller) {
-        this.mController = Preconditions.checkNotNull(controller, "MainController cannot be null");
+        this.controller = Preconditions.checkNotNull(controller, "MainController cannot be null");
     }
 
     public IController getController() {
-        return this.mController;
+        return this.controller;
     }
 
     @Override

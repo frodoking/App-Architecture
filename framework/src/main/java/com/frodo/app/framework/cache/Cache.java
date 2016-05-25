@@ -20,7 +20,7 @@ public interface Cache<K, V> {
      *
      * @return Type
      */
-    Type getmType();
+    Type getType();
 
     /**
      * Get an V by K.
