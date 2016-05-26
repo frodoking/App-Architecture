@@ -3,7 +3,7 @@ package com.frodo.app.android.simple;
 import android.content.res.Configuration;
 import android.widget.Toast;
 
-import com.frodo.app.android.core.toolbox.FragmentScheduler;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 
 /**

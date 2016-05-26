@@ -9,8 +9,7 @@ import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.UIView;
-import com.frodo.app.android.core.toolbox.FragmentScheduler;
-import com.frodo.app.android.ui.activity.FragmentContainerActivity;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.android.ui.fragment.AbstractBaseFragment;
 
 /**
@@ -35,8 +34,7 @@ public class SplashFragment extends AbstractBaseFragment {
                 ad.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentScheduler.removeFragment((FragmentContainerActivity) getActivity(), SplashFragment.this.getClass().getCanonicalName());
-                        FragmentScheduler.nextFragment((FragmentContainerActivity) getActivity(), MovieFragment.class, null);
+                        FragmentScheduler.doDirect(getActivity(), FragmentScheduler.SCHEMA + "/movie", true);
                     }
                 }, 5000);
             }

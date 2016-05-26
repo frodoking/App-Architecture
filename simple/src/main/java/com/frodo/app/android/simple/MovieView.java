@@ -15,11 +15,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.AndroidUIViewController;
 import com.frodo.app.android.core.UIView;
-import com.frodo.app.android.core.toolbox.FragmentScheduler;
 import com.frodo.app.android.core.toolbox.ScreenUtils;
 import com.frodo.app.android.simple.entity.Movie;
 import com.frodo.app.android.simple.entity.ServerConfiguration;
-import com.frodo.app.android.ui.activity.FragmentContainerActivity;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.framework.log.Logger;
 
 import java.util.ArrayList;
@@ -107,7 +106,7 @@ public class MovieView extends UIView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // only for test redirect function
-                FragmentScheduler.nextFragment((FragmentContainerActivity) getPresenter().getAndroidContext(), RedirectFragment.class, null);
+                FragmentScheduler.doDirect(getPresenter().getAndroidContext(), FragmentScheduler.SCHEMA + "/redirect");
             }
         });
     }
