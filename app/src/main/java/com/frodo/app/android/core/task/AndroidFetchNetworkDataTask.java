@@ -32,9 +32,9 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
     public String doBackgroundCall() throws HttpException {
         Response response = networkTransport.execute(request);
         try {
-            String s = ((ResponseBody)response.getBody()).string();
+            String s = ((ResponseBody) response.getBody()).string();
             Logger.fLog().tag(key()).i("Response String : " + s);
-            return  s;
+            return s;
         } catch (Exception e) {
             Logger.fLog().tag(key()).e("Response Exception : ", e);
             throw new HttpException(e);
@@ -60,7 +60,7 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
 
     @Override
     public String key() {
-        return getClass().getCanonicalName();
+        return getClass().getSimpleName();
     }
 
     public final Subscriber<String> getSubscriber() {

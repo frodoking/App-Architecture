@@ -5,11 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.frodo.android.app.simple.R;
-import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.android.simple.entity.Movie;
 import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.android.ui.fragment.StatedFragment;
@@ -34,32 +29,23 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
     }
 
     @Override
-    protected void onFirstTimeLaunched() {
+    public void onFirstTimeLaunched() {
         final ServerConfiguration serverConfiguration = (ServerConfiguration) getMainController().getConfig().serverConfig();
         getUIView().setServerConfig(serverConfiguration);
         loadMoviesWithRxjava();
     }
 
     @Override
-    protected void onSaveState(Bundle outState) {
-        List<Movie> movies = getModel().getMovies();
-        try {
-            outState.putString("moviesJson", new ObjectMapper().writeValueAsString(movies));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public void onSaveState(Bundle outState) {
+//        List<Movie> movies = getModel().getMovies();
+//        outState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) movies);
     }
 
     @Override
-    protected void onRestoreState(Bundle savedInstanceState) {
-        final ServerConfiguration serverConfiguration = (ServerConfiguration) getMainController().getConfig().serverConfig();
-        getUIView().setServerConfig(serverConfiguration);
-        if (savedInstanceState != null) {
-            String moviesJson = savedInstanceState.getString("moviesJson");
-            List<Movie> movies = JsonConverter.convert(moviesJson, new TypeReference<List<Movie>>() {
-            });
-            getUIView().showMovieList(movies);
-        }
+    public void onRestoreState(Bundle savedInstanceState) {
+//        List<Movie> movies = savedInstanceState.getParcelableArrayList("movies");
+        List<Movie> movies = getModel().getMovies();
+        getUIView().showMovieList(movies);
     }
 
     /**
@@ -74,28 +60,28 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
                 getModel().loadMoviesWithRxjava(subscriber);
             }
         }).subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                new Action1<List<Movie>>() {
-                    @Override
-                    public void call(List<Movie> result) {
-                        getUIView().showMovieList(result);
-                        getModel().setMovies(result);
-                    }
-                },
-                new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        if (getModel().isEnableCached()) {
-                            List<Movie> movies = getModel().getMoviesFromCache();
-                            if (movies != null) {
-                                getUIView().showMovieList(movies);
-                                return;
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Action1<List<Movie>>() {
+                            @Override
+                            public void call(List<Movie> result) {
+                                getUIView().showMovieList(result);
+                                getModel().setMovies(result);
+                            }
+                        },
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                if (getModel().isEnableCached()) {
+                                    List<Movie> movies = getModel().getMoviesFromCache();
+                                    if (movies != null) {
+                                        getUIView().showMovieList(movies);
+                                        return;
+                                    }
+                                }
+                                getUIView().showError(throwable.getMessage());
                             }
                         }
-                        getUIView().showError(throwable.getMessage());
-                    }
-                }
-        );
+                );
     }
 }

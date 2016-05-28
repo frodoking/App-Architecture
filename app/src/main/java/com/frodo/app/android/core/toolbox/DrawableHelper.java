@@ -70,7 +70,7 @@ public class DrawableHelper {
             throw new NullPointerException("É preciso chamar o método tint()");
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(mWrappedDrawable);
         } else {
             view.setBackgroundDrawable(mWrappedDrawable);

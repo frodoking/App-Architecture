@@ -1,6 +1,7 @@
 package com.frodo.app.android.simple;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.frodo.app.android.core.toolbox.ScreenUtils;
 import com.frodo.app.android.simple.entity.Movie;
 import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.android.ui.FragmentScheduler;
+import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 import com.frodo.app.framework.log.Logger;
 
 import java.util.ArrayList;
@@ -30,7 +32,6 @@ import java.util.List;
 public class MovieView extends UIView {
     private BaseAdapter movieAdapter;
     private GridView gridView;
-    private int[] imageSize;
     private ServerConfiguration serverConfig;
     private List<Movie> movies = new ArrayList<>();
 
@@ -44,7 +45,7 @@ public class MovieView extends UIView {
 
     @Override
     public void initView() {
-        imageSize = calcPosterSize();
+        int[] imageSize = calcPosterSize();
         gridView = (GridView) getRootView().findViewById(R.id.gridview);
 
         movieAdapter = new BaseAdapter() {
@@ -105,8 +106,10 @@ public class MovieView extends UIView {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // only for test redirect function
-                FragmentScheduler.doDirect(getPresenter().getAndroidContext(), FragmentScheduler.SCHEMA + "/redirect");
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("movie", movies.get(position));
+                FragmentScheduler.nextFragment((FragmentContainerActivity) getPresenter().getAndroidContext(), MovieDetailFragment.class, bundle);
+//                FragmentScheduler.doDirect(getPresenter().getAndroidContext(), FragmentScheduler.SCHEMA + "/redirect", bundle, false);
             }
         });
     }

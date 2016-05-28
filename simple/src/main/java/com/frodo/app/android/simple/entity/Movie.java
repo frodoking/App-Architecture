@@ -2,10 +2,12 @@ package com.frodo.app.android.simple.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * Created by frodo on 2016/3/3.
  */
-public class Movie {
+public class Movie implements Serializable {
     @JsonProperty("poster_path")
     public String posterPath;
     @JsonProperty("adult")

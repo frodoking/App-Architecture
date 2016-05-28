@@ -36,7 +36,7 @@ public class SimpleApplication extends MicroApplication {
         getMainController().getLogCollector().enableCollect(true);
         FragmentScheduler.register(FragmentScheduler.SCHEMA + "/splash", SplashFragment.class);
         FragmentScheduler.register(FragmentScheduler.SCHEMA + "/movie", MovieFragment.class);
-        FragmentScheduler.register(FragmentScheduler.SCHEMA + "/redirect", RedirectFragment.class);
+        FragmentScheduler.register(FragmentScheduler.SCHEMA + "/redirect", MovieDetailFragment.class);
     }
 
     @Override

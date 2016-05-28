@@ -39,9 +39,7 @@ public class FragmentScheduler {
 
     public static void doDirect(Context context, String schema, Bundle extra, boolean isFinishCurrentPage) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(SCHEMA));
-        if (extra!=null){
-            intent.putExtras(extra);
-        }
+        intent.putExtras(extra != null ? extra : new Bundle());
         intent.setData(Uri.parse(schema));
         context.startActivity(intent);
         if (isFinishCurrentPage && context instanceof Activity) {
@@ -50,15 +48,25 @@ public class FragmentScheduler {
     }
 
     public static void nextFragment(FragmentContainerActivity fragmentContainer,
+                                    Class<? extends Fragment> fragmentClass) {
+        nextFragment(fragmentContainer, fragmentClass, null);
+    }
+
+    public static void replaceFragment(FragmentContainerActivity fragmentContainer,
+                                       Class<? extends Fragment> fragmentClass) {
+        replaceFragment(fragmentContainer, fragmentClass, null);
+    }
+
+    public static void nextFragment(FragmentContainerActivity fragmentContainer,
                                     Class<? extends Fragment> fragmentClass,
                                     Bundle extra) {
-        fragmentContainer.addFragment(fragmentClass, extra);
+        fragmentContainer.addFragment(fragmentClass, extra != null ? extra : new Bundle());
     }
 
     public static void replaceFragment(FragmentContainerActivity fragmentContainer,
                                        Class<? extends Fragment> fragmentClass,
                                        Bundle extra) {
-        fragmentContainer.replaceFragment(fragmentClass, extra);
+        fragmentContainer.replaceFragment(fragmentClass, extra != null ? extra : new Bundle());
     }
 
     public static void removeFragment(FragmentContainerActivity fragmentContainer, String tag) {
