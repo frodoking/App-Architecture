@@ -2,15 +2,14 @@ package com.frodo.app.android.core.cache;
 
 import android.content.Context;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.framework.cache.Cache;
 import com.frodo.app.framework.cache.CacheSystem;
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.filesystem.FileSystem;
-import com.frodo.app.framework.orm.Database;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,14 +58,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     public <K, V> boolean put(K key, V value, Cache.Type type) {
         if (type.equals(Cache.Type.DISK)) {
             File file = fileSystem.createFile(key.toString());
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonString = null;
-            try {
-                jsonString = objectMapper.writeValueAsString(value);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            fileSystem.writeToFile(file, jsonString);
+            fileSystem.writeToFile(file, JsonConverter.toJson(value));
         }
         return false;
     }
