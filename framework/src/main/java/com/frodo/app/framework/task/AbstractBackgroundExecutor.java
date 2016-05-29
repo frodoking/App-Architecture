@@ -9,13 +9,13 @@ import java.util.concurrent.ExecutorService;
  */
 public abstract class AbstractBackgroundExecutor implements BackgroundExecutor {
 
-    private final ExecutorService mExecutorService;
+    private final ExecutorService executorService;
 
     public AbstractBackgroundExecutor(ExecutorService executorService) {
-        mExecutorService = Preconditions.checkNotNull(executorService, "executorService cannot be null");
+        this.executorService = Preconditions.checkNotNull(executorService, "executorService cannot be null");
     }
 
     public ExecutorService getExecutorService() {
-        return mExecutorService;
+        return executorService;
     }
 }

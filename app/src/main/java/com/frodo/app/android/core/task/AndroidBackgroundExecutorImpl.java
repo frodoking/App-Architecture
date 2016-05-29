@@ -64,7 +64,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
     }
 
-    private class NetworkCallRunner<R> implements Runnable , Comparable {
+    private class NetworkCallRunner<R> implements Runnable, Comparable {
 
         private final NetworkCallTask<R> mNetworkCallTask;
 

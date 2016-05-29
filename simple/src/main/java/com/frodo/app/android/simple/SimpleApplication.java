@@ -7,6 +7,7 @@ import com.frodo.app.android.core.exception.AndroidCrashHandler;
 import com.frodo.app.android.core.log.AndroidLogCollectorSystem;
 import com.frodo.app.android.core.network.AndroidNetworkSystem;
 import com.frodo.app.android.core.toolbox.ResourceManager;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.framework.config.Configuration;
 import com.frodo.app.framework.config.Environment;
 import com.frodo.app.framework.controller.IController;
@@ -33,6 +34,9 @@ public class SimpleApplication extends MicroApplication {
         super.init();
         Fresco.initialize(this);
         getMainController().getLogCollector().enableCollect(true);
+        FragmentScheduler.register(FragmentScheduler.SCHEMA + "/splash", SplashFragment.class);
+        FragmentScheduler.register(FragmentScheduler.SCHEMA + "/movie", MovieFragment.class);
+        FragmentScheduler.register(FragmentScheduler.SCHEMA + "/redirect", MovieDetailFragment.class);
     }
 
     @Override

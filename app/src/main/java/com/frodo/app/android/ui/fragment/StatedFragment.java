@@ -35,39 +35,21 @@ public abstract class StatedFragment<V extends UIView, M extends IModel> extends
         saveStateToArguments();
     }
 
-    protected void onFirstTimeLaunched() {
-    }
-
-    /**
-     * Like this : state.putString(text, tv1.getText().toString());
-     *
-     * @param outState
-     */
-    protected void onSaveState(Bundle outState) {
-    }
-
-    /**
-     * Like this: tv1.setText(savedState.getString(text));
-     *
-     * @param savedInstanceState
-     */
-    protected void onRestoreState(Bundle savedInstanceState) {
-    }
-
     private void saveStateToArguments() {
         if (getView() != null)
             savedState = saveState();
         if (savedState != null) {
             Bundle b = getArguments();
-            if (b != null)
-                b.putBundle(tag(), savedState);
+            if (b != null) {
+                b.putBundle("internalSavedViewState8954201239547", savedState);
+            }
         }
     }
 
     private boolean restoreStateFromArguments() {
         Bundle b = getArguments();
         if (b != null) {
-            savedState = b.getBundle(tag());
+            savedState = b.getBundle("internalSavedViewState8954201239547");
             if (savedState != null) {
                 restoreState();
                 return true;
@@ -76,15 +58,32 @@ public abstract class StatedFragment<V extends UIView, M extends IModel> extends
         return false;
     }
 
+    /**
+     * Restore Instance State Here
+     */
     private void restoreState() {
         if (savedState != null) {
             onRestoreState(savedState);
         }
     }
 
+    /**
+     * Save Instance State Here
+     *
+     * @return Bundle
+     */
     private Bundle saveState() {
         Bundle state = new Bundle();
         onSaveState(state);
         return state;
+    }
+
+    public void onFirstTimeLaunched() {
+    }
+
+    public void onRestoreState(Bundle savedInstanceState) {
+    }
+
+    public void onSaveState(Bundle outState) {
     }
 }

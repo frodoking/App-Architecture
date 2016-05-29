@@ -9,14 +9,15 @@ import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.UIView;
-import com.frodo.app.android.core.toolbox.FragmentScheduler;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
-import com.frodo.app.android.ui.fragment.AbstractBaseFragment;
+import com.frodo.app.android.ui.fragment.StatedFragment;
+import com.frodo.app.framework.controller.IModel;
 
 /**
  * Created by frodo on 2015/9/15.
  */
-public class SplashFragment extends AbstractBaseFragment {
+public class SplashFragment extends StatedFragment<UIView, IModel> {
     @Override
     public UIView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {
         return new UIView(this, inflater, container, R.layout.layout_splash) {
@@ -35,8 +36,8 @@ public class SplashFragment extends AbstractBaseFragment {
                 ad.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentScheduler.removeFragment((FragmentContainerActivity) getActivity(), SplashFragment.this.getClass().getCanonicalName());
-                        FragmentScheduler.nextFragment((FragmentContainerActivity) getActivity(), MovieFragment.class, null);
+//                        FragmentScheduler.doDirect(getAndroidContext(), FragmentScheduler.SCHEMA + "/movie", true);
+                        FragmentScheduler.replaceFragment((FragmentContainerActivity) getAndroidContext(), MovieFragment.class);
                     }
                 }, 5000);
             }
