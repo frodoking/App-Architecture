@@ -1,7 +1,7 @@
 package com.frodo.app.framework.net;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import com.google.common.base.Preconditions;
+
 import java.util.List;
 
 /**
@@ -19,23 +19,12 @@ public final class Response<ResponseBody> {
     private final ResponseBody body;
 
     public Response(String url, int status, String reason, List<Header> headers, ResponseBody body) {
-        if (url == null) {
-            throw new IllegalArgumentException("url == null");
-        }
-        if (status < 200) {
-            throw new IllegalArgumentException("Invalid status code: " + status);
-        }
-        if (reason == null) {
-            throw new IllegalArgumentException("reason == null");
-        }
-        if (headers == null) {
-            throw new IllegalArgumentException("headers == null");
-        }
+        this.url = Preconditions.checkNotNull(url, "url must not be null.");
+        Preconditions.checkState(status >= 200, "Invalid status code: " + status);
+        this.reason = Preconditions.checkNotNull(reason, "reason must not be null.");
+        this.headers = Preconditions.checkNotNull(headers, "headers must not be null.");
 
-        this.url = url;
         this.status = status;
-        this.reason = reason;
-        this.headers = Collections.unmodifiableList(new ArrayList<>(headers));
         this.body = body;
     }
 

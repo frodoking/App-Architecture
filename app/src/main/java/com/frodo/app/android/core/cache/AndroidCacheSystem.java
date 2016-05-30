@@ -1,6 +1,8 @@
 package com.frodo.app.android.core.cache;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +12,7 @@ import com.frodo.app.framework.cache.CacheSystem;
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.filesystem.FileSystem;
+import com.frodo.app.framework.orm.Database;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +28,8 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     private String cacheDir;
 
     private FileSystem fileSystem;
+    private SharedPreferences sharedPreferences;
+    private Database database;
 
     public AndroidCacheSystem(IController controller, String cacheDir) {
         super(controller);
@@ -32,6 +37,8 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
         this.cacheDir = cacheDir;
 
         this.fileSystem = controller.getFileSystem();
+        this.database = controller.getDatabase();
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -59,6 +66,12 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
         if (type.equals(Cache.Type.DISK)) {
             File file = fileSystem.createFile(key.toString());
             fileSystem.writeToFile(file, JsonConverter.toJson(value));
+            return true;
+        } else if (type.equals(Cache.Type.INTERNAL)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(key.toString(), value.toString());
+            editor.apply();
+            return true;
         }
         return false;
     }
@@ -75,12 +88,14 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
 
     @Override
     public boolean existCacheInInternal(String key) {
-        return false;
+        return sharedPreferences.contains(key);
     }
 
     @Override
     public <T> T findCacheFromInternal(String key, Type classType) {
-        return null;
+        if (existCacheInInternal(key))
+            return (T) sharedPreferences.getAll().get(key);
+        else return null;
     }
 
     @Override

@@ -11,8 +11,6 @@ import com.frodo.app.android.ui.fragment.StatedFragment;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -54,12 +52,7 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
     public void loadMoviesWithRxjava() {
         getModel().setEnableCached(true);
 
-        Observable.create(new Observable.OnSubscribe<List<Movie>>() {
-            @Override
-            public void call(Subscriber<? super List<Movie>> subscriber) {
-                getModel().loadMoviesWithRxjava(subscriber);
-            }
-        }).subscribeOn(Schedulers.io())
+        getModel().loadMoviesWithRxjava().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         new Action1<List<Movie>>() {

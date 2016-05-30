@@ -16,10 +16,10 @@ public interface NetworkInterceptor<R, V> extends Interceptor<R, V> {
         }
     }
 
-    class ResponseSuccessInterceptor implements NetworkInterceptor<String, Void> {
+    class ResponseSuccessInterceptor implements NetworkInterceptor<Response, Void> {
 
         @Override
-        public Void intercept(String result) {
+        public Void intercept(Response response) {
             return null;
         }
     }

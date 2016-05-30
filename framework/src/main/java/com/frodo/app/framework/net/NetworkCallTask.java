@@ -32,7 +32,7 @@ public abstract class NetworkCallTask<R> extends CallTask {
         if (!networkTransport.interceptorList().isEmpty()) {
             for (NetworkInterceptor interceptor : networkTransport.interceptorList()) {
                 if (interceptor instanceof NetworkInterceptor.ResponseSuccessInterceptor) {
-                    ((NetworkInterceptor.ResponseSuccessInterceptor) interceptor).intercept((String) result);
+                    ((NetworkInterceptor.ResponseSuccessInterceptor) interceptor).intercept((Response) result);
                 }
             }
         }

@@ -1,9 +1,12 @@
 package com.frodo.app.framework.net;
 
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +19,7 @@ public final class Request<RequestBody> {
     private String relativeUrl;
     private final List<Header> headers;
     private final RequestBody body;
-    private StringBuilder queryParams;
+    private Map<String, Object> queryParams;
 
     public Request(String method, String relativeUrl) {
         this(method, relativeUrl, null, null, null);
@@ -35,19 +38,19 @@ public final class Request<RequestBody> {
     }
 
     public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, RequestBody body) {
-        if (method == null) {
-            throw new NullPointerException("Method must not be null.");
-        }
-        if (relativeUrl == null) {
-            throw new NullPointerException("URL must not be null.");
-        }
-        this.method = method;
-        this.relativeUrl = relativeUrl;
+        this.method = Preconditions.checkNotNull(method, "Method must not be null.");
+        this.relativeUrl = Preconditions.checkNotNull(relativeUrl, "URL must not be null.");
 
         if (headers == null) {
-            this.headers = Collections.emptyList();
+            this.headers = Lists.newArrayList();
         } else {
             this.headers = headers;
+        }
+
+        if (params == null) {
+            this.queryParams = Maps.newHashMap();
+        } else {
+            this.queryParams = params;
         }
 
         this.body = body;
@@ -64,12 +67,7 @@ public final class Request<RequestBody> {
      * Target URL.
      */
     public String getUrl() {
-        StringBuilder url = new StringBuilder(relativeUrl);
-        StringBuilder queryParams = this.queryParams;
-        if (queryParams != null) {
-            url.append(queryParams);
-        }
-        return url.toString();
+        return relativeUrl + "?" + createParamString(this.queryParams);
     }
 
     /**
@@ -91,38 +89,29 @@ public final class Request<RequestBody> {
     }
 
     private void addQueryParam(String name, String value, boolean encodeName, boolean encodeValue) {
-        if (name == null) {
-            throw new IllegalArgumentException("Query param name must not be null.");
-        }
-        if (value == null) {
-            throw new IllegalArgumentException("Query param \"" + name + "\" value must not be null.");
-        }
+        Preconditions.checkNotNull(name, "Query param name must not be null.");
+        Preconditions.checkNotNull(value, "Query param \"" + name + "\" value must not be null.");
         try {
-            StringBuilder queryParams = this.queryParams;
-            if (queryParams == null) {
-                this.queryParams = queryParams = new StringBuilder();
-            }
-
-            if (queryParams.length() > 0) {
-                if (queryParams.charAt(queryParams.length() - 1) != '?') {
-                    queryParams.append('&');
-                }
-            } else {
-                queryParams.append('?');
-            }
-
-
             if (encodeName) {
                 name = URLEncoder.encode(name, "UTF-8");
             }
             if (encodeValue) {
                 value = URLEncoder.encode(value, "UTF-8");
             }
-            queryParams.append(name).append('=').append(value);
+
+            queryParams.put(name,value);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(
                     "Unable to convert query parameter \"" + name + "\" value to UTF-8: " + value, e);
         }
+    }
+
+    private static String createParamString(Map<String, Object> params) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : params.keySet()) {
+            sb.append(key).append('=').append(params.get(key).toString()).append("&");
+        }
+        return sb.substring(0, sb.length() - 1);
     }
 }
 
