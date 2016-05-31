@@ -43,7 +43,10 @@ public class MovieModel extends AbstractModel {
         return Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
             public void call(Subscriber<? super Response> subscriber) {
-                Request request = new Request("GET", Path.movie_popular);
+                Request request = new Request.Builder<ResponseBody>()
+                        .method("GET")
+                        .relativeUrl(Path.movie_popular)
+                        .build();
                 request.addQueryParam("page", "1");
                 request.addQueryParam("lang", "zh");
                 fetchNetworkDataTask = new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber);

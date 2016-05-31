@@ -25,7 +25,10 @@ public class ConfigurationModel extends AbstractModel {
 
     public ConfigurationModel(MainController controller) {
         super(controller);
-        Request request = new Request("GET", Path.configuration);
+        Request request = new Request.Builder<ResponseBody>()
+                .method("GET")
+                .relativeUrl(Path.configuration)
+                .build();
         fetchNetworkDataTask = new AndroidFetchNetworkDataTask(controller.getNetworkTransport(), request, new Subscriber<Response>() {
             @Override
             public void onCompleted() {

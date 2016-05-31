@@ -1,6 +1,7 @@
 package com.frodo.app.framework.net;
 
 
+import com.frodo.app.framework.toolbox.TextUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -20,22 +21,6 @@ public final class Request<RequestBody> {
     private final List<Header> headers;
     private final RequestBody body;
     private Map<String, Object> queryParams;
-
-    public Request(String method, String relativeUrl) {
-        this(method, relativeUrl, null, null, null);
-    }
-
-    public Request(String method, String relativeUrl, Map<String, Object> params) {
-        this(method, relativeUrl, params, null, null);
-    }
-
-    public Request(String method, String relativeUrl, List<Header> headers) {
-        this(method, relativeUrl, null, headers, null);
-    }
-
-    public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers) {
-        this(method, relativeUrl, params, headers, null);
-    }
 
     public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, RequestBody body) {
         this.method = Preconditions.checkNotNull(method, "Method must not be null.");
@@ -67,7 +52,12 @@ public final class Request<RequestBody> {
      * Target URL.
      */
     public String getUrl() {
-        return relativeUrl + "?" + createParamString(this.queryParams);
+        String paramString = createParamString(this.queryParams);
+        if (TextUtils.isEmpty(paramString)) {
+            return relativeUrl;
+        } else {
+            return relativeUrl + "?" + paramString;
+        }
     }
 
     /**
@@ -99,7 +89,7 @@ public final class Request<RequestBody> {
                 value = URLEncoder.encode(value, "UTF-8");
             }
 
-            queryParams.put(name,value);
+            queryParams.put(name, value);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(
                     "Unable to convert query parameter \"" + name + "\" value to UTF-8: " + value, e);
@@ -107,11 +97,52 @@ public final class Request<RequestBody> {
     }
 
     private static String createParamString(Map<String, Object> params) {
-        StringBuilder sb = new StringBuilder();
-        for (String key : params.keySet()) {
-            sb.append(key).append('=').append(params.get(key).toString()).append("&");
+        if (params == null || params.isEmpty()) {
+            return "";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (String key : params.keySet()) {
+                sb.append(key).append('=').append(params.get(key).toString()).append("&");
+            }
+            return sb.substring(0, sb.length() - 1);
         }
-        return sb.substring(0, sb.length() - 1);
+    }
+
+    public static class Builder<RequestBody> {
+        private String method;
+        private String relativeUrl;
+        private List<Header> headers;
+        private RequestBody body;
+        private Map<String, Object> queryParams;
+
+        public Request build() {
+            return new Request<RequestBody>(method, relativeUrl, queryParams, headers, body);
+        }
+
+        public Builder method(String method) {
+            this.method = method;
+            return this;
+        }
+
+        public Builder relativeUrl(String relativeUrl) {
+            this.relativeUrl = relativeUrl;
+            return this;
+        }
+
+        public Builder headers(List<Header> headers) {
+            this.headers = headers;
+            return this;
+        }
+
+        public Builder body(RequestBody body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder params(Map<String, Object> queryParams) {
+            this.queryParams = queryParams;
+            return this;
+        }
     }
 }
 

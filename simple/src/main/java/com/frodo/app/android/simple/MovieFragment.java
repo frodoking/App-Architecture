@@ -42,6 +42,10 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
     @Override
     public void onRestoreState(Bundle savedInstanceState) {
 //        List<Movie> movies = savedInstanceState.getParcelableArrayList("movies");
+
+        final ServerConfiguration serverConfiguration = (ServerConfiguration) getMainController().getConfig().serverConfig();
+        getUIView().setServerConfig(serverConfiguration);
+
         List<Movie> movies = getModel().getMovies();
         getUIView().showMovieList(movies);
     }
