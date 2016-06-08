@@ -22,8 +22,13 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
     private int minimumLogLevel = VERBOSE;
 
     public AndroidLogCollectorSystem(IController controller) {
+       this(controller, VERBOSE);
+    }
+
+    public AndroidLogCollectorSystem(IController controller, int minimumLogLevel) {
         super(controller);
-        logDir = controller.getFileSystem().getFilePath() + File.separator + "log";
+        this.logDir = controller.getFileSystem().getFilePath() + File.separator + "log";
+        this.minimumLogLevel = minimumLogLevel;
     }
 
     @Override
