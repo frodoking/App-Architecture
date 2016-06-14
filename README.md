@@ -79,7 +79,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
    
-   compile "com.github.frodoking:app-architecture-android:1.2.0-SNAPSHOT"
+   compile "com.github.frodoking:app-architecture-android:1.2.5-SNAPSHOT"
 ```
 
 ##### Gradle-RELEASE
@@ -98,7 +98,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 * 个人技术Blog：http://frodoking.github.io/
 
 #License
-Copyright 2015 Square, Inc.
+Copyright 2015 Frodo.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

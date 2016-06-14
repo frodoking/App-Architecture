@@ -20,6 +20,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.functions.Func1;
 
 /**
@@ -39,7 +40,7 @@ public class MovieModel extends AbstractModel {
         }
     }
 
-    public Observable<List<Movie>> loadMoviesWithRxjava() {
+    public Observable<List<Movie>> loadMoviesWithReactor() {
         return Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
             public void call(Subscriber<? super Response> subscriber) {
@@ -69,6 +70,17 @@ public class MovieModel extends AbstractModel {
                 return JsonConverter.convert(listString, new TypeReference<List<Movie>>() {
                 });
             }
+        }).doOnUnsubscribe(new Action0() {
+            @Override
+            public void call() {
+                fetchNetworkDataTask.terminate();
+                fetchNetworkDataTask = null;
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                fetchNetworkDataTask = null;
+            }
         });
     }
 
@@ -97,9 +109,5 @@ public class MovieModel extends AbstractModel {
         if (movieCache == null) {
             movieCache = new MovieCache(getMainController().getCacheSystem(), Cache.Type.DISK);
         }
-    }
-
-    @Override
-    public void initBusiness() {
     }
 }

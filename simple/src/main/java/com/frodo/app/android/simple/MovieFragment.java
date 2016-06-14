@@ -11,6 +11,7 @@ import com.frodo.app.android.ui.fragment.StatedFragment;
 
 import java.util.List;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -30,7 +31,7 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
     public void onFirstTimeLaunched() {
         final ServerConfiguration serverConfiguration = (ServerConfiguration) getMainController().getConfig().serverConfig();
         getUIView().setServerConfig(serverConfiguration);
-        loadMoviesWithRxjava();
+        loadMovies();
     }
 
     @Override
@@ -53,10 +54,9 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
     /**
      * Use RxJava for callback
      */
-    public void loadMoviesWithRxjava() {
+    public void loadMovies() {
         getModel().setEnableCached(true);
-
-        getModel().loadMoviesWithRxjava().subscribeOn(Schedulers.io())
+        Subscription subscription = getModel().loadMoviesWithReactor().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         new Action1<List<Movie>>() {
@@ -80,5 +80,7 @@ public class MovieFragment extends StatedFragment<MovieView, MovieModel> {
                             }
                         }
                 );
+//  TODO: 2016/6/14 can unsubscribe
+//        subscription.unsubscribe();
     }
 }

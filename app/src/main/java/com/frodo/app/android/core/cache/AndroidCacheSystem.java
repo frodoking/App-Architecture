@@ -77,13 +77,24 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     }
 
     @Override
-    public void evict(String key) {
+    public void evict(String key, Cache.Type type) {
+        if (type.equals(Cache.Type.DISK)) {
+            fileSystem.clearDirectory(new File(key));
+        } else if (type.equals(Cache.Type.INTERNAL)) {
+            sharedPreferences.edit().remove(key).apply();
+        }
+    }
+
+    @Override
+    public void evictAll(String key) {
         fileSystem.clearDirectory(new File(key));
+        sharedPreferences.edit().remove(key).apply();
     }
 
     @Override
     public void evictAll() {
-
+        fileSystem.clearDirectory(new File(getCacheDir()));
+        sharedPreferences.edit().clear().apply();
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.frodo.app.framework.task.AbstractBackgroundExecutor;
 import com.frodo.app.framework.task.BackgroundCallTask;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * Created by frodo on 2015/7/6.
@@ -19,13 +20,13 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
     }
 
     @Override
-    public <R> void execute(NetworkCallTask<R> runnable) {
-        getExecutorService().execute(new NetworkCallRunner<>(runnable));
+    public <R> Future<R> execute(NetworkCallTask<R> task) {
+        return (Future<R>) getExecutorService().submit(new NetworkCallRunner<>(task));
     }
 
     @Override
-    public <R> void execute(BackgroundCallTask<R> runnable) {
-        getExecutorService().execute(new BackgroundCallRunner<>(runnable));
+    public <R> Future<R> execute(BackgroundCallTask<R> task) {
+        return (Future<R>) getExecutorService().submit(new BackgroundCallRunner<R>(task));
     }
 
     private class BackgroundCallRunner<R> implements Runnable, Comparable {
