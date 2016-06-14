@@ -22,6 +22,11 @@ public abstract class AbstractModel implements IModel {
         return mainController;
     }
 
+    @Override
+    public void initBusiness() {
+        // do something
+    }
+
     public static class SimpleModel extends AbstractModel {
 
         public SimpleModel(MainController controller) {

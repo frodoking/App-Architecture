@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,5 +72,36 @@ public class FragmentScheduler {
 
     public static void removeFragment(FragmentContainerActivity fragmentContainer, String tag) {
         fragmentContainer.removeFragmentByTag(tag);
+    }
+
+    public static void nextFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
+                                                 Class<? extends Fragment> fragmentClass) {
+        nextFragmentWithUniqueTag(fragmentContainer, fragmentClass, null);
+    }
+
+    public static void replaceFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
+                                                    Class<? extends Fragment> fragmentClass) {
+        replaceFragment(fragmentContainer, fragmentClass, null);
+    }
+
+    public static void nextFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
+                                                 Class<? extends Fragment> fragmentClass,
+                                                 Bundle extra) {
+        fragmentContainer.addFragment(fragmentClass, fragmentClass.getCanonicalName() + '@' + System.nanoTime(), extra != null ? extra : new Bundle());
+    }
+
+    public static void replaceFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
+                                                    Class<? extends Fragment> fragmentClass,
+                                                    Bundle extra) {
+        fragmentContainer.replaceFragment(fragmentClass, fragmentClass.getCanonicalName() + '@' + System.nanoTime(), extra != null ? extra : new Bundle());
+    }
+
+    public static void removeFragmentsStartsWithUniqueTag(FragmentContainerActivity fragmentContainer, String tag) {
+        List<Fragment> fragments = fragmentContainer.getSupportFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment.getTag().toLowerCase().startsWith(tag.toLowerCase())) {
+                fragmentContainer.removeFragmentByTag(fragment.getTag());
+            }
+        }
     }
 }

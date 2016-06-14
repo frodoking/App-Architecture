@@ -8,14 +8,20 @@ import com.frodo.app.framework.cache.Cache;
 import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.net.Request;
+import com.frodo.app.framework.net.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Func1;
 
 /**
  * Created by frodo on 2015/4/2.
@@ -34,54 +40,48 @@ public class MovieModel extends AbstractModel {
         }
     }
 
-    public void loadMoviesWithRxjava(final Subscriber<? super List<Movie>> subscriber) {
-        Request request = new Request("GET", Path.movie_popular);
-        request.addQueryParam("page", "1");
-        request.addQueryParam("lang", "zh");
-        fetchNetworkDataTask = new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, new Subscriber<String>() {
-
+    public Observable<List<Movie>> loadMoviesWithReactor() {
+        return Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
-            public void onStart() {
-                super.onStart();
-                subscriber.onStart();
+            public void call(Subscriber<? super Response> subscriber) {
+                Request request = new Request.Builder<ResponseBody>()
+                        .method("GET")
+                        .relativeUrl(Path.movie_popular)
+                        .build();
+                request.addQueryParam("page", "1");
+                request.addQueryParam("lang", "zh");
+                fetchNetworkDataTask = new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber);
+                getMainController().getBackgroundExecutor().execute(fetchNetworkDataTask);
             }
-
+        }).map(new Func1<Response, List<Movie>>() {
             @Override
-            public void onCompleted() {
-                subscriber.onCompleted();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                subscriber.onError(e);
-            }
-
-            @Override
-            public void onNext(String s) {
+            public List<Movie> call(Response response) {
                 String listString = null;
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(((ResponseBody) response.getBody()).string());
                     Object resultsObj = jsonObject.opt("results");
                     if (resultsObj instanceof JSONArray) {
                         JSONArray jsonArray = (JSONArray) resultsObj;
                         listString = jsonArray.toString();
                     }
-                } catch (JSONException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
-                    subscriber.onError(e);
-                    return;
                 }
-
-                if (listString != null) {
-                    List<Movie> movies = JsonConverter.convert(listString, new TypeReference<List<Movie>>() {
-                    });
-                    subscriber.onNext(movies);
-                } else {
-                    subscriber.onNext(null);
-                }
+                return JsonConverter.convert(listString, new TypeReference<List<Movie>>() {
+                });
+            }
+        }).doOnUnsubscribe(new Action0() {
+            @Override
+            public void call() {
+                fetchNetworkDataTask.terminate();
+                fetchNetworkDataTask = null;
+            }
+        }).doOnCompleted(new Action0() {
+            @Override
+            public void call() {
+                fetchNetworkDataTask = null;
             }
         });
-        getMainController().getBackgroundExecutor().execute(fetchNetworkDataTask);
     }
 
     public List<Movie> getMovies() {
@@ -109,9 +109,5 @@ public class MovieModel extends AbstractModel {
         if (movieCache == null) {
             movieCache = new MovieCache(getMainController().getCacheSystem(), Cache.Type.DISK);
         }
-    }
-
-    @Override
-    public void initBusiness() {
     }
 }

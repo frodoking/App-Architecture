@@ -8,7 +8,11 @@ import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.net.Request;
+import com.frodo.app.framework.net.Response;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import rx.Subscriber;
 
 /**
@@ -21,8 +25,11 @@ public class ConfigurationModel extends AbstractModel {
 
     public ConfigurationModel(MainController controller) {
         super(controller);
-        Request request = new Request("GET", Path.configuration);
-        fetchNetworkDataTask = new AndroidFetchNetworkDataTask(controller.getNetworkTransport(), request, new Subscriber<String>() {
+        Request request = new Request.Builder<ResponseBody>()
+                .method("GET")
+                .relativeUrl(Path.configuration)
+                .build();
+        fetchNetworkDataTask = new AndroidFetchNetworkDataTask(controller.getNetworkTransport(), request, new Subscriber<Response>() {
             @Override
             public void onCompleted() {
             }
@@ -32,9 +39,13 @@ public class ConfigurationModel extends AbstractModel {
             }
 
             @Override
-            public void onNext(String result) {
-                serverConfiguration = JsonConverter.convert(result, ServerConfiguration.class);
-                setTmdbConfiguration(serverConfiguration);
+            public void onNext(Response response) {
+                try {
+                    serverConfiguration = JsonConverter.convert(((ResponseBody) response.getBody()).string(), ServerConfiguration.class);
+                    setTmdbConfiguration(serverConfiguration);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
