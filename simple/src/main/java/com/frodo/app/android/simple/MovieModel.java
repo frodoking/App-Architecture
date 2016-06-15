@@ -74,12 +74,11 @@ public class MovieModel extends AbstractModel {
             @Override
             public void call() {
                 fetchNetworkDataTask.terminate();
-                fetchNetworkDataTask = null;
             }
         }).doOnCompleted(new Action0() {
             @Override
             public void call() {
-                fetchNetworkDataTask = null;
+//                fetchNetworkDataTask = null;
             }
         });
     }

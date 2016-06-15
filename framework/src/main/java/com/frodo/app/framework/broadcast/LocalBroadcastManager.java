@@ -7,27 +7,23 @@ import com.frodo.app.framework.controller.Interceptor;
  */
 public interface LocalBroadcastManager {
     /**
-     *
      * @param group
      * @param message
      */
     void onBroadcast(String group, Object message);
 
     /**
-     *
      * @param message
      */
     void onBroadcastAll(Object message);
 
     /**
-     *
      * @param group
      * @param listener
      */
     void unRegister(String group, MessageInterceptor listener);
 
     /**
-     *
      * @param group
      */
     void unRegisterGroup(String group);
@@ -39,7 +35,6 @@ public interface LocalBroadcastManager {
     void unRegisterAll();
 
     /**
-     *
      * @param group
      * @param listener
      */

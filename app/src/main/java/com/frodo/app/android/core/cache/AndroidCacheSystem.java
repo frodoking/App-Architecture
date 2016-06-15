@@ -33,7 +33,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
 
     public AndroidCacheSystem(IController controller, String cacheDir) {
         super(controller);
-        this.context = (Context) controller.getMicroContext();
+        this.context = (Context) controller.getMicroContext().getContext();
         this.cacheDir = cacheDir;
 
         this.fileSystem = controller.getFileSystem();

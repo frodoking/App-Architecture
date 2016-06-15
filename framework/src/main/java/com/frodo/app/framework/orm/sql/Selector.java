@@ -123,9 +123,9 @@ public class Selector {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append("SELECT ")
-              .append("*")
-              .append(" FROM ")
-              .append(tableName);
+                .append("*")
+                .append(" FROM ")
+                .append(tableName);
         if (whereBuilder != null && whereBuilder.getWhereItemSize() > 0) {
             result.append(" WHERE ").append(whereBuilder.toString());
         }

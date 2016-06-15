@@ -22,7 +22,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
     private int minimumLogLevel = VERBOSE;
 
     public AndroidLogCollectorSystem(IController controller) {
-       this(controller, VERBOSE);
+        this(controller, VERBOSE);
     }
 
     public AndroidLogCollectorSystem(IController controller, int minimumLogLevel) {

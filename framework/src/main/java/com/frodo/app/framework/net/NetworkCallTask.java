@@ -12,6 +12,7 @@ public abstract class NetworkCallTask<R> extends CallTask {
     protected Request request;
 
     protected NetworkCallTask(NetworkTransport networkTransport, Request request) {
+        super();
         this.networkTransport = networkTransport;
         this.request = request;
     }

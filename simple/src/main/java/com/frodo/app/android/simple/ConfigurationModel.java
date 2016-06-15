@@ -7,44 +7,48 @@ import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.MainController;
+import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
 
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by frodo on 2015/7/24.
  */
 public class ConfigurationModel extends AbstractModel {
 
-    private AndroidFetchNetworkDataTask fetchNetworkDataTask;
+    private Observable<ServerConfiguration> observable;
     private ServerConfiguration serverConfiguration;
 
     public ConfigurationModel(MainController controller) {
         super(controller);
-        Request request = new Request.Builder<ResponseBody>()
-                .method("GET")
-                .relativeUrl(Path.configuration)
-                .build();
-        fetchNetworkDataTask = new AndroidFetchNetworkDataTask(controller.getNetworkTransport(), request, new Subscriber<Response>() {
-            @Override
-            public void onCompleted() {
-            }
 
+        observable = Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
-            public void onError(Throwable e) {
+            public void call(Subscriber<? super Response> subscriber) {
+                Request request = new Request.Builder<ResponseBody>()
+                        .method("GET")
+                        .relativeUrl(Path.configuration)
+                        .build();
+                getMainController().getBackgroundExecutor().execute(new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber));
             }
-
+        }).map(new Func1<Response, ServerConfiguration>() {
             @Override
-            public void onNext(Response response) {
+            public ServerConfiguration call(Response response) {
                 try {
-                    serverConfiguration = JsonConverter.convert(((ResponseBody) response.getBody()).string(), ServerConfiguration.class);
-                    setTmdbConfiguration(serverConfiguration);
+                    return JsonConverter.convert(((ResponseBody) response.getBody()).string(), ServerConfiguration.class);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return null;
                 }
             }
         });
@@ -68,12 +72,14 @@ public class ConfigurationModel extends AbstractModel {
     }
 
     @Override
-    public String name() {
-        return "ConfigurationModel";
-    }
-
-    @Override
     public void initBusiness() {
-        getMainController().getBackgroundExecutor().execute(fetchNetworkDataTask);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ServerConfiguration>() {
+                    @Override
+                    public void call(ServerConfiguration serverConfiguration) {
+                        setTmdbConfiguration(serverConfiguration);
+                    }
+                });
     }
 }
