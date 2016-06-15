@@ -41,7 +41,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
 
     public AndroidNetworkSystem(IController controller, HttpModule httpModule) {
         super(controller);
-        this.context = (Context) controller.getMicroContext();
+        this.context = (Context) controller.getMicroContext().getContext();
         if (httpModule == null) {
             this.httpModule = new ManifestParser(context).parse();
         } else {

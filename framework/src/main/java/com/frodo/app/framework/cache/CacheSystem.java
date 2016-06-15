@@ -58,13 +58,14 @@ public interface CacheSystem extends ChildSystem {
     /**
      * evict
      *
-     * @param key {@link String}
+     * @param key  {@link String}
      * @param type {@link Cache.Type}
      */
     void evict(String key, Cache.Type type);
 
     /**
      * evict all by key
+     *
      * @param key {@link String}
      */
     void evictAll(String key);

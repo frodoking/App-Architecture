@@ -7,7 +7,8 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
-import com.frodo.app.android.MicroApplication;
+import com.frodo.app.android.ApplicationDelegation;
+import com.frodo.app.android.MicroContextLoader;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.log.Logger;
 
@@ -21,7 +22,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        controller = ((MicroApplication) getApplication()).getMainController();
+        controller = ((ApplicationDelegation) getApplication()).getMainController();
         Logger.fLog().tag(tag() + LIFECYCLE).i("onCreate");
         init();
     }

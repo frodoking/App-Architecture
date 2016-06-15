@@ -8,7 +8,7 @@ package com.frodo.app.framework.controller;
  * Created by frodo on 2015/4/1.
  */
 public interface IModel {
-    String MODEL_UNKNOWN = "model_unknown";
+    String MODEL_DEFAULT = AbstractModel.SimpleModel.class.getSimpleName();
 
     String name();
 

@@ -7,6 +7,7 @@ import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.task.AbstractBackgroundExecutor;
 import com.frodo.app.framework.task.BackgroundCallTask;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -21,15 +22,15 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
     @Override
     public <R> Future<R> execute(NetworkCallTask<R> task) {
-        return (Future<R>) getExecutorService().submit(new NetworkCallRunner<>(task));
+        return  getExecutorService().submit(new NetworkCallRunner<>(task));
     }
 
     @Override
     public <R> Future<R> execute(BackgroundCallTask<R> task) {
-        return (Future<R>) getExecutorService().submit(new BackgroundCallRunner<R>(task));
+        return  getExecutorService().submit(new BackgroundCallRunner<>(task));
     }
 
-    private class BackgroundCallRunner<R> implements Runnable, Comparable {
+    private static class BackgroundCallRunner<R> implements Callable<R>, Comparable {
         private final BackgroundCallTask<R> mBackgroundCallTask;
 
         BackgroundCallRunner(BackgroundCallTask<R> task) {
@@ -37,23 +38,24 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
 
         @Override
-        public final void run() {
+        public R call() throws Exception {
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
             if (mBackgroundCallTask.isCancelled()) {
-                return;
+                return null;
             }
             mBackgroundCallTask.preExecute();
 
             if (mBackgroundCallTask.isCancelled()) {
-                return;
+                return null;
             }
             R result = mBackgroundCallTask.runAsync();
 
             if (mBackgroundCallTask.isCancelled()) {
-                return;
+                return null;
             }
             mBackgroundCallTask.postExecute(result);
+            return result;
         }
 
         @Override
@@ -65,7 +67,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
     }
 
-    private class NetworkCallRunner<R> implements Runnable, Comparable {
+    private class NetworkCallRunner<R> implements Callable<R>, Comparable {
 
         private final NetworkCallTask<R> mNetworkCallTask;
 
@@ -74,35 +76,30 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
 
         @Override
-        public final void run() {
+        public R call() throws Exception {
             android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
             if (mNetworkCallTask.isCancelled()) {
-                return;
+                return null;
             }
-            mNetworkCallTask.onPreCall();
-
             R result = null;
-            HttpException httpException = null;
-
             try {
+                mNetworkCallTask.onPreCall();
                 if (mNetworkCallTask.isCancelled()) {
-                    return;
+                    return null;
                 }
                 result = mNetworkCallTask.doBackgroundCall();
-            } catch (HttpException re) {
-                httpException = re;
-            }
-
-            if (mNetworkCallTask.isCancelled()) {
-                return;
-            }
-
-            if (result != null) {
+                if (mNetworkCallTask.isCancelled()) {
+                    return null;
+                }
                 mNetworkCallTask.onSuccess(result);
-            } else if (httpException != null) {
+            } catch (HttpException httpException) {
+                if (mNetworkCallTask.isCancelled()) {
+                    return null;
+                }
                 mNetworkCallTask.onError(httpException);
             }
             mNetworkCallTask.onFinished();
+            return result;
         }
 
         @Override

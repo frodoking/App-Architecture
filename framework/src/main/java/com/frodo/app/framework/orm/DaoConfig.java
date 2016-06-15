@@ -18,7 +18,7 @@ public final class DaoConfig {
         this.context = context;
     }
 
-    public MicroContext getContext() {
+    public MicroContext getMicroContext() {
         return context;
     }
 

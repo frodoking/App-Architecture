@@ -29,6 +29,7 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<Response> {
 
     @Override
     public Response doBackgroundCall() throws HttpException {
+        Logger.fLog().tag(key()).i("doBackgroundCall");
         try {
             return networkTransport.execute(request);
         } catch (Exception e) {
@@ -57,9 +58,5 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<Response> {
     @Override
     public String key() {
         return getClass().getSimpleName();
-    }
-
-    public final Subscriber<? super Response> getSubscriber() {
-        return subscriber;
     }
 }

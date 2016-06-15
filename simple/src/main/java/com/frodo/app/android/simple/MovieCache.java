@@ -49,7 +49,6 @@ public class MovieCache extends AbstractCache<String, List<Movie>> {
 
     @Override
     public void evictAll() {
-        getCacheSystem().evict("");
     }
 
     private String createAbsoluteKey(String relativeKey) {

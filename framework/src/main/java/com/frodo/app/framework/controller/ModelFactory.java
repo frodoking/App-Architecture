@@ -55,7 +55,7 @@ public final class ModelFactory {
             } catch (NoSuchMethodException e) {
                 Logger.fLog().tag("ModelFactory").e("getOrCreateIfAbsent", e);
             }
-            return (M) getOrCreateIfAbsent("default", AbstractModel.SimpleModel.class, mainController);
+            return (M) getOrCreateIfAbsent(IModel.MODEL_DEFAULT, AbstractModel.SimpleModel.class, mainController);
         }
     }
 
