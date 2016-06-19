@@ -42,6 +42,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 
 ## Simple工程
 Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)工程
+另外，此框架在另一个工程的完整应用是 [GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient) 工程
 
 ## 注
 
