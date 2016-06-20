@@ -58,12 +58,12 @@ public class OkHttpModule implements HttpModule {
     public Response execute(Request request) throws HttpException {
         try {
             return parseResponse(client.newCall(createRequest(this.options.apiUrl, request)).execute());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new HttpException(e);
         }
     }
 
-    static okhttp3.Request createRequest(String apiUrl, Request<RequestBody> request) {
+    private static okhttp3.Request createRequest(String apiUrl, Request<RequestBody> request) {
         okhttp3.Request.Builder builder = new okhttp3.Request.Builder()
                 .url(apiUrl + request.getUrl())
                 .method(request.getMethod(), request.getBody());
@@ -81,7 +81,7 @@ public class OkHttpModule implements HttpModule {
         return builder.build();
     }
 
-    static Response<ResponseBody> parseResponse(okhttp3.Response response) throws IOException {
+    private static Response<ResponseBody> parseResponse(okhttp3.Response response) throws IOException {
         return new Response<>(response.request().url().url().getPath(), response.code(), response.message(),
                 createHeaders(response.headers()), response.body());
     }

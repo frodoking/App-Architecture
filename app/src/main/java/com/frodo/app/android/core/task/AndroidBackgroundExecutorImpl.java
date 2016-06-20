@@ -2,7 +2,6 @@ package com.frodo.app.android.core.task;
 
 import android.os.Process;
 
-import com.frodo.app.framework.exception.HttpException;
 import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.task.AbstractBackgroundExecutor;
 import com.frodo.app.framework.task.BackgroundCallTask;
@@ -22,12 +21,12 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
 
     @Override
     public <R> Future<R> execute(NetworkCallTask<R> task) {
-        return  getExecutorService().submit(new NetworkCallRunner<>(task));
+        return getExecutorService().submit(new NetworkCallRunner<>(task));
     }
 
     @Override
     public <R> Future<R> execute(BackgroundCallTask<R> task) {
-        return  getExecutorService().submit(new BackgroundCallRunner<>(task));
+        return getExecutorService().submit(new BackgroundCallRunner<>(task));
     }
 
     private static class BackgroundCallRunner<R> implements Callable<R>, Comparable {
@@ -81,23 +80,20 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
             if (mNetworkCallTask.isCancelled()) {
                 return null;
             }
-            R result = null;
-            try {
-                mNetworkCallTask.onPreCall();
-                if (mNetworkCallTask.isCancelled()) {
-                    return null;
-                }
-                result = mNetworkCallTask.doBackgroundCall();
-                if (mNetworkCallTask.isCancelled()) {
-                    return null;
-                }
-                mNetworkCallTask.onSuccess(result);
-            } catch (HttpException httpException) {
-                if (mNetworkCallTask.isCancelled()) {
-                    return null;
-                }
-                mNetworkCallTask.onError(httpException);
+            mNetworkCallTask.onPreCall();
+
+            if (mNetworkCallTask.isCancelled()) {
+                return null;
             }
+            R result = mNetworkCallTask.doBackgroundCall();
+
+            if (mNetworkCallTask.isCancelled()) {
+                return null;
+            }
+            if (result != null) {
+                mNetworkCallTask.onSuccess(result);
+            }
+
             mNetworkCallTask.onFinished();
             return result;
         }

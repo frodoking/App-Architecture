@@ -25,7 +25,10 @@ subprojects { project ->
         jcenter()
         mavenCentral()
         maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots/"
+            url getProperty('LOCAL_REPOSITORY_URL')
+        }
+        maven {
+            url getProperty('SNAPSHOT_REPOSITORY_URL')
         }
     }
 

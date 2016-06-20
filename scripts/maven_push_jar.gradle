@@ -1,40 +1,51 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-def isReleaseBuild() {
-    return VERSION_NAME.contains("SNAPSHOT") == false
+def isLocalBuild() {
+    return getProperty('VERSION_NAME').toString().contains("LOCAL")
 }
 
-def getReleaseRepositoryUrl() {
-    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
-            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+def isReleaseBuild() {
+    return getProperty('VERSION_NAME').toString().contains("SNAPSHOT")
+}
+
+def getLocalRepositoryUrl() {
+    return getProperty('LOCAL_REPOSITORY_URL')
 }
 
 def getSnapshotRepositoryUrl() {
-    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
-            : "https://oss.sonatype.org/content/repositories/snapshots/"
+    return getProperty('SNAPSHOT_REPOSITORY_URL')
+}
+
+def getDebugRepositoryUrl() {
+    return isLocalBuild() ? getLocalRepositoryUrl() : getSnapshotRepositoryUrl()
+}
+
+def getReleaseRepositoryUrl() {
+    return getProperty('RELEASE_REPOSITORY_URL')
 }
 
 def getRepositoryUsername() {
-    return hasProperty('MAVEN_USERNAME') ? MAVEN_USERNAME : ""
+    return hasProperty('MAVEN_USERNAME') ? getProperty('MAVEN_USERNAME') : ""
 }
 
 def getRepositoryPassword() {
-    return hasProperty('MAVEN_PASSWORD') ? MAVEN_PASSWORD : ""
+    return hasProperty('MAVEN_PASSWORD') ? getProperty('MAVEN_PASSWORD') : ""
 }
 
 uploadArchives {
     repositories {
         mavenDeployer {
+            configurePOM(pom)
+
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: getReleaseRepositoryUrl()) {
                 authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
             }
-            snapshotRepository(url: getSnapshotRepositoryUrl()) {
+            snapshotRepository(url: getDebugRepositoryUrl()) {
                 authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
             }
-            configurePOM(pom)
         }
     }
 }
@@ -63,42 +74,42 @@ signing {
 
 private configurePOM(def pom) {
     pom.project {
-        groupId POM_GROUP_ID
-        artifactId POM_ARTIFACT_ID
-        version VERSION_NAME
-        name POM_NAME
-        packaging POM_PACKAGING
-        description POM_DESCRIPTION
-        url POM_URL
-        inceptionYear POM_INCEPTION_YEAR
+        groupId getProperty('POM_GROUP_ID')
+        artifactId getProperty('POM_ARTIFACT_ID')
+        version getProperty('VERSION_NAME')
+        name getProperty('POM_NAME')
+        packaging getProperty('POM_PACKAGING')
+        description getProperty('POM_DESCRIPTION')
+        url getProperty('POM_URL')
+        inceptionYear getProperty('POM_INCEPTION_YEAR')
 
         scm {
-            url POM_SCM_URL
-            connection POM_SCM_CONNECTION
-            developerConnection POM_SCM_DEV_CONNECTION
+            url getProperty('POM_SCM_URL')
+            connection getProperty('POM_SCM_CONNECTION')
+            developerConnection getProperty('POM_SCM_DEV_CONNECTION')
         }
 
         licenses {
             license {
-                name POM_LICENCE_NAME
-                url POM_LICENCE_URL
-                distribution POM_LICENCE_DIST
-                comments POM_LICENCE_COMMENTS
+                name getProperty('POM_LICENCE_NAME')
+                url getProperty('POM_LICENCE_URL')
+                distribution getProperty('POM_LICENCE_DIST')
+                comments getProperty('POM_LICENCE_COMMENTS')
             }
         }
 
         developers {
             developer {
-                id POM_DEVELOPER_ID
-                name POM_DEVELOPER_NAME
-                email POM_DEVELOPER_EMAIL
-                url POM_DEVELOPER_URL
+                id getProperty('POM_DEVELOPER_ID')
+                name getProperty('POM_DEVELOPER_NAME')
+                email getProperty('POM_DEVELOPER_EMAIL')
+                url getProperty('POM_DEVELOPER_URL')
             }
         }
 
         issueManagement {
-            system POM_ISSUE_MANAGEMENT_SYSTEM
-            url POM_ISSUE_MANAGEMENT_URL
+            system getProperty('POM_ISSUE_MANAGEMENT_SYSTEM')
+            url getProperty('POM_ISSUE_MANAGEMENT_URL')
         }
     }
 }

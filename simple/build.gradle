@@ -46,5 +46,5 @@ android {
 dependencies {
     compile libraries.rxandroid
 //    compile project(':app')
-    compile "com.github.frodoking:app-architecture-android:1.2.6-SNAPSHOT"
+    compile "com.github.frodoking:app-architecture-android:1.2.8-LOCAL-SNAPSHOT"
 }

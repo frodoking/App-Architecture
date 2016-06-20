@@ -27,7 +27,7 @@ public abstract class NetworkCallTask<R> extends CallTask {
         }
     }
 
-    public abstract R doBackgroundCall() throws HttpException;
+    public abstract R doBackgroundCall();
 
     public void onSuccess(R result) {
         if (!networkTransport.interceptorList().isEmpty()) {
