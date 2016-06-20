@@ -22,7 +22,7 @@ public final class Request<RequestBody> {
     private final RequestBody body;
     private Map<String, Object> queryParams;
 
-    public Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, RequestBody body) {
+    private Request(String method, String relativeUrl, Map<String, Object> params, List<Header> headers, RequestBody body) {
         this.method = Preconditions.checkNotNull(method, "Method must not be null.");
         this.relativeUrl = Preconditions.checkNotNull(relativeUrl, "URL must not be null.");
 
@@ -75,10 +75,10 @@ public final class Request<RequestBody> {
     }
 
     public void addQueryParam(String name, String value) {
-        addQueryParam(name, value, false, true);
+        addQueryParam(name, value, false, false);
     }
 
-    private void addQueryParam(String name, String value, boolean encodeName, boolean encodeValue) {
+    public void addQueryParam(String name, String value, boolean encodeName, boolean encodeValue) {
         Preconditions.checkNotNull(name, "Query param name must not be null.");
         Preconditions.checkNotNull(value, "Query param \"" + name + "\" value must not be null.");
         try {

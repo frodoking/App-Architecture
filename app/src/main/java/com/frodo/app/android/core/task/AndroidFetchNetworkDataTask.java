@@ -1,7 +1,6 @@
 package com.frodo.app.android.core.task;
 
 import com.frodo.app.framework.exception.HttpException;
-import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
@@ -28,13 +27,12 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<Response> {
     }
 
     @Override
-    public Response doBackgroundCall() throws HttpException {
-        Logger.fLog().tag(key()).i("doBackgroundCall");
+    public Response doBackgroundCall() {
         try {
             return networkTransport.execute(request);
-        } catch (Exception e) {
-            Logger.fLog().tag(key()).e("Response Exception : ", e);
-            throw new HttpException(e);
+        } catch (HttpException e) {
+            onError(e);
+            return null;
         }
     }
 
