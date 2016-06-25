@@ -79,7 +79,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
    
-   compile "com.github.frodoking:app-architecture-android:1.2.5-SNAPSHOT"
+   compile "com.github.frodoking:app-architecture-android:1.2.9-SNAPSHOT"
 ```
 
 ##### Gradle-RELEASE
