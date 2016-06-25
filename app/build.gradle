@@ -17,7 +17,6 @@ android {
         htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
         xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
     }
-    buildToolsVersion '23.0.3'
 }
 
 dependencies {
