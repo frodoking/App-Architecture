@@ -23,6 +23,11 @@ public abstract class AbstractModel implements IModel {
     }
 
     @Override
+    public final ModelFactory getModelFactory() {
+        return getMainController().getModelFactory();
+    }
+
+    @Override
     public void initBusiness() {
         // do something
     }

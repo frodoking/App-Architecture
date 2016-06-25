@@ -14,5 +14,7 @@ public interface IModel {
 
     MainController getMainController();
 
+    ModelFactory getModelFactory();
+
     void initBusiness();
 }

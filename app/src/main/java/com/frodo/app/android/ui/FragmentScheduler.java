@@ -48,59 +48,53 @@ public class FragmentScheduler {
         }
     }
 
-    public static void nextFragment(FragmentContainerActivity fragmentContainer,
-                                    Class<? extends Fragment> fragmentClass) {
-        nextFragment(fragmentContainer, fragmentClass, null);
+    public static void nextFragment(Context context, Class<? extends Fragment> fragmentClass) {
+        nextFragment(context, fragmentClass, null);
     }
 
-    public static void replaceFragment(FragmentContainerActivity fragmentContainer,
-                                       Class<? extends Fragment> fragmentClass) {
-        replaceFragment(fragmentContainer, fragmentClass, null);
+    public static void replaceFragment(Context context, Class<? extends Fragment> fragmentClass) {
+        replaceFragment(context, fragmentClass, null);
     }
 
-    public static void nextFragment(FragmentContainerActivity fragmentContainer,
-                                    Class<? extends Fragment> fragmentClass,
-                                    Bundle extra) {
-        fragmentContainer.addFragment(fragmentClass, extra != null ? extra : new Bundle());
+    public static void nextFragment(Context context, Class<? extends Fragment> fragmentClass, Bundle extra) {
+        if (!(context instanceof FragmentContainerActivity)) throw new AssertionError();
+        ((FragmentContainerActivity) context).addFragment(fragmentClass, extra != null ? extra : new Bundle());
     }
 
-    public static void replaceFragment(FragmentContainerActivity fragmentContainer,
-                                       Class<? extends Fragment> fragmentClass,
-                                       Bundle extra) {
-        fragmentContainer.replaceFragment(fragmentClass, extra != null ? extra : new Bundle());
+    public static void replaceFragment(Context context, Class<? extends Fragment> fragmentClass, Bundle extra) {
+        if (!(context instanceof FragmentContainerActivity)) throw new AssertionError();
+        ((FragmentContainerActivity) context).replaceFragment(fragmentClass, extra != null ? extra : new Bundle());
     }
 
-    public static void removeFragment(FragmentContainerActivity fragmentContainer, String tag) {
-        fragmentContainer.removeFragmentByTag(tag);
+    public static void removeFragment(Context context, String tag) {
+        if (!(context instanceof FragmentContainerActivity)) throw new AssertionError();
+        ((FragmentContainerActivity) context).removeFragmentByTag(tag);
     }
 
-    public static void nextFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
-                                                 Class<? extends Fragment> fragmentClass) {
-        nextFragmentWithUniqueTag(fragmentContainer, fragmentClass, null);
+    public static void nextFragmentWithUniqueTag(Context context, Class<? extends Fragment> fragmentClass) {
+        nextFragmentWithUniqueTag(context, fragmentClass, null);
     }
 
-    public static void replaceFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
-                                                    Class<? extends Fragment> fragmentClass) {
-        replaceFragment(fragmentContainer, fragmentClass, null);
+    public static void replaceFragmentWithUniqueTag(Context context, Class<? extends Fragment> fragmentClass) {
+        replaceFragment(context, fragmentClass, null);
     }
 
-    public static void nextFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
-                                                 Class<? extends Fragment> fragmentClass,
-                                                 Bundle extra) {
-        fragmentContainer.addFragment(fragmentClass, fragmentClass.getCanonicalName() + '@' + System.nanoTime(), extra != null ? extra : new Bundle());
+    public static void nextFragmentWithUniqueTag(Context context, Class<? extends Fragment> fragmentClass, Bundle extra) {
+        if (!(context instanceof FragmentContainerActivity)) throw new AssertionError();
+        ((FragmentContainerActivity) context).addFragment(fragmentClass, fragmentClass.getCanonicalName() + '@' + System.nanoTime(), extra != null ? extra : new Bundle());
     }
 
-    public static void replaceFragmentWithUniqueTag(FragmentContainerActivity fragmentContainer,
-                                                    Class<? extends Fragment> fragmentClass,
-                                                    Bundle extra) {
-        fragmentContainer.replaceFragment(fragmentClass, fragmentClass.getCanonicalName() + '@' + System.nanoTime(), extra != null ? extra : new Bundle());
+    public static void replaceFragmentWithUniqueTag(Context context, Class<? extends Fragment> fragmentClass, Bundle extra) {
+        if (!(context instanceof FragmentContainerActivity)) throw new AssertionError();
+        ((FragmentContainerActivity) context).replaceFragment(fragmentClass, fragmentClass.getCanonicalName() + '@' + System.nanoTime(), extra != null ? extra : new Bundle());
     }
 
-    public static void removeFragmentsStartsWithUniqueTag(FragmentContainerActivity fragmentContainer, String tag) {
-        List<Fragment> fragments = fragmentContainer.getSupportFragmentManager().getFragments();
+    public static void removeFragmentsStartsWithUniqueTag(Context context, String tag) {
+        if (!(context instanceof FragmentContainerActivity)) throw new AssertionError();
+        List<Fragment> fragments = ((FragmentContainerActivity) context).getSupportFragmentManager().getFragments();
         for (Fragment fragment : fragments) {
             if (fragment.getTag().toLowerCase().startsWith(tag.toLowerCase())) {
-                fragmentContainer.removeFragmentByTag(fragment.getTag());
+                ((FragmentContainerActivity) context).removeFragmentByTag(fragment.getTag());
             }
         }
     }

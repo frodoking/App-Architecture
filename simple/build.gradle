@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion getProperty('COMPILE_SDK_VERSION') as int
+    buildToolsVersion getProperty('BUILD_TOOLS_VERSION')
 
     defaultConfig {
-        applicationId BASE_PACKAGENAME
-        minSdkVersion MIN_SDK_VERSION
-        targetSdkVersion TARGET_SDK_VERSION
+        applicationId getProperty('BASE_PACKAGENAME')
+        minSdkVersion getProperty('MIN_SDK_VERSION')
+        targetSdkVersion getProperty('TARGET_SDK_VERSION')
     }
 
     packagingOptions {
@@ -40,11 +40,10 @@ android {
         paid {}
         free {}
     }
-    buildToolsVersion '23.0.3'
 }
 
 dependencies {
     compile libraries.rxandroid
-//    compile project(':app')
-    compile "com.github.frodoking:app-architecture-android:1.2.8-LOCAL-SNAPSHOT"
+    compile project(':app')
+//    compile "com.github.frodoking:app-architecture-android:1.2.8-LOCAL-SNAPSHOT"
 }
