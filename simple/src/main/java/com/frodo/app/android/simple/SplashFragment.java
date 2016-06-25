@@ -37,7 +37,7 @@ public class SplashFragment extends StatedFragment<UIView, IModel> {
                     @Override
                     public void run() {
 //                        FragmentScheduler.doDirect(getAndroidContext(), FragmentScheduler.SCHEMA + "/movie", true);
-                        FragmentScheduler.replaceFragment((FragmentContainerActivity) getAndroidContext(), MovieFragment.class);
+                        FragmentScheduler.replaceFragment(getAndroidContext(), MovieFragment.class);
                     }
                 }, 5000);
             }

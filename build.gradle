@@ -1,9 +1,31 @@
+task checkArguments {
+    try {
+        getProperty('EXIST_DEFAULT_ARGS')
+    } catch (Exception e) {
+        def log = "You should define some arguments in *.properties, like this :\n" +
+                "\n" +
+                "EXIST_DEFAULT_ARGS\n" +
+                "\n" +
+                "ANDROID_GRADLE_VERSION=2.2.0-alpha3\n" +
+                "COMPILE_SDK_VERSION=24\n" +
+                "BUILD_TOOLS_VERSION=24.0.0\n" +
+                "TARGET_SDK_VERSION=24\n" +
+                "MIN_SDK_VERSION=21\n" +
+                "SUPPORT_VERSION=24.0.0\n" +
+                "DEFAULT_ENCODING=UTF-8"
+
+        throw new NullPointerException(log)
+    }
+}
+
+checkArguments
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0-alpha3'
+        classpath "com.android.tools.build:gradle:${ANDROID_GRADLE_VERSION}"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
     }
 }
@@ -40,10 +62,14 @@ subprojects { project ->
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.10'
+    gradleVersion = '2.13'
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+
+
 

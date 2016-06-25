@@ -108,7 +108,7 @@ public class MovieView extends UIView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("movie", movies.get(position));
-                FragmentScheduler.nextFragment((FragmentContainerActivity) getPresenter().getAndroidContext(), MovieDetailFragment.class, bundle);
+                FragmentScheduler.nextFragment(getPresenter().getAndroidContext(), MovieDetailFragment.class, bundle);
 //                FragmentScheduler.doDirect(getPresenter().getAndroidContext(), FragmentScheduler.SCHEMA + "/redirect", bundle, false);
             }
         });
