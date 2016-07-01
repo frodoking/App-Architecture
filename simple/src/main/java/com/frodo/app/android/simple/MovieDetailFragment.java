@@ -18,30 +18,30 @@ import com.frodo.app.android.ui.fragment.AbstractBaseFragment;
  */
 public class MovieDetailFragment extends AbstractBaseFragment {
 
-    private Movie movie;
+	private Movie movie;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        movie = (Movie) bundle.getSerializable("movie");
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Bundle bundle = getArguments();
+		movie = (Movie) bundle.getSerializable("movie");
+	}
 
-    @Override
-    public UIView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {
-        return new UIView(null, inflater, container, R.layout.layout_movie_detail) {
-            @Override
-            public void initView() {
-                TextView tv = (TextView) getRootView().findViewById(R.id.imei);
-                tv.setText(movie.title);
+	@Override
+	public UIView createUIView(Context context, LayoutInflater inflater, ViewGroup container) {
+		return new UIView(null, inflater, container, R.layout.layout_movie_detail) {
+			@Override
+			public void initView() {
+				TextView tv = (TextView) getRootView().findViewById(R.id.imei);
+				tv.setText(movie.title);
 
-                SimpleDraweeView sdv = (SimpleDraweeView) getRootView().findViewById(R.id.sdv);
-                sdv.setImageURI(Uri.parse("http://s0.nuomi.bdimg.com/shoubai_nuomi/huodong/%E5%88%B0%E5%BA%97%E4%BB%98%E6%96%87%E5%AD%97.PNG"));
-            }
+				SimpleDraweeView sdv = (SimpleDraweeView) getRootView().findViewById(R.id.sdv);
+				sdv.setImageURI(Uri.parse(movie.posterPath));
+			}
 
-            @Override
-            public void registerListener() {
-            }
-        };
-    }
+			@Override
+			public void registerListener() {
+			}
+		};
+	}
 }

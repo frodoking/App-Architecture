@@ -6,6 +6,7 @@ import com.frodo.app.android.core.toolbox.AndroidLeakcanary;
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.log.LogCollector;
+import com.frodo.app.framework.task.BackgroundCallTask;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
@@ -146,10 +147,21 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
         }
     }
 
-    private void checkWriteLog(String tag, String msg) {
+    private void checkWriteLog(final String tag,final String msg) {
         if (enable) {
-            getController().getFileSystem()
-                    .writeToFile(logFile(), getCurrentTime() + ", tag: " + tag + ", msg: " + msg);
+            getController().getBackgroundExecutor().execute(new BackgroundCallTask<String>() {
+                @Override
+                public String runAsync() {
+                    String log = getCurrentTime() + ", tag: " + tag + ", msg: " + msg;
+                    getController().getFileSystem().writeToFile(logFile(), log);
+                    return log;
+                }
+
+                @Override
+                public String key() {
+                    return "WriteLog";
+                }
+            });
         }
     }
 
@@ -186,7 +198,6 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
                 }
             }
         }
-
         return null;
     }
 }

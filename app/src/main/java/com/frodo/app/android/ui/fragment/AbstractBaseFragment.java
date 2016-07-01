@@ -26,7 +26,6 @@ import java.lang.reflect.Type;
  */
 public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> extends Fragment implements AndroidUIViewController<V, M> {
     private static final String LIFECYCLE = "_LifeCycle_F";
-    private MainController controller;
     private V uiView;
     private M model;
 
@@ -77,10 +76,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.fLog().tag(tag() + LIFECYCLE).i("onCreate");
-        controller = ((AbstractBaseActivity) getActivity()).getMainController();
-        model = createModel();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +98,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Logger.fLog().tag(tag() + LIFECYCLE).i("onActivityCreated");
+        model = createModel();
         getModel().initBusiness();
     }
 
@@ -168,7 +165,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     }
 
     public MainController getMainController() {
-        return this.controller;
+        return ((AbstractBaseActivity) getActivity()).getMainController();
     }
 
     public String tag() {

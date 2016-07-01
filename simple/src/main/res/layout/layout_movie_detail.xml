@@ -16,7 +16,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="match_parent"
         android:background="@android:color/black"
         app:actualImageScaleType="fitCenter"/>
 </LinearLayout>
