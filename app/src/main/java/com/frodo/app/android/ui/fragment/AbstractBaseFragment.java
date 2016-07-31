@@ -155,7 +155,9 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onDestroy() {
         super.onDestroy();
         Logger.fLog().tag(tag() + LIFECYCLE).i("onDestroy");
-        getMainController().getLogCollector().watchLeak(this);
+        if (getMainController().getConfig().isDebug()) {
+            getMainController().getLogCollector().watchLeak(this);
+        }
     }
 
     @Override

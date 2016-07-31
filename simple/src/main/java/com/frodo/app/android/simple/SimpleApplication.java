@@ -38,7 +38,6 @@ public class SimpleApplication extends Application implements ApplicationDelegat
 		beforeLoad();
 		microContextLoader = loadMicroContextLoader();
 		afterLoad();
-		Logger.fLog().tag("ReBuild [Application]"+hashCode()).i("MainController@"+microContextLoader.getMainController().hashCode());
 	}
 
 	@Override

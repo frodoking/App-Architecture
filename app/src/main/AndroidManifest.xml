@@ -45,6 +45,7 @@
                     android:host="redirect"/>
             </intent-filter>
         </activity>
+        <service android:name="com.frodo.app.android.core.toolbox.AndroidLeakUploadService"/>
     </application>
 
 </manifest>

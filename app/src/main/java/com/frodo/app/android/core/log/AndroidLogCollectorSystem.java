@@ -2,7 +2,7 @@ package com.frodo.app.android.core.log;
 
 import android.util.Log;
 
-import com.frodo.app.android.core.toolbox.AndroidLeakcanary;
+import com.frodo.app.android.core.toolbox.AndroidLeakCanary;
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.log.LogCollector;
@@ -89,7 +89,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
 
     @Override
     public void watchLeak(Object watchedReference) {
-        RefWatcher refWatcher = AndroidLeakcanary.get().getRefWatcher();
+        RefWatcher refWatcher = AndroidLeakCanary.get().getRefWatcher();
         refWatcher.watch(watchedReference);
     }
 
