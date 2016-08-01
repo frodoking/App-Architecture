@@ -1,11 +1,20 @@
 apply plugin: 'com.android.library'
 
+ext {
+    try {
+        redirectScheme = getProperty('REDIRECT_SCHEME')
+    }catch (Exception e) {
+        redirectScheme = "frodo"
+    }
+}
+
 android {
     compileSdkVersion getProperty('COMPILE_SDK_VERSION') as int
     buildToolsVersion getProperty('BUILD_TOOLS_VERSION')
 
     defaultConfig {
         minSdkVersion getProperty('MIN_SDK_VERSION')
+        manifestPlaceholders = [REDIRECT_SCHEME: redirectScheme]
     }
 
     lintOptions {

@@ -15,6 +15,7 @@ import com.frodo.app.android.core.toolbox.AndroidLeakCanary;
 import com.frodo.app.android.core.toolbox.ResourceManager;
 import com.frodo.app.android.core.toolbox.SDCardUtils;
 import com.frodo.app.android.core.toolbox.StrictModeWrapper;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.framework.broadcast.GlobalLocalBroadcastManager;
 import com.frodo.app.framework.config.Configuration;
 import com.frodo.app.framework.context.MicroContext;
@@ -72,6 +73,8 @@ public abstract class MicroContextLoader implements MicroContext<Context> {
         controller.setExceptionHandler(loadExceptionHandler());
 
         enableCache(true);
+
+        FragmentScheduler.findDirectScheme(application);
 
         ResourceManager.newInstance(application);
 

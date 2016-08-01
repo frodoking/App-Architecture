@@ -36,14 +36,13 @@
             android:label="redirect">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-
                 <data
-                    android:scheme="app"
+                    android:scheme="${REDIRECT_SCHEME}"
                     android:host="redirect"/>
             </intent-filter>
+            <meta-data android:name="REDIRECT_SCHEME_KEY" android:value="${REDIRECT_SCHEME}"/>
         </activity>
         <service android:name="com.frodo.app.android.core.toolbox.AndroidLeakUploadService"/>
     </application>
