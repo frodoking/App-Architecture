@@ -11,10 +11,11 @@ import com.frodo.app.android.core.filesystem.AndroidFileSystem;
 import com.frodo.app.android.core.log.AndroidLogCollectorSystem;
 import com.frodo.app.android.core.task.AndroidBackgroundExecutorImpl;
 import com.frodo.app.android.core.task.AndroidExecutor;
-import com.frodo.app.android.core.toolbox.AndroidLeakcanary;
+import com.frodo.app.android.core.toolbox.AndroidLeakCanary;
 import com.frodo.app.android.core.toolbox.ResourceManager;
 import com.frodo.app.android.core.toolbox.SDCardUtils;
 import com.frodo.app.android.core.toolbox.StrictModeWrapper;
+import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.framework.broadcast.GlobalLocalBroadcastManager;
 import com.frodo.app.framework.config.Configuration;
 import com.frodo.app.framework.context.MicroContext;
@@ -73,9 +74,11 @@ public abstract class MicroContextLoader implements MicroContext<Context> {
 
         enableCache(true);
 
+        FragmentScheduler.findDirectScheme(application);
+
         ResourceManager.newInstance(application);
 
-        AndroidLeakcanary.newInstance(application);
+        AndroidLeakCanary.newInstance(application);
 
         loadServerConfiguration();
     }

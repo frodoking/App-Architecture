@@ -2,21 +2,22 @@ package com.frodo.app.android.core.toolbox;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.AndroidExcludedRefs;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 /**
- * Created by frodo on 2015/8/14. for AndroidLeakcanary
+ * Created by frodo on 2015/8/14. for AndroidLeakCanary
  */
-public final class AndroidLeakcanary {
-    private static AndroidLeakcanary instance;
+public final class AndroidLeakCanary {
+    private static AndroidLeakCanary instance;
     private RefWatcher refWatcher;
 
-    public AndroidLeakcanary(RefWatcher refWatcher) {
+    public AndroidLeakCanary(RefWatcher refWatcher) {
         this.refWatcher = refWatcher;
     }
 
-    public static AndroidLeakcanary get() {
+    public static AndroidLeakCanary get() {
         return instance;
     }
 
@@ -24,12 +25,12 @@ public final class AndroidLeakcanary {
         return get().refWatcher;
     }
 
-    public static AndroidLeakcanary newInstance(Application application) {
+    public static AndroidLeakCanary newInstance(Application application) {
         if (instance != null) {
             throw new IllegalArgumentException("already exist instance");
         }
-        final RefWatcher watcher = LeakCanary.install(application);
-        instance = new AndroidLeakcanary(watcher);
+        final RefWatcher watcher = LeakCanary.install(application, AndroidLeakUploadService.class, AndroidExcludedRefs.createAppDefaults().build());
+        instance = new AndroidLeakCanary(watcher);
         return instance;
     }
 }

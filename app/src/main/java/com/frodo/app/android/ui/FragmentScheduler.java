@@ -1,13 +1,17 @@
 package com.frodo.app.android.ui;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.frodo.app.android.ui.activity.FragmentContainerActivity;
+import com.frodo.app.android.ui.activity.RedirectActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +22,22 @@ import java.util.Map;
  */
 public class FragmentScheduler {
 
-    public static final String SCHEMA = "app://redirect";
+    public static String SCHEME = "frodo://redirect";
 
     private final static Map<String, Class<? extends Fragment>> map = new HashMap<>();
 
     public static void register(String schema, Class<? extends Fragment> fragmentClass) {
         map.put(schema, fragmentClass);
+    }
+
+    public static void findDirectScheme(Context context) {
+        ComponentName cn = new ComponentName(context, RedirectActivity.class);
+        try {
+            ActivityInfo info = context.getPackageManager().getActivityInfo(cn, PackageManager.GET_META_DATA);
+            FragmentScheduler.SCHEME = info.metaData.getString("REDIRECT_SCHEME_KEY", "frodo://redirect");
+        } catch (PackageManager.NameNotFoundException e) {
+            FragmentScheduler.SCHEME = "frodo://redirect";
+        }
     }
 
     public static Class<? extends Fragment> get(String schema) {
@@ -39,7 +53,7 @@ public class FragmentScheduler {
     }
 
     public static void doDirect(Context context, String schema, Bundle extra, boolean isFinishCurrentPage) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(SCHEMA));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(SCHEME));
         intent.putExtras(extra != null ? extra : new Bundle());
         intent.setData(Uri.parse(schema));
         context.startActivity(intent);
