@@ -34,7 +34,7 @@ public class FragmentScheduler {
         ComponentName cn = new ComponentName(context, RedirectActivity.class);
         try {
             ActivityInfo info = context.getPackageManager().getActivityInfo(cn, PackageManager.GET_META_DATA);
-            FragmentScheduler.SCHEME = info.metaData.getString("REDIRECT_SCHEME_KEY", "frodo://redirect");
+            FragmentScheduler.SCHEME = info.metaData.getString("REDIRECT_SCHEME_KEY", "frodo") + "://redirect";
         } catch (PackageManager.NameNotFoundException e) {
             FragmentScheduler.SCHEME = "frodo://redirect";
         }

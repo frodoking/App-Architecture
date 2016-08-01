@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:tools="http://schemas.android.com/tools"
-          tools:overrideLibrary="com.android.app.framework"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.android.app">
+    tools:overrideLibrary="com.android.app.framework"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.app">
 
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,25 +26,31 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
     <application>
         <meta-data
             android:name="com.frodo.app.android.core.network.integration.okhttp.OkHttpModule"
-            android:value="HttpModule"/>
+            android:value="HttpModule" />
+
+        <!--must define same scheme and meta-data value, like {frodo}-->
         <activity
             android:name="com.frodo.app.android.ui.activity.RedirectActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="redirect">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="${REDIRECT_SCHEME}"
-                    android:host="redirect"/>
+                    android:scheme="frodo"
+                    android:host="redirect" />
             </intent-filter>
-            <meta-data android:name="REDIRECT_SCHEME_KEY" android:value="${REDIRECT_SCHEME}"/>
+            <meta-data
+                android:name="REDIRECT_SCHEME_KEY"
+                android:value="frodo" />
         </activity>
-        <service android:name="com.frodo.app.android.core.toolbox.AndroidLeakUploadService"/>
+        <service android:name="com.frodo.app.android.core.toolbox.AndroidLeakUploadService" />
     </application>
 
 </manifest>
