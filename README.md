@@ -94,29 +94,29 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
    compile "com.github.frodoking:app-architecture-android:1.0"
 ```
 
-1.implement ApplicationDelegation in MainApplication
-2.override RedirectActivity in manifest.xml if you want to replace direct scheme
+1. implement ApplicationDelegation in MainApplication
+2. override RedirectActivity in manifest.xml if you want to replace direct scheme
 ```
 <activity
-            android:name="com.frodo.app.android.ui.activity.RedirectActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="redirect"
-            tools:node="merge" >
-            <intent-filter tools:node="replace">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+    android:name="com.frodo.app.android.ui.activity.RedirectActivity"
+    android:configChanges="orientation|keyboardHidden|screenSize"
+    android:label="redirect"
+    tools:node="merge" >
+    <intent-filter tools:node="replace">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:scheme="ys"
-                    android:host="redirect"
-                    tools:replace="scheme"/>
-            </intent-filter>
-            <meta-data
-                android:name="REDIRECT_SCHEME_KEY"
-                android:value="ys"
-                tools:replace="value"/>
-        </activity>
+        <data
+            android:scheme="ys"
+            android:host="redirect"
+            tools:replace="scheme"/>
+    </intent-filter>
+    <meta-data
+        android:name="REDIRECT_SCHEME_KEY"
+        android:value="ys"
+        tools:replace="value"/>
+</activity>
 ```
 
 ## 关于作者(frodoking)
