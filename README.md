@@ -40,9 +40,13 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 ## 架构图
 ![架构图](http://frodoking.github.io/img/App-Architecture.png)
 
-## Simple工程
+## 工程应用
+
+#### Simple工程
 Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)工程
-另外，此框架在另一个工程的完整应用是 [GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient) 工程
+
+##### 实际项目应用
+完整应用[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)
 
 ## 注
 
@@ -118,8 +122,6 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         tools:replace="value"/>
 </activity>
 ```
-##### 实际项目应用
-https://github.com/frodoking/GithubAndroidClient
 
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com
