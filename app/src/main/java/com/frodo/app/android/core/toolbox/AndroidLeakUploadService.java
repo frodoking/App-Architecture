@@ -17,9 +17,11 @@ public class AndroidLeakUploadService extends DisplayLeakService {
     public void onCreate() {
         super.onCreate();
 
-        final ApplicationDelegation delegation = (ApplicationDelegation) getApplication();
-        if (delegation != null) {
-            logCollector = delegation.getMainController().getLogCollector();
+        if (getApplication() instanceof ApplicationDelegation) {
+            final ApplicationDelegation delegation = (ApplicationDelegation) getApplication();
+            if (delegation != null) {
+                logCollector = delegation.getMainController().getLogCollector();
+            }
         }
     }
 

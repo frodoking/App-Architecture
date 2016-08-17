@@ -66,7 +66,7 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
     }
 
     private void dumpPhoneInfo(PrintWriter pw) throws PackageManager.NameNotFoundException {
-        PackageInfo pi =  ResourceManager.getPackageInfo();
+        PackageInfo pi = ResourceManager.getPackageInfo();
         pw.print("App Version: ");
         pw.print(pi.versionName);
         pw.print('_');

@@ -79,7 +79,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
    
-   compile "com.github.frodoking:app-architecture-android:1.2.9-SNAPSHOT"
+   compile "com.github.frodoking:app-architecture-android:1.2.11-SNAPSHOT"
 ```
 
 ##### Gradle-RELEASE
@@ -90,8 +90,11 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
 
-   compile "com.github.frodoking:app-architecture-android:1.0"
+   compile "com.github.frodoking:app-architecture-android:1.2"
 ```
+
+##### 实际项目应用
+https://github.com/frodoking/GithubAndroidClient
 
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com

@@ -40,7 +40,7 @@ public class FragmentScheduler {
         }
     }
 
-    public static Class<? extends Fragment> get(String schema) {
+    private static Class<? extends Fragment> get(String schema) {
         return map.get(schema);
     }
 
@@ -61,6 +61,39 @@ public class FragmentScheduler {
             ((Activity) context).finish();
         }
     }
+
+    public static void doNext(Context context, String schema) {
+        doNext(context, schema, null);
+    }
+
+    public static void doNext(Context context, String schema, Bundle extra) {
+        nextFragment(context, get(schema), extra);
+    }
+
+    public static void doNextWithUniqueTag(Context context, String schema) {
+        doNextWithUniqueTag(context, schema, null);
+    }
+
+    public static void doNextWithUniqueTag(Context context, String schema, Bundle extra) {
+        nextFragmentWithUniqueTag(context, get(schema), extra);
+    }
+
+    public static void doReplace(Context context, String schema) {
+        doReplace(context, schema, null);
+    }
+
+    public static void doReplace(Context context, String schema, Bundle extra) {
+        replaceFragment(context, get(schema), extra);
+    }
+
+    public static void doReplaceWithUniqueTag(Context context, String schema) {
+        doReplaceWithUniqueTag(context, schema, null);
+    }
+
+    public static void doReplaceWithUniqueTag(Context context, String schema, Bundle extra) {
+        replaceFragmentWithUniqueTag(context, get(schema), extra);
+    }
+
 
     public static void nextFragment(Context context, Class<? extends Fragment> fragmentClass) {
         nextFragment(context, fragmentClass, null);

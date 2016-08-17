@@ -1,33 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.frodo.android.app.simple">
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <!-- 蓝牙分享所需的权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.frodo.android.app.simple">
+
     <supports-screens
             android:anyDensity="true"
             android:largeScreens="true"
             android:normalScreens="true"
             android:resizeable="true"
             android:smallScreens="true"/>
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
             android:allowBackup="true"
@@ -45,6 +25,28 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.frodo.app.android.ui.activity.RedirectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="redirect"
+            tools:node="merge">
+            <intent-filter tools:node="replace">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="appArchitectureSimple"
+                    android:host="redirect"
+                    tools:replace="scheme" />
+            </intent-filter>
+            <meta-data
+                android:name="REDIRECT_SCHEME_KEY"
+                android:value="appArchitectureSimple"
+                tools:replace="value" />
         </activity>
     </application>
 

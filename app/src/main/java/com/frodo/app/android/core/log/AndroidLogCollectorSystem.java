@@ -147,7 +147,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
         }
     }
 
-    private void checkWriteLog(final String tag,final String msg) {
+    private void checkWriteLog(final String tag, final String msg) {
         if (enable) {
             getController().getBackgroundExecutor().execute(new BackgroundCallTask<String>() {
                 @Override
