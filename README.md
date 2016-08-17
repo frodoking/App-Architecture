@@ -42,6 +42,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 
 ## Simple工程
 Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)工程
+另外，此框架在另一个工程的完整应用是 [GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient) 工程
 
 ## 注
 
@@ -93,6 +94,30 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
    compile "com.github.frodoking:app-architecture-android:1.2"
 ```
 
+1. implement ApplicationDelegation in MainApplication
+2. override RedirectActivity in manifest.xml if you want to replace direct scheme
+```
+<activity
+    android:name="com.frodo.app.android.ui.activity.RedirectActivity"
+    android:configChanges="orientation|keyboardHidden|screenSize"
+    android:label="redirect"
+    tools:node="merge" >
+    <intent-filter tools:node="replace">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+            android:scheme="{custom scheme}"
+            android:host="redirect"
+            tools:replace="scheme"/>
+    </intent-filter>
+    <meta-data
+        android:name="REDIRECT_SCHEME_KEY"
+        android:value="{custom scheme}"
+        tools:replace="value"/>
+</activity>
+```
 ##### 实际项目应用
 https://github.com/frodoking/GithubAndroidClient
 
