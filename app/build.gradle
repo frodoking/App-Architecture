@@ -1,19 +1,18 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion getProperty('COMPILE_SDK_VERSION') as int
+    buildToolsVersion getProperty('BUILD_TOOLS_VERSION')
 
     defaultConfig {
-        minSdkVersion MIN_SDK_VERSION
-        targetSdkVersion TARGET_SDK_VERSION
+        minSdkVersion getProperty('MIN_SDK_VERSION')
     }
 
     lintOptions {
         abortOnError true
         xmlReport false
         htmlReport true
-        lintConfig file("${rootProject.rootDir}/scripts/quality/lint/lint.xml")
+        lintConfig file("${project.rootDir}/scripts/quality/lint/lint.xml")
         htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
         xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
     }
@@ -39,16 +38,16 @@ dependencies {
     // replace with rxjava
     compile libraries.rxjava
 
-    compile "com.github.frodoking:app-architecture-framework:1.1.2-SNAPSHOT"
+    compile 'com.github.frodoking:app-architecture-framework:1.2'
+//    compile "com.github.frodoking:app-architecture-framework:1.2.3-SNAPSHOT"
 //    compile project(":framework")
 
-    debugCompile libraries.leakcanary_android
-    releaseCompile libraries.leakcanary_android_no_op
+    compile libraries.leakcanary_android
+//    releaseCompile libraries.leakcanary_android_no_op
+//    testCompile libraries.leakcanary_android_no_op
 }
 
 apply from: "${rootProject.rootDir}/scripts/quality/quality.gradle"
 check.dependsOn 'checkstyle', 'findbugs', 'pmd', 'lint'
 
 apply from: "${rootProject.rootDir}/scripts/maven_push_aar.gradle"
-
-

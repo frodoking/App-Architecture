@@ -13,8 +13,8 @@ public abstract class AbstractModel implements IModel {
     }
 
     @Override
-    public String name() {
-        return MODEL_UNKNOWN;
+    public final String name() {
+        return getClass().getSimpleName();
     }
 
     @Override
@@ -22,15 +22,20 @@ public abstract class AbstractModel implements IModel {
         return mainController;
     }
 
+    @Override
+    public final ModelFactory getModelFactory() {
+        return getMainController().getModelFactory();
+    }
+
+    @Override
+    public void initBusiness() {
+        // do something
+    }
+
     public static class SimpleModel extends AbstractModel {
 
         public SimpleModel(MainController controller) {
             super(controller);
-        }
-
-        @Override
-        public void initBusiness() {
-            // do nothing
         }
     }
 }

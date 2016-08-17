@@ -17,7 +17,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 3. Context 接管App层级上下文
 4. NetworkInteractor  网络模块，主要负责网络检测以及网络请求
 5. FileSystem  文件系统
-6. Database   数据库
+6. Database   数据库 (参考[realm-java](https://github.com/realm/realm-java))
 7. Theme   主题
 8. Scene   场景功能
 9. ModelFactory    业务工厂（实现IModel功能的所有业务操作类）
@@ -32,7 +32,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 依赖于Framework Library。实现基于Android平台下的一系列接口
 
 1. 主要接管Activity和Fragment中的架构，采用了MVVM的方式来解放UI(最近受到IOS的MVC架构所启发，Android的View概念被弱化，Activity和Fragment被强化导致很多同学认为这两者就是UI上的事情。其实不是这样，Fragment应该类似于IOS中的UIViewController才对。因此本框架通过UIView来强化Android的UI概念。用Fragment来做为UIViewController。)
-2. App全局只有一个入口启动MainActivity同时也是唯一的一个Activity。MainActivity继承了FragmentContainerActivity，因此他是Fragment容器
+2. App全局只有一个入口启动MainActivity同时也是唯一的一个Activity。MainActivity继承了FragmentContainerActivity，因此他是Fragment容器(页面跳转采用FragmentScheduler提供的方法，目前主要考虑单一Activity多Fragment对复杂页面管理问题，引用了通过schema跳转到单独Activity+Fragment的方式来增加多种跳转实现的支持)
 3. 所有页面都是Fragment实现，包括启动页面。主要利用support.v4包的FragmentManager来管理整个Fragment堆栈实现页面切换功能
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
 5. Model设计初衷是为了处理各种业务，Model和View的关系是多对多的关系。Model不依赖View，但是View依托于View。
@@ -58,11 +58,12 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 2. Findbugs
 3. Pmd
 4. Lint
+
 (目前工程代码质量未严格把关，后续打算完善这一步)
 
 ## 第三方依赖
 1. 基础库guava
-2. 网络库okhttp
+2. 网络库okhttp3
 3. 数据解码库jackson
 4. 图片库fresco
 5. 事件传递机制的Rxjava
@@ -70,7 +71,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 
 ## 应用
 
-##### Gradle
+##### Gradle-SNAPSHOT
 ```
   repositories {
         maven {
@@ -78,16 +79,29 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
    
-   compile "com.github.frodoking:app-architecture-android:1.1.8-SNAPSHOT"
+   compile "com.github.frodoking:app-architecture-android:1.2.11-SNAPSHOT"
 ```
-目前该架构还未达到发布release的质量要求，暂时只发布snapshot版本。主要应用在[GithubAndroidClient](https://github.com/frodoking/GithubAndroidClient)工程上。
+
+##### Gradle-RELEASE
+```
+  repositories {
+        maven {
+            url "https://oss.sonatype.org/service/local/repositories/releases/content/"
+        }
+    }
+
+   compile "com.github.frodoking:app-architecture-android:1.2"
+```
+
+##### 实际项目应用
+https://github.com/frodoking/GithubAndroidClient
 
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com
 * 个人技术Blog：http://frodoking.github.io/
 
 #License
-Copyright 2015 Square, Inc.
+Copyright 2015 Frodo.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

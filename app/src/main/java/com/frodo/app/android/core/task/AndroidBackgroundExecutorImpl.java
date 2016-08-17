@@ -2,12 +2,13 @@ package com.frodo.app.android.core.task;
 
 import android.os.Process;
 
-import com.frodo.app.framework.exception.HttpException;
 import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.task.AbstractBackgroundExecutor;
 import com.frodo.app.framework.task.BackgroundCallTask;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * Created by frodo on 2015/7/6.
@@ -19,16 +20,16 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
     }
 
     @Override
-    public <R> void execute(NetworkCallTask<R> runnable) {
-        getExecutorService().execute(new NetworkCallRunner<>(runnable));
+    public <R> Future<R> execute(NetworkCallTask<R> task) {
+        return getExecutorService().submit(new NetworkCallRunner<>(task));
     }
 
     @Override
-    public <R> void execute(BackgroundCallTask<R> runnable) {
-        getExecutorService().execute(new BackgroundCallRunner<>(runnable));
+    public <R> Future<R> execute(BackgroundCallTask<R> task) {
+        return getExecutorService().submit(new BackgroundCallRunner<>(task));
     }
 
-    private class BackgroundCallRunner<R> implements Runnable, Comparable {
+    private static class BackgroundCallRunner<R> implements Callable<R>, Comparable {
         private final BackgroundCallTask<R> mBackgroundCallTask;
 
         BackgroundCallRunner(BackgroundCallTask<R> task) {
@@ -36,23 +37,24 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
 
         @Override
-        public final void run() {
+        public R call() throws Exception {
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
             if (mBackgroundCallTask.isCancelled()) {
-                return;
+                return null;
             }
             mBackgroundCallTask.preExecute();
 
             if (mBackgroundCallTask.isCancelled()) {
-                return;
+                return null;
             }
             R result = mBackgroundCallTask.runAsync();
 
             if (mBackgroundCallTask.isCancelled()) {
-                return;
+                return null;
             }
             mBackgroundCallTask.postExecute(result);
+            return result;
         }
 
         @Override
@@ -64,7 +66,7 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
     }
 
-    private class NetworkCallRunner<R> implements Runnable , Comparable {
+    private class NetworkCallRunner<R> implements Callable<R>, Comparable {
 
         private final NetworkCallTask<R> mNetworkCallTask;
 
@@ -73,35 +75,27 @@ public class AndroidBackgroundExecutorImpl extends AbstractBackgroundExecutor {
         }
 
         @Override
-        public final void run() {
+        public R call() throws Exception {
             android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
             if (mNetworkCallTask.isCancelled()) {
-                return;
+                return null;
             }
             mNetworkCallTask.onPreCall();
 
-            R result = null;
-            HttpException httpException = null;
-
-            try {
-                if (mNetworkCallTask.isCancelled()) {
-                    return;
-                }
-                result = mNetworkCallTask.doBackgroundCall();
-            } catch (HttpException re) {
-                httpException = re;
+            if (mNetworkCallTask.isCancelled()) {
+                return null;
             }
+            R result = mNetworkCallTask.doBackgroundCall();
 
             if (mNetworkCallTask.isCancelled()) {
-                return;
+                return null;
             }
-
             if (result != null) {
                 mNetworkCallTask.onSuccess(result);
-            } else if (httpException != null) {
-                mNetworkCallTask.onError(httpException);
             }
+
             mNetworkCallTask.onFinished();
+            return result;
         }
 
         @Override

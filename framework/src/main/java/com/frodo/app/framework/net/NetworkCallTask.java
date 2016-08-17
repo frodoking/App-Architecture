@@ -12,6 +12,7 @@ public abstract class NetworkCallTask<R> extends CallTask {
     protected Request request;
 
     protected NetworkCallTask(NetworkTransport networkTransport, Request request) {
+        super();
         this.networkTransport = networkTransport;
         this.request = request;
     }
@@ -26,13 +27,13 @@ public abstract class NetworkCallTask<R> extends CallTask {
         }
     }
 
-    public abstract R doBackgroundCall() throws HttpException;
+    public abstract R doBackgroundCall();
 
     public void onSuccess(R result) {
         if (!networkTransport.interceptorList().isEmpty()) {
             for (NetworkInterceptor interceptor : networkTransport.interceptorList()) {
                 if (interceptor instanceof NetworkInterceptor.ResponseSuccessInterceptor) {
-                    ((NetworkInterceptor.ResponseSuccessInterceptor) interceptor).intercept((String) result);
+                    ((NetworkInterceptor.ResponseSuccessInterceptor) interceptor).intercept((Response) result);
                 }
             }
         }

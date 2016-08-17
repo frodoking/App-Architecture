@@ -16,50 +16,49 @@ import java.util.List;
  */
 public class MovieCache extends AbstractCache<String, List<Movie>> {
 
-    public MovieCache(CacheSystem cacheSystem, Type type) {
-        super(cacheSystem, type);
-    }
+	public MovieCache(CacheSystem cacheSystem, Type type) {
+		super(cacheSystem, type);
+	}
 
-    @Override
-    public List<Movie> get(String key) {
-        if (isCached(key)) {
-            return getCacheSystem().findCacheFromDisk(createAbsoluteKey(key), new TypeReference<List<Movie>>() {
-            });
-        }
-        return null;
-    }
+	@Override
+	public List<Movie> get(String key) {
+		if (isCached(key)) {
+			return getCacheSystem().findCacheFromDisk(createAbsoluteKey(key), new TypeReference<List<Movie>>() {
+			});
+		}
+		return null;
+	}
 
-    @Override
-    public void put(String key, List<Movie> value) {
-        getCacheSystem().put(createAbsoluteKey(key), value, getType());
-    }
+	@Override
+	public void put(String key, List<Movie> value) {
+		getCacheSystem().put(createAbsoluteKey(key), value, getType());
+	}
 
-    @Override
-    public boolean isCached(String key) {
-        if (getType().equals(Type.DISK)) {
-            return getCacheSystem().existCacheInDisk(createAbsoluteKey(key));
-        }
-        return false;
-    }
+	@Override
+	public boolean isCached(String key) {
+		if (getType().equals(Type.DISK)) {
+			return getCacheSystem().existCacheInDisk(createAbsoluteKey(key));
+		}
+		return false;
+	}
 
-    @Override
-    public boolean isExpired() {
-        return false;
-    }
+	@Override
+	public boolean isExpired() {
+		return false;
+	}
 
-    @Override
-    public void evictAll() {
-        getCacheSystem().evict("");
-    }
+	@Override
+	public void evictAll() {
+	}
 
-    private String createAbsoluteKey(String relativeKey) {
-        final FileSystem fs = getCacheSystem().getController().getFileSystem();
-        final String absoluteKey = fs.getFilePath() + File.separator + getCacheKey(relativeKey) + ".cache.tmp";
-        Logger.fLog().tag("MovieCache").d("Cache path >>>> " + absoluteKey);
-        return absoluteKey;
-    }
+	private String createAbsoluteKey(String relativeKey) {
+		final FileSystem fs = getCacheSystem().getController().getFileSystem();
+		final String absoluteKey = fs.getFilePath() + File.separator + getCacheKey(relativeKey) + ".cache.tmp";
+		Logger.fLog().tag("MovieCache").d("Cache path >>>> " + absoluteKey);
+		return absoluteKey;
+	}
 
-    private String getCacheKey(String cacheKey) {
-        return HashUtils.computeWeakHash(cacheKey.trim()) + String.format("%04x", cacheKey.length());
-    }
+	private String getCacheKey(String cacheKey) {
+		return HashUtils.computeWeakHash(cacheKey.trim()) + String.format("%04x", cacheKey.length());
+	}
 }

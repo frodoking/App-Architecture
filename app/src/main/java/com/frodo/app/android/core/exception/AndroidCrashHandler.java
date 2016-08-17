@@ -1,11 +1,11 @@
 package com.frodo.app.android.core.exception;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 
+import com.frodo.app.android.core.toolbox.ResourceManager;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.exception.AbstractExceptionHandler;
 import com.frodo.app.framework.log.Logger;
@@ -23,11 +23,8 @@ import java.util.Locale;
  */
 public class AndroidCrashHandler extends AbstractExceptionHandler {
 
-    private Context mContext;
-
     public AndroidCrashHandler(MainController controller) {
         super(controller);
-        mContext = (Context) controller.getMicroContext();
     }
 
     @Override
@@ -69,8 +66,7 @@ public class AndroidCrashHandler extends AbstractExceptionHandler {
     }
 
     private void dumpPhoneInfo(PrintWriter pw) throws PackageManager.NameNotFoundException {
-        PackageManager pm = mContext.getPackageManager();
-        PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
+        PackageInfo pi = ResourceManager.getPackageInfo();
         pw.print("App Version: ");
         pw.print(pi.versionName);
         pw.print('_');

@@ -1,23 +1,21 @@
 package com.frodo.app.android.core.task;
 
 import com.frodo.app.framework.exception.HttpException;
-import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.NetworkCallTask;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
 
-import okhttp3.ResponseBody;
 import rx.Subscriber;
 
 /**
  * Created by frodo on 2016/3/1. base bean from server
  */
-public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
+public class AndroidFetchNetworkDataTask extends NetworkCallTask<Response> {
 
-    private Subscriber<String> subscriber;
+    private Subscriber<? super Response> subscriber;
 
-    public AndroidFetchNetworkDataTask(NetworkTransport networkTransport, Request request, Subscriber<String> subscriber) {
+    public AndroidFetchNetworkDataTask(NetworkTransport networkTransport, Request request, Subscriber<? super Response> subscriber) {
         super(networkTransport, request);
         this.subscriber = subscriber;
     }
@@ -29,22 +27,19 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
     }
 
     @Override
-    public String doBackgroundCall() throws HttpException {
-        Response response = networkTransport.execute(request);
+    public Response doBackgroundCall() {
         try {
-            String s = ((ResponseBody)response.getBody()).string();
-            Logger.fLog().tag(key()).i("Response String : " + s);
-            return  s;
-        } catch (Exception e) {
-            Logger.fLog().tag(key()).e("Response Exception : ", e);
-            throw new HttpException(e);
+            return networkTransport.execute(request);
+        } catch (HttpException e) {
+            onError(e);
+            return null;
         }
     }
 
     @Override
-    public void onSuccess(String result) {
-        super.onSuccess(result);
-        subscriber.onNext(result);
+    public void onSuccess(Response response) {
+        super.onSuccess(response);
+        subscriber.onNext(response);
     }
 
     @Override
@@ -60,10 +55,6 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<String> {
 
     @Override
     public String key() {
-        return getClass().getCanonicalName();
-    }
-
-    public final Subscriber<String> getSubscriber() {
-        return subscriber;
+        return getClass().getSimpleName();
     }
 }

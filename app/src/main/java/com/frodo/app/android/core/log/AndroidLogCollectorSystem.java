@@ -2,10 +2,11 @@ package com.frodo.app.android.core.log;
 
 import android.util.Log;
 
-import com.frodo.app.android.core.toolbox.AndroidLeakcanary;
+import com.frodo.app.android.core.toolbox.AndroidLeakCanary;
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.log.LogCollector;
+import com.frodo.app.framework.task.BackgroundCallTask;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
@@ -22,8 +23,13 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
     private int minimumLogLevel = VERBOSE;
 
     public AndroidLogCollectorSystem(IController controller) {
+        this(controller, VERBOSE);
+    }
+
+    public AndroidLogCollectorSystem(IController controller, int minimumLogLevel) {
         super(controller);
-        logDir = controller.getFileSystem().getFilePath() + File.separator + "log";
+        this.logDir = controller.getFileSystem().getFilePath() + File.separator + "log";
+        this.minimumLogLevel = minimumLogLevel;
     }
 
     @Override
@@ -83,7 +89,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
 
     @Override
     public void watchLeak(Object watchedReference) {
-        RefWatcher refWatcher = AndroidLeakcanary.get().getRefWatcher();
+        RefWatcher refWatcher = AndroidLeakCanary.get().getRefWatcher();
         refWatcher.watch(watchedReference);
     }
 
@@ -141,10 +147,21 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
         }
     }
 
-    private void checkWriteLog(String tag, String msg) {
+    private void checkWriteLog(final String tag, final String msg) {
         if (enable) {
-            getController().getFileSystem()
-                    .writeToFile(logFile(), getCurrentTime() + ", tag: " + tag + ", msg: " + msg);
+            getController().getBackgroundExecutor().execute(new BackgroundCallTask<String>() {
+                @Override
+                public String runAsync() {
+                    String log = getCurrentTime() + ", tag: " + tag + ", msg: " + msg;
+                    getController().getFileSystem().writeToFile(logFile(), log);
+                    return log;
+                }
+
+                @Override
+                public String key() {
+                    return "WriteLog";
+                }
+            });
         }
     }
 
@@ -181,7 +198,6 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
                 }
             }
         }
-
         return null;
     }
 }

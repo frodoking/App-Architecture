@@ -574,7 +574,7 @@ public final class AndroidDatabaseSystem extends AbstractChildSystem implements 
                 result = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
             }
         } else {
-            android.content.Context androidContext = (Context) config.getContext();
+            android.content.Context androidContext = (Context) config.getMicroContext().getContext();
             result = androidContext.openOrCreateDatabase(config.getDbName(), 0, null);
         }
         return result;

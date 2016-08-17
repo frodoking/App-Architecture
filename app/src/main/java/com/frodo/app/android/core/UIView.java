@@ -28,6 +28,9 @@ public abstract class UIView implements IView {
         return presenter;
     }
 
+    /**
+     * just only to layout view
+     */
     public abstract void initView();
 
     public abstract void registerListener();

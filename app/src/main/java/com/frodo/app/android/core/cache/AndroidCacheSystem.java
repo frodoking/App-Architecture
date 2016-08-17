@@ -1,10 +1,12 @@
 package com.frodo.app.android.core.cache;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.framework.cache.Cache;
 import com.frodo.app.framework.cache.CacheSystem;
 import com.frodo.app.framework.controller.AbstractChildSystem;
@@ -26,13 +28,17 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     private String cacheDir;
 
     private FileSystem fileSystem;
+    private SharedPreferences sharedPreferences;
+    private Database database;
 
     public AndroidCacheSystem(IController controller, String cacheDir) {
         super(controller);
-        this.context = (Context) controller.getMicroContext();
+        this.context = (Context) controller.getMicroContext().getContext();
         this.cacheDir = cacheDir;
 
         this.fileSystem = controller.getFileSystem();
+        this.database = controller.getDatabase();
+        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -59,36 +65,48 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     public <K, V> boolean put(K key, V value, Cache.Type type) {
         if (type.equals(Cache.Type.DISK)) {
             File file = fileSystem.createFile(key.toString());
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonString = null;
-            try {
-                jsonString = objectMapper.writeValueAsString(value);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            fileSystem.writeToFile(file, jsonString);
+            fileSystem.writeToFile(file, JsonConverter.toJson(value));
+            return true;
+        } else if (type.equals(Cache.Type.INTERNAL)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(key.toString(), value.toString());
+            editor.apply();
+            return true;
         }
         return false;
     }
 
     @Override
-    public void evict(String key) {
+    public void evict(String key, Cache.Type type) {
+        if (type.equals(Cache.Type.DISK)) {
+            fileSystem.clearDirectory(new File(key));
+        } else if (type.equals(Cache.Type.INTERNAL)) {
+            sharedPreferences.edit().remove(key).apply();
+        }
+    }
+
+    @Override
+    public void evictAll(String key) {
         fileSystem.clearDirectory(new File(key));
+        sharedPreferences.edit().remove(key).apply();
     }
 
     @Override
     public void evictAll() {
-
+        fileSystem.clearDirectory(new File(getCacheDir()));
+        sharedPreferences.edit().clear().apply();
     }
 
     @Override
     public boolean existCacheInInternal(String key) {
-        return false;
+        return sharedPreferences.contains(key);
     }
 
     @Override
     public <T> T findCacheFromInternal(String key, Type classType) {
-        return null;
+        if (existCacheInInternal(key))
+            return (T) sharedPreferences.getAll().get(key);
+        else return null;
     }
 
     @Override

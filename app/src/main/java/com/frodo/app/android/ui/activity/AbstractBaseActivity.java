@@ -7,7 +7,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
-import com.frodo.app.android.MicroApplication;
+import com.frodo.app.android.ApplicationDelegation;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.log.Logger;
 
@@ -16,12 +16,10 @@ import com.frodo.app.framework.log.Logger;
  */
 public abstract class AbstractBaseActivity extends AppCompatActivity {
     private static final String LIFECYCLE = "_LifeCycle_A";
-    private MainController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        controller = ((MicroApplication) getApplication()).getMainController();
         Logger.fLog().tag(tag() + LIFECYCLE).i("onCreate");
         init();
     }
@@ -153,7 +151,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     }
 
     public MainController getMainController() {
-        return this.controller;
+        return ((ApplicationDelegation) getApplication()).getMainController();
     }
 
     public String tag() {

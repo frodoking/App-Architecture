@@ -17,6 +17,7 @@ import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.controller.ModelFactory;
 import com.frodo.app.framework.log.Logger;
 
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -25,7 +26,6 @@ import java.lang.reflect.Type;
  */
 public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> extends Fragment implements AndroidUIViewController<V, M> {
     private static final String LIFECYCLE = "_LifeCycle_F";
-    private MainController controller;
     private V uiView;
     private M model;
 
@@ -38,19 +38,22 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
 
     @SuppressWarnings("unchecked")
     protected M createModel() {
-        Type type = getClass().getGenericSuperclass();
+        Type genericSuperclass = getClass().getGenericSuperclass();
         ModelFactory modelFactory = getMainController().getModelFactory();
-        if (type instanceof ParameterizedType) {
-            if (((ParameterizedType) type).getActualTypeArguments().length >= 2) {
-                Type modelType = ((ParameterizedType) type).getActualTypeArguments()[1];
-                if (modelType instanceof Class) {
-                    String key = ((Class) modelType).getSimpleName();
-                    return modelFactory.getOrCreateIfAbsent(key, (Class<M>) modelType, getMainController());
+        if (genericSuperclass instanceof ParameterizedType) {
+            for (Type type : ((ParameterizedType) genericSuperclass).getActualTypeArguments()) {
+                if (type instanceof Class) {
+                    Class<M> clazz = (Class<M>) type;
+                    if (IModel.class.isAssignableFrom(clazz) && !clazz.isInterface() && !Modifier.isAbstract(clazz.getModifiers())) {
+                        String key = ((Class) type).getSimpleName();
+                        Logger.fLog().tag("Model").i("isAssignableFrom " + key);
+                        return modelFactory.getOrCreateIfAbsent(key, (Class<M>) type, getMainController());
+                    }
                 }
             }
         }
 
-        return (M) modelFactory.getOrCreateIfAbsent("default", SimpleModel.class, getMainController());
+        return (M) modelFactory.getOrCreateIfAbsent(IModel.MODEL_DEFAULT, SimpleModel.class, getMainController());
     }
 
     @Override
@@ -73,10 +76,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.fLog().tag(tag() + LIFECYCLE).i("onCreate");
-        controller = ((AbstractBaseActivity) getActivity()).getMainController();
-        model = createModel();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,6 +98,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Logger.fLog().tag(tag() + LIFECYCLE).i("onActivityCreated");
+        model = createModel();
         getModel().initBusiness();
     }
 
@@ -154,7 +155,9 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     public void onDestroy() {
         super.onDestroy();
         Logger.fLog().tag(tag() + LIFECYCLE).i("onDestroy");
-        getMainController().getLogCollector().watchLeak(this);
+        if (getMainController().getConfig().isDebug()) {
+            getMainController().getLogCollector().watchLeak(this);
+        }
     }
 
     @Override
@@ -164,7 +167,7 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
     }
 
     public MainController getMainController() {
-        return this.controller;
+        return ((AbstractBaseActivity) getActivity()).getMainController();
     }
 
     public String tag() {
