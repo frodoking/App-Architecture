@@ -2,7 +2,6 @@ package com.frodo.app.android.core.log;
 
 import android.util.Log;
 
-import com.frodo.app.android.core.toolbox.AndroidLeakCanary;
 import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.log.LogCollector;

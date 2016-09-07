@@ -114,6 +114,10 @@ public abstract class AbstractBaseFragment<V extends UIView, M extends IModel> e
         Logger.fLog().tag(tag() + LIFECYCLE).i("onViewStateRestored");
     }
 
+    public void onNewIntent(Intent intent) {
+        Logger.fLog().tag(tag() + LIFECYCLE).i("onNewIntent");
+    }
+
     @Override
     public void onStart() {
         super.onStart();

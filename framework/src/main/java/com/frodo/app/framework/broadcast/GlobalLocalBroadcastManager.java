@@ -1,9 +1,9 @@
 package com.frodo.app.framework.broadcast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by frodo on 2015/12/29.
@@ -60,7 +60,7 @@ public final class GlobalLocalBroadcastManager implements LocalBroadcastManager 
                 map.get(group).add(listener);
             }
         } else {
-            List<MessageInterceptor> list = new ArrayList<>();
+            List<MessageInterceptor> list = new CopyOnWriteArrayList<>();
             list.add(listener);
             map.put(group, list);
         }

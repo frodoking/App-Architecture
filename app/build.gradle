@@ -42,9 +42,9 @@ dependencies {
 //    compile "com.github.frodoking:app-architecture-framework:1.2.3-SNAPSHOT"
 //    compile project(":framework")
 
-    compile libraries.leakcanary_android
-//    releaseCompile libraries.leakcanary_android_no_op
-//    testCompile libraries.leakcanary_android_no_op
+    debugCompile libraries.leakcanary_android
+    releaseCompile libraries.leakcanary_android_no_op
+    testCompile libraries.leakcanary_android_no_op
 }
 
 apply from: "${rootProject.rootDir}/scripts/quality/quality.gradle"

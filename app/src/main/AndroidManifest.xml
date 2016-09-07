@@ -50,7 +50,6 @@
                 android:name="REDIRECT_SCHEME_KEY"
                 android:value="frodo" />
         </activity>
-        <service android:name="com.frodo.app.android.core.toolbox.AndroidLeakUploadService" />
     </application>
 
 </manifest>

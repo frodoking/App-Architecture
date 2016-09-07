@@ -1,5 +1,6 @@
 package com.frodo.app.android.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.android.app.R;
+import com.frodo.app.android.ui.fragment.AbstractBaseFragment;
 
 /**
  * Created by frodo on 2015/1/27. FragmentContainer
@@ -28,6 +30,16 @@ public abstract class FragmentContainerActivity extends AbstractBaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_container;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof AbstractBaseFragment) {
+                ((AbstractBaseFragment) fragment).onNewIntent(intent);
+            }
+        }
     }
 
     public void setTransitionAnimationsForViewContainer(@AnimRes int enter, @AnimRes int exit,

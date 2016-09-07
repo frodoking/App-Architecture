@@ -1,5 +1,7 @@
 package com.frodo.app.framework.cache;
 
+import java.lang.reflect.Method;
+
 /**
  * Abstract Cache
  *
@@ -22,5 +24,32 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
 
     public final Type getType() {
         return type;
+    }
+
+    @Override
+    public boolean isCached(K key) {
+        return getCacheSystem().existCacheByType(key.toString(), getType());
+    }
+
+    @Override
+    public boolean isExpired() {
+        return false;
+    }
+
+    @Override
+    public V get(K key) {
+        Method[] methods = getClass().getDeclaredMethods();
+        for(Method method: methods){
+            if (method.getName().equals("get")){
+                Class clazz = method.getReturnType();
+                return getCacheSystem().findCacheByType(key.toString(),clazz, getType());
+            }
+        }
+        return  null;
+    }
+
+    @Override
+    public void put(K key, V value) {
+        getCacheSystem().put(key, value ,getType());
     }
 }
