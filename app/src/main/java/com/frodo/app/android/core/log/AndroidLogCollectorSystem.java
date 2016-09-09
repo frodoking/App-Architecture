@@ -6,7 +6,6 @@ import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.log.LogCollector;
 import com.frodo.app.framework.task.BackgroundCallTask;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -88,8 +87,6 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
 
     @Override
     public void watchLeak(Object watchedReference) {
-        RefWatcher refWatcher = AndroidLeakCanary.get().getRefWatcher();
-        refWatcher.watch(watchedReference);
     }
 
     @Override

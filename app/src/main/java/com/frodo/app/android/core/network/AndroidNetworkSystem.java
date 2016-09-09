@@ -25,9 +25,9 @@ import java.util.List;
  * Created by frodo on 2015/6/20.
  */
 public class AndroidNetworkSystem extends AbstractChildSystem implements NetworkTransport {
-    public static final int DEFAULT_READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
-    public static final int DEFAULT_WRITE_TIMEOUT_MILLIS = 20 * 1000; // 20s
-    public static final int DEFAULT_CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
+    public static final int DEFAULT_READ_TIMEOUT_MILLIS = 60 * 1000; // 60s
+    public static final int DEFAULT_WRITE_TIMEOUT_MILLIS = 60 * 1000; // 60s
+    public static final int DEFAULT_CONNECT_TIMEOUT_MILLIS = 60 * 1000; // 60s
 
     private Context context;
     private String apiUrl;

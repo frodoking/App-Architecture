@@ -64,11 +64,17 @@ public class OkHttpModule implements HttpModule {
     }
 
     private static okhttp3.Request createRequest(String apiUrl, Request<RequestBody> request) {
+        String url;
+        if (apiUrl.startsWith("http")) {
+            url = apiUrl;
+        } else {
+            url = apiUrl + request.getUrl();
+        }
         okhttp3.Request.Builder builder = new okhttp3.Request.Builder()
-                .url(apiUrl + request.getUrl())
+                .url(url)
                 .method(request.getMethod(), request.getBody());
 
-        Logger.fLog().tag("RequestURL").i(String.format("[ %s ]", apiUrl + request.getUrl()));
+        Logger.fLog().tag("RequestURL").i(String.format("[ %s ]", url));
 
         List<Header> headers = request.getHeaders();
         for (int i = 0, size = headers.size(); i < size; i++) {

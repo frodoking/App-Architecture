@@ -1,6 +1,6 @@
 ext.versions = [
         guava        : '19.0',
-        okhttp       : '3.2.0',
+        okhttp       : '3.4.1',
         jackson      : '2.7.2',
         picasso      : '2.5.2',
         glide        : '3.7.0',

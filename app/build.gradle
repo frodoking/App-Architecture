@@ -38,13 +38,9 @@ dependencies {
     // replace with rxjava
     compile libraries.rxjava
 
-    compile 'com.github.frodoking:app-architecture-framework:1.2'
-//    compile "com.github.frodoking:app-architecture-framework:1.2.3-SNAPSHOT"
+//    compile 'com.github.frodoking:app-architecture-framework:1.2'
+    compile "com.github.frodoking:app-architecture-framework:1.2.4-LOCAL-SNAPSHOT"
 //    compile project(":framework")
-
-    debugCompile libraries.leakcanary_android
-    releaseCompile libraries.leakcanary_android_no_op
-    testCompile libraries.leakcanary_android_no_op
 }
 
 apply from: "${rootProject.rootDir}/scripts/quality/quality.gradle"
