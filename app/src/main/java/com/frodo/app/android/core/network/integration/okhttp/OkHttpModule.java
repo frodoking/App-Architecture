@@ -65,8 +65,8 @@ public class OkHttpModule implements HttpModule {
 
     private static okhttp3.Request createRequest(String apiUrl, Request<RequestBody> request) {
         String url;
-        if (apiUrl.startsWith("http")) {
-            url = apiUrl;
+        if (request.getUrl().startsWith("http")) {
+            url = request.getUrl();
         } else {
             url = apiUrl + request.getUrl();
         }
