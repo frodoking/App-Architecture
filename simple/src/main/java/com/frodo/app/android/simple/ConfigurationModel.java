@@ -7,7 +7,6 @@ import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.android.simple.entity.ServerConfiguration;
 import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.MainController;
-import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
 
@@ -26,60 +25,60 @@ import rx.schedulers.Schedulers;
  */
 public class ConfigurationModel extends AbstractModel {
 
-	private Observable<ServerConfiguration> observable;
-	private ServerConfiguration serverConfiguration;
+    private Observable<ServerConfiguration> observable;
+    private ServerConfiguration serverConfiguration;
 
-	public ConfigurationModel(MainController controller) {
-		super(controller);
+    public ConfigurationModel(MainController controller) {
+        super(controller);
 
-		observable = Observable.create(new Observable.OnSubscribe<Response>() {
-			@Override
-			public void call(Subscriber<? super Response> subscriber) {
-				Request request = new Request.Builder<ResponseBody>()
-						.method("GET")
-						.relativeUrl(Path.configuration)
-						.build();
-				getMainController().getBackgroundExecutor().execute(new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber));
-			}
-		}).map(new Func1<Response, ServerConfiguration>() {
-			@Override
-			public ServerConfiguration call(Response response) {
-				try {
-					return JsonConverter.convert(((ResponseBody) response.getBody()).string(), ServerConfiguration.class);
-				} catch (IOException e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
-		});
-	}
+        observable = Observable.create(new Observable.OnSubscribe<Response>() {
+            @Override
+            public void call(Subscriber<? super Response> subscriber) {
+                Request request = new Request.Builder<ResponseBody>()
+                        .method("GET")
+                        .relativeUrl(Path.configuration)
+                        .build();
+                getMainController().getBackgroundExecutor().execute(new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber));
+            }
+        }).map(new Func1<Response, ServerConfiguration>() {
+            @Override
+            public ServerConfiguration call(Response response) {
+                try {
+                    return JsonConverter.convert(((ResponseBody) response.getBody()).string(), ServerConfiguration.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        });
+    }
 
-	public boolean isValid() {
-		return serverConfiguration != null
-				&& !TextUtils.isEmpty(serverConfiguration.images.baseUrl)
-				&& isValidArray(serverConfiguration.images.backdropSizes)
-				&& isValidArray(serverConfiguration.images.posterSizes)
-				&& isValidArray(serverConfiguration.images.profileSizes);
-	}
+    public boolean isValid() {
+        return serverConfiguration != null
+                && !TextUtils.isEmpty(serverConfiguration.images.baseUrl)
+                && isValidArray(serverConfiguration.images.backdropSizes)
+                && isValidArray(serverConfiguration.images.posterSizes)
+                && isValidArray(serverConfiguration.images.profileSizes);
+    }
 
-	private static boolean isValidArray(Object[] array) {
-		return array != null && array.length > 0;
-	}
+    private static boolean isValidArray(Object[] array) {
+        return array != null && array.length > 0;
+    }
 
-	public void setTmdbConfiguration(ServerConfiguration configuration) {
-		this.serverConfiguration = configuration;
-		getMainController().getConfig().setServerConfig(configuration);
-	}
+    public void setTmdbConfiguration(ServerConfiguration configuration) {
+        this.serverConfiguration = configuration;
+        getMainController().getConfig().setServerConfig(configuration);
+    }
 
-	@Override
-	public void initBusiness() {
-		observable.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Action1<ServerConfiguration>() {
-					@Override
-					public void call(ServerConfiguration serverConfiguration) {
-						setTmdbConfiguration(serverConfiguration);
-					}
-				});
-	}
+    @Override
+    public void initBusiness() {
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ServerConfiguration>() {
+                    @Override
+                    public void call(ServerConfiguration serverConfiguration) {
+                        setTmdbConfiguration(serverConfiguration);
+                    }
+                });
+    }
 }

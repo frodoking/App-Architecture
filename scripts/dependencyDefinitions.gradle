@@ -1,11 +1,11 @@
 ext.versions = [
         guava        : '19.0',
         okhttp       : '3.4.1',
-        jackson      : '2.7.2',
+        gson         : '2.7',
         picasso      : '2.5.2',
         glide        : '3.7.0',
-        fresco       : '0.12.0',
-        rxjava       : '1.1.8',
+        fresco       : '0.13.0',
+        rxjava       : '1.2.0',
         rxandroid    : '1.2.1',
         leakcanary   : '1.4-beta2',
         support      : getProperty('SUPPORT_VERSION'),
@@ -26,8 +26,7 @@ ext.libraries = [
         // net
         okhttp                               : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
 
-        jackson_core                         : "com.fasterxml.jackson.core:jackson-core:${versions.jackson}",
-        jackson_databind                     : "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
+        gson                                 : "com.google.code.gson:gson:${versions.gson}",
 
         // img
         picasso                              : "com.squareup.picasso:picasso:${versions.picasso}",

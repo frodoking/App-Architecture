@@ -36,7 +36,9 @@ public class RedirectActivity extends FragmentContainerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (getIntent().getBooleanExtra("needActivityResult", false)) {
+        if (getIntent() != null
+                && getIntent().getExtras() != null
+                && getIntent().getExtras().getBoolean("needActivityResult", false)) {
             List<Fragment> fragments = getSupportFragmentManager().getFragments();
             for (Fragment f : fragments) {
                 if (f != null) {

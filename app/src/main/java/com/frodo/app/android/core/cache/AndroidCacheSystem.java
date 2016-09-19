@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.framework.cache.Cache;
 import com.frodo.app.framework.cache.CacheSystem;
@@ -15,7 +13,6 @@ import com.frodo.app.framework.filesystem.FileSystem;
 import com.frodo.app.framework.orm.Database;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Type;
 
 /**
@@ -104,9 +101,12 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
 
     @Override
     public <T> T findCacheFromInternal(String key, Type classType) {
-        if (existCacheInInternal(key))
-            return (T) sharedPreferences.getAll().get(key);
-        else return null;
+        if (existCacheInInternal(key)) {
+            String jsonString = sharedPreferences.getString(key, "");
+            return JsonConverter.convert(jsonString, classType);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -125,14 +125,9 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     }
 
     @Override
-    public <T> T findCacheFromDisk(String fileName, Object clazz) {
-        try {
-            if (clazz instanceof TypeReference) {
-                return (T) new ObjectMapper().readValue(new File(fileName), (TypeReference) clazz);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public <T> T findCacheFromDisk(String fileName, Type classType) {
+        File file = new File(getCacheDir(), fileName);
+        String content = fileSystem.readFileContent(file);
+        return JsonConverter.convert(content, classType);
     }
 }

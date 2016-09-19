@@ -1,12 +1,12 @@
 package com.frodo.app.android.simple;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.frodo.app.android.core.toolbox.HashUtils;
 import com.frodo.app.android.simple.entity.Movie;
 import com.frodo.app.framework.cache.AbstractCache;
 import com.frodo.app.framework.cache.CacheSystem;
 import com.frodo.app.framework.filesystem.FileSystem;
 import com.frodo.app.framework.log.Logger;
+import com.google.common.reflect.TypeToken;
 
 import java.io.File;
 import java.util.List;
@@ -23,8 +23,8 @@ public class MovieCache extends AbstractCache<String, List<Movie>> {
 	@Override
 	public List<Movie> get(String key) {
 		if (isCached(key)) {
-			return getCacheSystem().findCacheFromDisk(createAbsoluteKey(key), new TypeReference<List<Movie>>() {
-			});
+			return getCacheSystem().findCacheFromDisk(createAbsoluteKey(key), new TypeToken<List<Movie>>() {
+			}.getType());
 		}
 		return null;
 	}

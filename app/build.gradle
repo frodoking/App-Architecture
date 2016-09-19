@@ -24,11 +24,8 @@ dependencies {
     //net
     compile libraries.okhttp
 
-    // jackson
-    compile(
-            libraries.jackson_core,
-            libraries.jackson_databind,
-    )
+    // gson
+    compile libraries.gson
 
     // img
     compile libraries.fresco
@@ -39,7 +36,7 @@ dependencies {
     compile libraries.rxjava
 
 //    compile 'com.github.frodoking:app-architecture-framework:1.2'
-    compile "com.github.frodoking:app-architecture-framework:1.2.4-LOCAL-SNAPSHOT"
+    compile "com.github.frodoking:app-architecture-framework:1.2.5-SNAPSHOT"
 //    compile project(":framework")
 }
 

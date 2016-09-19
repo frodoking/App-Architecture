@@ -127,5 +127,5 @@ public interface CacheSystem extends ChildSystem {
      * @param <T>      {@link T}
      * @return {@link T}
      */
-    <T> T findCacheFromDisk(String fileName, Object clazz);
+    <T> T findCacheFromDisk(String fileName, Type classType);
 }

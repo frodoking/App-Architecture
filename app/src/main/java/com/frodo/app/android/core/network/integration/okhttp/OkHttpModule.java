@@ -88,7 +88,7 @@ public class OkHttpModule implements HttpModule {
     }
 
     private static Response<ResponseBody> parseResponse(okhttp3.Response response) throws IOException {
-        return new Response<>(response.request().url().url().getPath(), response.code(), response.message(),
+        return new Response<>(response.request().url().toString(), response.code(), response.message(),
                 createHeaders(response.headers()), response.body());
     }
 
