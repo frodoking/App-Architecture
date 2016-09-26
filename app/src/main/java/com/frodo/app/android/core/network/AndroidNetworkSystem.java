@@ -53,7 +53,7 @@ public class AndroidNetworkSystem extends AbstractChildSystem implements Network
     public boolean isNetworkAvailable() {
         ConnectivityManager mConnMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = mConnMgr.getActiveNetworkInfo();
-        return networkInfo.isAvailable();
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.stetho.Stetho;
 import com.frodo.app.android.core.cache.AndroidCacheSystem;
 import com.frodo.app.android.core.database.AndroidDatabaseSystem;
 import com.frodo.app.android.core.exception.AndroidCrashHandler;
@@ -46,6 +47,7 @@ public abstract class MicroContextLoader implements MicroContext<Context> {
         this.controller = new MainController();
         initialize();
         enabledStrictMode();
+        enabledStetho();
         Fresco.initialize(application);
     }
 
@@ -154,6 +156,12 @@ public abstract class MicroContextLoader implements MicroContext<Context> {
     private void enabledStrictMode() {
         if (SDK_INT >= GINGERBREAD) {
             StrictModeWrapper.enable(controller.getConfig().isDebug());
+        }
+    }
+
+    private void enabledStetho() {
+        if (controller.getConfig().isDebug()) {
+            Stetho.initializeWithDefaults(application);
         }
     }
 }

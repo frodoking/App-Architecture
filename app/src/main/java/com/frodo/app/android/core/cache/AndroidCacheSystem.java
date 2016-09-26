@@ -32,6 +32,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
         super(controller);
         this.context = (Context) controller.getMicroContext().getContext();
         this.cacheDir = cacheDir;
+        controller.getFileSystem().createDirectory(cacheDir);
 
         this.fileSystem = controller.getFileSystem();
         this.database = controller.getDatabase();
@@ -61,7 +62,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     @Override
     public <K, V> boolean put(K key, V value, Cache.Type type) {
         if (type.equals(Cache.Type.DISK)) {
-            File file = fileSystem.createFile(key.toString());
+            File file = new File(getCacheDir(), key.toString());
             fileSystem.writeToFile(file, JsonConverter.toJson(value));
             return true;
         } else if (type.equals(Cache.Type.INTERNAL)) {
@@ -121,7 +122,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
 
     @Override
     public boolean existCacheInDisk(String fileName) {
-        return fileSystem.exists(new File(fileName));
+        return fileSystem.exists(new File(getCacheDir(), fileName));
     }
 
     @Override

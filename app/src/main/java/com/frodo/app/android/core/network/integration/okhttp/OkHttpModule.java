@@ -1,5 +1,6 @@
 package com.frodo.app.android.core.network.integration.okhttp;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.exception.HttpException;
 import com.frodo.app.framework.log.Logger;
@@ -51,6 +52,9 @@ public class OkHttpModule implements HttpModule {
         builder.connectTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
         builder.readTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
         builder.writeTimeout(options.connectTimeout, TimeUnit.MILLISECONDS);
+        if (controller.getConfig().isDebug()) {
+            builder.addNetworkInterceptor(new StethoInterceptor());
+        }
         client = builder.build();
     }
 

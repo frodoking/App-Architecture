@@ -18,6 +18,9 @@ ext.versions = [
         runner       : '0.4.1',
         rules        : '0.4.1',
         espresso     : '2.2.1',
+
+//        tools
+        stetho       : '1.4.1'
 ]
 
 ext.libraries = [
@@ -70,6 +73,10 @@ ext.libraries = [
         android_test_espresso_core           : "com.android.support.test.espresso:espresso-core:${versions.espresso}",
         android_test_espresso_contrib        : "com.android.support.test.espresso:espresso-contrib:${versions.espresso}",
         android_test_espresso_intents        : "com.android.support.test.espresso:espresso-intents:${versions.espresso}",
+
+        // tools
+        stetho                               : "com.facebook.stetho:stetho:${versions.stetho}",
+        stetho_okhttp3                       : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}"
 ]
 
 ext.jars = [

@@ -35,9 +35,15 @@ dependencies {
     // replace with rxjava
     compile libraries.rxjava
 
+    // tools
+    compile (
+            libraries.stetho,
+            libraries.stetho_okhttp3,
+    )
+
 //    compile 'com.github.frodoking:app-architecture-framework:1.2'
-    compile "com.github.frodoking:app-architecture-framework:1.2.5-SNAPSHOT"
-//    compile project(":framework")
+//    compile "com.github.frodoking:app-architecture-framework:1.2.5-SNAPSHOT"
+    compile project(":framework")
 }
 
 apply from: "${rootProject.rootDir}/scripts/quality/quality.gradle"
