@@ -42,7 +42,7 @@ dependencies {
     )
 
 //    compile 'com.github.frodoking:app-architecture-framework:1.2'
-//    compile "com.github.frodoking:app-architecture-framework:1.2.5-SNAPSHOT"
+//    compile "com.github.frodoking:app-architecture-framework:1.2.5-LOCAL-SNAPSHOT"
     compile project(":framework")
 }
 

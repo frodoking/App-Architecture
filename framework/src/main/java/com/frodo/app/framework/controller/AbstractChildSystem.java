@@ -20,6 +20,6 @@ public abstract class AbstractChildSystem implements ChildSystem {
 
     @Override
     public String systemName() {
-        return getClass().getSimpleName();
+        return getClass().getCanonicalName();
     }
 }

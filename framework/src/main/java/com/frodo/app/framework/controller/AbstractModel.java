@@ -14,7 +14,7 @@ public abstract class AbstractModel implements IModel {
 
     @Override
     public final String name() {
-        return getClass().getSimpleName();
+        return getClass().getCanonicalName();
     }
 
     @Override

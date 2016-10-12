@@ -6,6 +6,7 @@ import com.frodo.app.framework.controller.AbstractChildSystem;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.log.LogCollector;
 import com.frodo.app.framework.task.BackgroundCallTask;
+import com.frodo.app.framework.toolbox.TextUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -106,8 +107,9 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
             message += "\n" + Log.getStackTraceString(t);
         }
 
-        if (getFunctionName() != null) {
-            message = getFunctionName() + " - " + message;
+        String functionName = getFunctionName();
+        if (!TextUtils.isEmpty(functionName)) {
+            message = functionName + " - " + message;
         }
 
         checkWriteLog(tag, message);
@@ -186,7 +188,9 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
         StackTraceElement[] sts = Thread.currentThread().getStackTrace();
         if (sts != null) {
             for (int i = 0; i < sts.length; i++) {
-                if (sts[i].getFileName().contains("Logger") && (i + 1 < sts.length)) {
+                if (!TextUtils.isEmpty(sts[i].getFileName())
+                        && sts[i].getFileName().contains("Logger")
+                        && (i + 1 < sts.length)) {
                     StackTraceElement st = sts[i + 1];
                     return "[ " + Thread.currentThread().getName() + ": "
                             + st.getFileName() + ":" + st.getLineNumber() + " "

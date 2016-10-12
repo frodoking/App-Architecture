@@ -123,6 +123,14 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 </activity>
 ```
 
+##### Proguard
+```
+-keep public class com.frodo.app.android.core.network.integration.okhttp.OkHttpModule
+-keep public class * extends com.frodo.app.framework.controller.AbstractModel {
+    public <init>(com.frodo.app.framework.controller.MainController);
+}
+```
+
 ## 关于作者(frodoking)
 * Email: awangyun8@gmail.com
 * 个人技术Blog：http://frodoking.github.io/
