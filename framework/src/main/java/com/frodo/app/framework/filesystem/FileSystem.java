@@ -10,6 +10,8 @@ import java.io.File;
  */
 public interface FileSystem extends ChildSystem {
 
+    boolean canUsed();
+
     String getRootDir();
 
     String getFilePath();

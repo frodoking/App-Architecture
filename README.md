@@ -35,7 +35,7 @@ App-Architecture是一个关于移动应用一整套架构的解决方案开源�
 2. App全局只有一个入口启动MainActivity同时也是唯一的一个Activity。MainActivity继承了FragmentContainerActivity，因此他是Fragment容器(页面跳转采用FragmentScheduler提供的方法，目前主要考虑单一Activity多Fragment对复杂页面管理问题，引用了通过schema跳转到单独Activity+Fragment的方式来增加多种跳转实现的支持)
 3. 所有页面都是Fragment实现，包括启动页面。主要利用support.v4包的FragmentManager来管理整个Fragment堆栈实现页面切换功能
 4. 页面请求都采用线程池执行Task的方式来完成，回调使用了Rxjava的订阅/消费的观察者模式完成
-5. Model设计初衷是为了处理各种业务，Model和View的关系是多对多的关系。Model不依赖View，但是View依托于View。
+5. Model设计初衷是为了处理各种业务，Model和View的关系是多对多的关系。Model不依赖View，但是依托于View。
 
 ## 架构图
 ![架构图](http://frodoking.github.io/img/App-Architecture.png)
@@ -84,7 +84,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
    
-   compile "com.github.frodoking:app-architecture-android:1.2.11-SNAPSHOT"
+   compile "com.github.frodoking:app-architecture-android:1.2.15-SNAPSHOT"
 ```
 
 ##### Gradle-RELEASE
@@ -95,7 +95,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
         }
     }
 
-   compile "com.github.frodoking:app-architecture-android:1.2"
+   compile "com.github.frodoking:app-architecture-android:1.3"
 ```
 
 1. implement ApplicationDelegation in MainApplication

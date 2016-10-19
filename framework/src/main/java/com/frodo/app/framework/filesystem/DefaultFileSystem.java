@@ -23,13 +23,13 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
         this.rootDir = controller.getMicroContext().getRootDirName();
         this.filePath = controller.getMicroContext().getFilesDirName();
 
+        canUsed();
+    }
+
+    @Override
+    public boolean canUsed() {
         File file = new File(filePath);
-        if (!file.exists()) {
-            boolean success = file.mkdirs();
-            if (!success) {
-                throw new IllegalArgumentException("create file system " + filePath + " fail.");
-            }
-        }
+        return file.exists() ? true : file.mkdirs();
     }
 
     @Override
