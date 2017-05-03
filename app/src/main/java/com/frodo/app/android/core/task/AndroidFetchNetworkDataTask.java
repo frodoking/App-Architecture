@@ -6,7 +6,7 @@ import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
 
-import rx.Subscriber;
+import org.reactivestreams.Subscriber;
 
 /**
  * Created by frodo on 2016/3/1. base bean from server
@@ -23,7 +23,6 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<Response> {
     @Override
     public void onPreCall() {
         super.onPreCall();
-        subscriber.onStart();
     }
 
     @Override
@@ -50,7 +49,7 @@ public class AndroidFetchNetworkDataTask extends NetworkCallTask<Response> {
 
     @Override
     public void onFinished() {
-        subscriber.onCompleted();
+        subscriber.onComplete();
     }
 
     @Override
