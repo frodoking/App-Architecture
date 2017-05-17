@@ -69,9 +69,9 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 ## 第三方依赖
 1. 基础库guava
 2. 网络库okhttp3
-3. 数据解码库jackson
+3. 数据解码库gson
 4. 图片库fresco
-5. 事件传递机制的Rxjava
+5. 事件传递机制的Rxjava2
 6. 内存泄露检测库leakcanary
 
 ## 应用
@@ -89,6 +89,9 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 
 ##### Gradle-RELEASE
 ```
+repositories {
+        mavenCentral()
+    }
 compile "com.github.frodoking:app-architecture-android:1.5"
 ```
 
