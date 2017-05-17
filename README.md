@@ -89,13 +89,7 @@ Simple工程数据主要参考[philm](https://github.com/OpenSource-Frodo/philm)
 
 ##### Gradle-RELEASE
 ```
-  repositories {
-        maven {
-            url "https://oss.sonatype.org/service/local/repositories/releases/content/"
-        }
-    }
-
-   compile "com.github.frodoking:app-architecture-android:1.3"
+compile "com.github.frodoking:app-architecture-android:1.5"
 ```
 
 1. implement ApplicationDelegation in MainApplication
