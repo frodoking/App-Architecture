@@ -10,7 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.frodo.android.app.simple.R;
 import com.frodo.app.android.core.UIView;
 import com.frodo.app.android.ui.FragmentScheduler;
-import com.frodo.app.android.ui.activity.FragmentContainerActivity;
 import com.frodo.app.android.ui.fragment.StatedFragment;
 import com.frodo.app.framework.controller.IModel;
 
@@ -36,7 +35,7 @@ public class SplashFragment extends StatedFragment<UIView, IModel> {
 				ad.postDelayed(new Runnable() {
 					@Override
 					public void run() {
-                        FragmentScheduler.doDirect(getAndroidContext(), FragmentScheduler.SCHEMA + "/movie", true);
+                        FragmentScheduler.doDirect(getAndroidContext(), FragmentScheduler.schema() + "/movie", true);
 //						FragmentScheduler.replaceFragment(getAndroidContext(), MovieFragment.class);
 					}
 				}, 5000);

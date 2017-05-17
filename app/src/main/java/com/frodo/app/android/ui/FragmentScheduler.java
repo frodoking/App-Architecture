@@ -22,9 +22,21 @@ import java.util.Map;
  */
 public class FragmentScheduler {
 
-    public static String SCHEME = "frodo://redirect";
+    private static String SCHEME = "frodo://redirect";
 
     private final static Map<String, Class<? extends Fragment>> map = new HashMap<>();
+
+    public static String schema() {
+        return SCHEME;
+    }
+
+    public static boolean isMatch(String schema) {
+        return schema.startsWith(SCHEME);
+    }
+
+    public static void registerWithDefaultSchemaHost(String tag, Class<? extends Fragment> fragmentClass) {
+        register(schema() + "/" + tag, fragmentClass);
+    }
 
     public static void register(String schema, Class<? extends Fragment> fragmentClass) {
         map.put(schema, fragmentClass);
@@ -34,9 +46,9 @@ public class FragmentScheduler {
         ComponentName cn = new ComponentName(context, RedirectActivity.class);
         try {
             ActivityInfo info = context.getPackageManager().getActivityInfo(cn, PackageManager.GET_META_DATA);
-            FragmentScheduler.SCHEME = info.metaData.getString("REDIRECT_SCHEME_KEY", "frodo") + "://redirect";
+            SCHEME = info.metaData.getString("REDIRECT_SCHEME_KEY", "frodo") + "://redirect";
         } catch (PackageManager.NameNotFoundException e) {
-            FragmentScheduler.SCHEME = "frodo://redirect";
+            SCHEME = "frodo://redirect";
         }
     }
 

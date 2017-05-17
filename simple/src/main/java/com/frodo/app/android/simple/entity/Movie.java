@@ -1,9 +1,10 @@
 package com.frodo.app.android.simple.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+ 
 
 import java.io.Serializable;
 
@@ -12,33 +13,33 @@ import java.io.Serializable;
  */
 public class Movie implements Serializable, Parcelable {
 
-	@JsonProperty("poster_path")
+	@SerializedName("poster_path")
 	public String posterPath;
-	@JsonProperty("adult")
+	@SerializedName("adult")
 	public boolean adult;
-	@JsonProperty("overview")
+	@SerializedName("overview")
 	public String overView;
-	@JsonProperty("release_date")
+	@SerializedName("release_date")
 	public String releaseDate;
-	@JsonProperty("genre_ids")
+	@SerializedName("genre_ids")
 	public int[] genreIds;
-	@JsonProperty("id")
+	@SerializedName("id")
 	public int id;
-	@JsonProperty("original_title")
+	@SerializedName("original_title")
 	public String originalTitle;
-	@JsonProperty("original_language")
+	@SerializedName("original_language")
 	public String originalLanguage;
-	@JsonProperty("title")
+	@SerializedName("title")
 	public String title;
-	@JsonProperty("backdrop_path")
+	@SerializedName("backdrop_path")
 	public String backdropPath;
-	@JsonProperty("popularity")
+	@SerializedName("popularity")
 	public float popularity;
-	@JsonProperty("vote_count")
+	@SerializedName("vote_count")
 	public int voteCount;
-	@JsonProperty("video")
+	@SerializedName("video")
 	public boolean video;
-	@JsonProperty("vote_average")
+	@SerializedName("vote_average")
 	public float voteAverage;
 
 	public Movie() {

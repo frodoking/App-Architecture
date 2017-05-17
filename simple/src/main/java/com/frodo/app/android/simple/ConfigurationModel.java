@@ -12,13 +12,15 @@ import com.frodo.app.framework.net.Response;
 
 import java.io.IOException;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by frodo on 2015/7/24.
@@ -30,19 +32,18 @@ public class ConfigurationModel extends AbstractModel {
 
     public ConfigurationModel(MainController controller) {
         super(controller);
-
-        observable = Observable.create(new Observable.OnSubscribe<Response>() {
+        observable = Observable.create(new ObservableOnSubscribe<Response>() {
             @Override
-            public void call(Subscriber<? super Response> subscriber) {
+            public void subscribe(@NonNull ObservableEmitter<Response> observableEmitter) throws Exception {
                 Request request = new Request.Builder<ResponseBody>()
                         .method("GET")
                         .relativeUrl(Path.configuration)
                         .build();
-                getMainController().getBackgroundExecutor().execute(new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber));
+                getMainController().getBackgroundExecutor().execute(new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, observableEmitter));
             }
-        }).map(new Func1<Response, ServerConfiguration>() {
+        }).map(new Function<Response, ServerConfiguration>() {
             @Override
-            public ServerConfiguration call(Response response) {
+            public ServerConfiguration apply(@NonNull Response response) throws Exception {
                 try {
                     return JsonConverter.convert(((ResponseBody) response.getBody()).string(), ServerConfiguration.class);
                 } catch (IOException e) {
@@ -74,9 +75,9 @@ public class ConfigurationModel extends AbstractModel {
     public void initBusiness() {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ServerConfiguration>() {
+                .subscribe(new Consumer<ServerConfiguration>() {
                     @Override
-                    public void call(ServerConfiguration serverConfiguration) {
+                    public void accept(@NonNull ServerConfiguration serverConfiguration) throws Exception {
                         setTmdbConfiguration(serverConfiguration);
                     }
                 });

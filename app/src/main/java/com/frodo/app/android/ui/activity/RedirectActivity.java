@@ -17,7 +17,7 @@ public class RedirectActivity extends FragmentContainerActivity {
         Intent intent = getIntent();
         Uri uri = intent.getData();
         String uriString = uri.toString();
-        if (uriString.startsWith(FragmentScheduler.SCHEME)) {
+        if (FragmentScheduler.isMatch(uriString)) {
             FragmentScheduler.doReplace(this, uri.toString(), intent.getExtras());
         } else {
             throw new IllegalArgumentException("you must to define your schema like 'app://redirect/xxxx'");

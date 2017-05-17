@@ -13,34 +13,34 @@ import com.frodo.app.framework.log.Logger;
  */
 public class MainActivity extends FragmentContainerActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Logger.fLog().tag("ReBuild [Activity]"+hashCode()).i("Activity@"+hashCode() + "Application@"+ getApplication().hashCode() /*+ "MainController@"+getMainController().hashCode()*/);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Logger.fLog().tag("ReBuild [Activity]" + hashCode()).i("Activity@" + hashCode() + "Application@" + getApplication().hashCode() /*+ "MainController@"+getMainController().hashCode()*/);
+    }
 
-	@Override
-	public void initView() {
-		// do nothing
-	}
+    @Override
+    public void initView() {
+        // do nothing
+    }
 
-	@Override
-	public void registerListener() {
-		// do nothing
-	}
+    @Override
+    public void registerListener() {
+        // do nothing
+    }
 
-	@Override
-	public void initBusiness() {
-		FragmentScheduler.replaceFragment(this, SplashFragment.class, null);
-	}
+    @Override
+    public void initBusiness() {
+        FragmentScheduler.doReplace(this, FragmentScheduler.schema() + "/splash");
+    }
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-			Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-		}
-	}
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

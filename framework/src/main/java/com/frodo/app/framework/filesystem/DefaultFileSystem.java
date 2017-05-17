@@ -85,9 +85,9 @@ public class DefaultFileSystem extends AbstractChildSystem implements FileSystem
      * @param file The file to write to Disk.
      */
     @Override
-    public void writeToFile(File file, String fileContent) {
+    public void writeToFile(File file, String fileContent, boolean append) {
         try {
-            FileWriter writer = new FileWriter(file);
+            FileWriter writer = new FileWriter(file, append);
             writer.write(fileContent);
             writer.close();
         } catch (IOException e) {

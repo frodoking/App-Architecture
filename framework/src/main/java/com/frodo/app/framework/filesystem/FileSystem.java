@@ -20,7 +20,7 @@ public interface FileSystem extends ChildSystem {
 
     File createDirectory(String dirName);
 
-    void writeToFile(File file, String fileContent);
+    void writeToFile(File file, String fileContent, boolean append);
 
     String readFileContent(File file);
 

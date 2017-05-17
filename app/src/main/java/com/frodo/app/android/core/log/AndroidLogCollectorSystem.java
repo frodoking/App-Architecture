@@ -28,10 +28,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
     public AndroidLogCollectorSystem(IController controller, int minimumLogLevel) {
         super(controller);
         this.logDir = controller.getFileSystem().getFilePath() + File.separator + "log"+ File.separator;
-        File tmpDir = new File(this.logDir);
-        if (!tmpDir.exists()) {
-            tmpDir.mkdirs();
-        }
+        getController().getFileSystem().createDirectory(this.logDir);
         this.minimumLogLevel = minimumLogLevel;
     }
 
@@ -155,7 +152,7 @@ public class AndroidLogCollectorSystem extends AbstractChildSystem implements Lo
                 @Override
                 public String runAsync() {
                     String log = getCurrentTime() + ", tag: " + tag + ", msg: " + msg;
-                    getController().getFileSystem().writeToFile(logFile(), log);
+                    getController().getFileSystem().writeToFile(logFile(), log, true);
                     return log;
                 }
 

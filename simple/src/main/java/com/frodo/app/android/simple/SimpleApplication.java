@@ -5,26 +5,15 @@ import android.app.Application;
 import com.frodo.app.android.ApplicationDelegation;
 import com.frodo.app.android.MicroContextLoader;
 import com.frodo.app.android.core.config.AndroidConfig;
-import com.frodo.app.android.core.exception.AndroidCrashHandler;
-import com.frodo.app.android.core.log.AndroidLogCollectorSystem;
 import com.frodo.app.android.core.network.AndroidNetworkSystem;
-import com.frodo.app.android.core.toolbox.ResourceManager;
 import com.frodo.app.android.ui.FragmentScheduler;
 import com.frodo.app.framework.config.Configuration;
 import com.frodo.app.framework.config.Environment;
 import com.frodo.app.framework.controller.IController;
 import com.frodo.app.framework.controller.MainController;
-import com.frodo.app.framework.exception.ExceptionHandler;
-import com.frodo.app.framework.log.LogCollector;
-import com.frodo.app.framework.log.Logger;
 import com.frodo.app.framework.net.NetworkInterceptor;
 import com.frodo.app.framework.net.NetworkTransport;
 import com.frodo.app.framework.net.Request;
-import com.frodo.app.framework.scene.DefaultScene;
-import com.frodo.app.framework.scene.Scene;
-import com.frodo.app.framework.theme.Theme;
-
-import java.io.File;
 
 /**
  * Created by frodo on 2015/4/2. for example
@@ -42,9 +31,6 @@ public class SimpleApplication extends Application implements ApplicationDelegat
 
 	@Override
 	public void beforeLoad() {
-		FragmentScheduler.register(FragmentScheduler.SCHEMA + "/splash", SplashFragment.class);
-		FragmentScheduler.register(FragmentScheduler.SCHEMA + "/movie", MovieFragment.class);
-		FragmentScheduler.register(FragmentScheduler.SCHEMA + "/redirect", MovieDetailFragment.class);
 	}
 
 	@Override
@@ -77,6 +63,10 @@ public class SimpleApplication extends Application implements ApplicationDelegat
 	@Override
 	public void afterLoad() {
 		getMainController().getLogCollector().enableCollect(true);
+
+		FragmentScheduler.registerWithDefaultSchemaHost("splash", SplashFragment.class);
+		FragmentScheduler.registerWithDefaultSchemaHost("movie", MovieFragment.class);
+		FragmentScheduler.registerWithDefaultSchemaHost("redirect", MovieDetailFragment.class);
 	}
 
 	@Override

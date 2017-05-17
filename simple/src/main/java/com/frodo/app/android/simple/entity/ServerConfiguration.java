@@ -1,30 +1,30 @@
 package com.frodo.app.android.simple.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by frodo on 2016/3/3.
  */
 public class ServerConfiguration {
-	@JsonProperty("images")
+	@SerializedName("images")
 	public Images images;
-	@JsonProperty("change_keys")
+	@SerializedName("change_keys")
 	public String[] changeKeys;
 
 	public static class Images {
-		@JsonProperty("base_url")
+		@SerializedName("base_url")
 		public String baseUrl;
-		@JsonProperty("secure_base_url")
+		@SerializedName("secure_base_url")
 		public String secureBaseUrl;
-		@JsonProperty("backdrop_sizes")
+		@SerializedName("backdrop_sizes")
 		public String[] backdropSizes;
-		@JsonProperty("logo_sizes")
+		@SerializedName("logo_sizes")
 		public String[] logoSizes;
-		@JsonProperty("poster_sizes")
+		@SerializedName("poster_sizes")
 		public String[] posterSizes;
-		@JsonProperty("profile_sizes")
+		@SerializedName("profile_sizes")
 		public String[] profileSizes;
-		@JsonProperty("still_sizes")
+		@SerializedName("still_sizes")
 		public String[] stillSizes;
 	}
 }

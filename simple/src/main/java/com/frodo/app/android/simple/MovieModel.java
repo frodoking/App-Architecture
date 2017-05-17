@@ -1,5 +1,7 @@
 package com.frodo.app.android.simple;
 
+import com.google.gson.reflect.TypeToken;
+
 import com.frodo.app.android.core.task.AndroidFetchNetworkDataTask;
 import com.frodo.app.android.core.toolbox.JsonConverter;
 import com.frodo.app.android.simple.entity.Movie;
@@ -9,7 +11,6 @@ import com.frodo.app.framework.controller.AbstractModel;
 import com.frodo.app.framework.controller.MainController;
 import com.frodo.app.framework.net.Request;
 import com.frodo.app.framework.net.Response;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,11 +19,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Func1;
 
 /**
  * Created by frodo on 2015/4/2.
@@ -43,21 +45,21 @@ public class MovieModel extends AbstractModel {
     }
 
     public Observable<List<Movie>> loadMoviesWithReactor(final ServerConfiguration serverConfiguration) {
-        return Observable.create(new Observable.OnSubscribe<Response>() {
+        return Observable.create(new ObservableOnSubscribe<Response>() {
             @Override
-            public void call(Subscriber<? super Response> subscriber) {
+            public void subscribe(@NonNull ObservableEmitter<Response> observableEmitter) throws Exception {
                 Request request = new Request.Builder<ResponseBody>()
                         .method("GET")
                         .relativeUrl(Path.movie_popular)
                         .build();
                 request.addQueryParam("page", "1");
                 request.addQueryParam("lang", "zh");
-                fetchNetworkDataTask = new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, subscriber);
+                fetchNetworkDataTask = new AndroidFetchNetworkDataTask(getMainController().getNetworkTransport(), request, observableEmitter);
                 getMainController().getBackgroundExecutor().execute(fetchNetworkDataTask);
             }
-        }).map(new Func1<Response, List<Movie>>() {
+        }).map(new Function<Response, List<Movie>>() {
             @Override
-            public List<Movie> call(Response response) {
+            public List<Movie> apply(@NonNull Response response) throws Exception {
                 String listString = null;
                 try {
                     JSONObject jsonObject = new JSONObject(((ResponseBody) response.getBody()).string());
@@ -80,16 +82,7 @@ public class MovieModel extends AbstractModel {
                 }
 
                 return movies;
-            }
-        }).doOnUnsubscribe(new Action0() {
-            @Override
-            public void call() {
-                fetchNetworkDataTask.terminate();
-            }
-        }).doOnCompleted(new Action0() {
-            @Override
-            public void call() {
-//                fetchNetworkDataTask = null;
+
             }
         });
     }

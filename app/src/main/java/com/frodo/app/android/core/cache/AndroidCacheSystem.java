@@ -63,7 +63,7 @@ public class AndroidCacheSystem extends AbstractChildSystem implements CacheSyst
     public <K, V> boolean put(K key, V value, Cache.Type type) {
         if (type.equals(Cache.Type.DISK)) {
             File file = new File(getCacheDir(), key.toString());
-            fileSystem.writeToFile(file, JsonConverter.toJson(value));
+            fileSystem.writeToFile(file, JsonConverter.toJson(value), false);
             return true;
         } else if (type.equals(Cache.Type.INTERNAL)) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
